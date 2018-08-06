@@ -168,3 +168,31 @@
   -webkit-user-select: none;
   user-select: none;
 }
+
+// set page header to fixed
+header {
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+}
+
+.page-header-container {
+  margin-top: 61px;
+  position: fixed;
+  width: 100%;
+}
+
+.snapshot-container,
+.hotline-container,
+.homepage-container {
+  padding-top: 140px;
+}
+
+.snapshot-inner-container,
+.hotline-inner-container {
+  margin-left: 279px;
+}
+
+.side-bar-container {
+  position: fixed;
+}

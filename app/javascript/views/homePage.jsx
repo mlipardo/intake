@@ -54,7 +54,7 @@ export const HomePage = ({snapshot, hotline, actions: {createSnapshot, createScr
     <div className='container'>
       <div className='row gap-top'>
         <div className='col-md-3' />
-        <div className='col-md-9'>
+        <div className='col-md-9 homepage-container'>
           { hotline && <ScreeningsTable /> }
         </div>
       </div>

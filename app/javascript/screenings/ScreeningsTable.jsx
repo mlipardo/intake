@@ -22,7 +22,7 @@ class ScreeningsTable extends React.Component {
 
   render() {
     return (
-      <div className='table-responsive'>
+      <div className='table-responsive homepage-inner-container'>
         <table className='table table-hover'>
           <thead>{this.renderTableHead()}</thead>
           <tbody>
