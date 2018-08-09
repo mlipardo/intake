@@ -63,15 +63,14 @@ class PersonSearchQueryBuilder
 
   def should
     term = formatted_search_term
-    [
-      and_query(:autocomplete_search_bar, term, MEDIUM_BOOST),
-      match_query(:first_name, term, HIGH_BOOST),
-      match_query(:last_name, term, HIGH_BOOST),
-      match_query(:'first_name.phonetic', term, LOW_BOOST),
-      match_query(:'last_name.phonetic', term, LOW_BOOST),
-      match_query(:date_of_birth_as_text, term, HIGH_BOOST),
-      match_query(:ssn, term, HIGH_BOOST)
-    ]
+    [and_query(:autocomplete_search_bar, term, MEDIUM_BOOST),
+     match_query(:first_name, term, HIGH_BOOST),
+     match_query(:last_name, term, HIGH_BOOST),
+     match_query(:'first_name.phonetic', term, LOW_BOOST),
+     match_query(:'last_name.phonetic', term, LOW_BOOST),
+     match_query(:date_of_birth_as_text, term, HIGH_BOOST),
+     match_query(:searchable_date_of_birth, term, NO_BOOST),
+     match_query(:ssn, term, HIGH_BOOST)]
   end
 
   def fuzzy_query
@@ -109,9 +108,8 @@ class PersonSearchQueryBuilder
   end
 
   def highlight
-    { order: 'score',
-      number_of_fragments: NUMBER_OF_FRAGMENTS,
-      require_field_match: false,
+    { number_of_fragments: NUMBER_OF_FRAGMENTS,
+      require_field_match: true,
       fields: {
         'autocomplete_search_bar': auto_bar_highlight,
         'searchable_date_of_birth': {}
