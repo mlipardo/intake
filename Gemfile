@@ -57,7 +57,6 @@ group :test do
     ref: '2a0e6a73d445de5938e6174d3d1970633c94fbed'
   gem 'capybara-screenshot'
   gem 'faker'
-  gem 'headless', '2.3.1', require: false
   gem 'poltergeist'
   gem 'rails-controller-testing'
   gem 'rspec_junit_formatter', require: false

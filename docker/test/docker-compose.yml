@@ -15,7 +15,6 @@ services:
       NODE_ENV: test
       CI_REPORTS: /reports
       GENERATE_TEST_REPORTS: 'yes'
-      USE_XVFB: 'true'
       REDIS_HOST: 'redis'
       TZ: US/Pacific
       REDIS_PORT: 6379
