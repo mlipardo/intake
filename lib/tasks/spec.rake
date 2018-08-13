@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 def host_env_string
-  'AUTHENTICATION=false API_URL=http://api FERB_API_URL=https://ferb_api MARIONETTE=false'
+  'DEFAULT_DRIVER=accessible_selenium_local AUTHENTICATION=false API_URL=http://api FERB_API_URL=https://ferb_api MARIONETTE=false'
 end
 
 namespace :spec do # rubocop:disable BlockLength

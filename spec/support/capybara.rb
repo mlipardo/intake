@@ -24,6 +24,15 @@ Capybara.register_driver :accessible_selenium do |app|
   Capybara::Accessible.setup(driver, adaptor)
 end
 
+Capybara.register_driver :accessible_selenium_local do |app|
+  driver = Capybara::Selenium::Driver.new(
+    app,
+    browser: :firefox
+  )
+  adaptor = Capybara::Accessible::SeleniumDriverAdapter.new
+  Capybara::Accessible.setup(driver, adaptor)
+end
+
 Capybara.register_driver :accessible_selenium_chrome do |app|
   redux_devtools = ENV.fetch('REDUX_DEVTOOLS', false)
   react_devtools = ENV.fetch('REACT_DEVTOOLS', false)
