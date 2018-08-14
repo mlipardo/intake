@@ -21,9 +21,9 @@ export default class ScreeningCreateRelationship extends React.Component {
   selectParticipant(person, participants) {
     let selectedParticipant = ''
     participants.map((participant) => {
-       console.log(`person: ${JSON.stringify(person.id)}`)
-       console.log(`participant: ${JSON.stringify(participant.id)}`)
-      console.log(`participant.newly_created_person: ${participant.newly_created_person}`)
+      //  console.log(`person: ${JSON.stringify(person.name)}`)
+      //  console.log(`participant: ${JSON.stringify(participant.first_name)}`)
+      // console.log(`participant.newly_created_person: ${participant.newly_created_person}`)
   
      if (participant.id === person.id && participant.newly_created_person){
       selectedParticipant  = participant

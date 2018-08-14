@@ -43,7 +43,7 @@ export const Relationships = ({
   isScreening,
   pendingPeople = [],
 }) => { 
-  people.map((person) => { console.log(`person: ${JSON.stringify(person)}`)
+  people.map((person) => { console.log(`person: ${JSON.stringify(person.name)}`)
   console.log(`person.newly_create_person: ${JSON.stringify(person.newly_created_person)}`)})
   // console.log(`people in relationship: ${JSON.stringify(people)}`)
   // console.log(`participants in relationship: ${JSON.stringify(participants)}`)
