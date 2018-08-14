@@ -39,9 +39,14 @@ export function* sendPersonPayload(person) {
   return yield call(post, '/api/v1/participants', participantPayload)
 }
 
+  function markNewlyCreatedPerson(person) {
+    const newlyCreatePerson = {... person, newly_created_person: true}
+    return newlyCreatePerson
+  }
 export function* createParticipant({payload: {person}}) {
   try {
-    const response = yield* sendPersonPayload(person)
+    let response = yield* sendPersonPayload(person)
+     response = markNewlyCreatedPerson(response)
     yield put(createPersonSuccess(response))
     const clientIds = yield select(selectClientIds)
     const screeningId = yield select(getScreeningIdValueSelector)

@@ -16,14 +16,33 @@ const isPersonCardExists = (people, relationship) => {
   return true
 }
 
+const isPersonNewlyCreated = (participants, person) => {
+  console.log(`inside isPersonNewlyCreate=====`)
+  if (participants.size > 0 && person.id) {
+    const personNewlyCreated = participants.some((participant) => { 
+      console.log(`particiapnt.id: ${participant.get('id')}`)
+      console.log(`person.id: ${person.id}`)
+      console.log(`particiapnt.get('newly_created_person'): ${participant.get('newly_created_person')}`)
+      return participant.get('id') === person.id && participant.get('newly_created_person') })
+    return personNewlyCreated
+  }
+  return false
+}
+
+
+
 export const getPeopleSelector = createSelector(
   selectParticipants,
   getScreeningRelationships,
   selectRelationshipTypes,
   (participants, people, relationshipTypes) => people.map((person) => Map({
+    id: person.get('id'),
+    test: 'test',
     dateOfBirth: dateFormatter(person.get('date_of_birth')),
     legacy_id: person.get('legacy_id'),
     name: nameFormatter({...person.toJS()}),
+    newly_created_person: isPersonNewlyCreated(participants, person.toJS()),
+    // legacy_descriptor: person.get('legacy_descriptor').toJS(),
     gender: person.get('gender') || '',
     age: ageFormatter({
       age: person.get('age'),

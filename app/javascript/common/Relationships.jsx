@@ -3,7 +3,7 @@ import React from 'react'
 import ActionMenu from 'common/relationship/ActionMenu'
 import AttachLink from 'common/relationship/AttachLink'
 import RelationCard from 'common/relationship/RelationCard'
-import ScreeningCreateRelationship from 'views/ScreeningCreateRelationship'
+import CreateRelationshipContainer from 'containers/screenings/CreateRelationshipContainer'
 
 const actionsMenu = (
   row,
@@ -26,18 +26,28 @@ const actionsMenu = (
 
 const createRelationsData = (person, data) => {
   const relationData = []
+  if (data.length > 0) { 
   data.map((relatedPerson) => relationData.push({focus_person: person, related_person: relatedPerson}))
+} else {
+  relationData.push({focus_person: person, related_person: null})
+}
   return relationData
 }
 
 export const Relationships = ({
+  participants,
   people,
   onChange,
   onClick,
   screeningId,
   isScreening,
   pendingPeople = [],
-}) => (
+}) => { 
+  people.map((person) => { console.log(`person: ${JSON.stringify(person)}`)
+  console.log(`person.newly_create_person: ${JSON.stringify(person.newly_created_person)}`)})
+  // console.log(`people in relationship: ${JSON.stringify(people)}`)
+  // console.log(`participants in relationship: ${JSON.stringify(participants)}`)
+  return (
   <div className='card-body no-pad-top'>
     {
       isScreening && people.map((person, index) => (
@@ -63,7 +73,12 @@ export const Relationships = ({
               }
             </div>
           </div>
-          <ScreeningCreateRelationship data={createRelationsData(person, person.relationships)}/>
+          <div className='row'>
+               <div className='col-md-9' />
+                <div className='col-md-3'>
+                  <CreateRelationshipContainer showModal={person.newly_created_person} participants={participants} person={person} data={createRelationsData(person, person.relationships)}/>
+                </div>
+          </div>
         </div>
       ))
     }
@@ -104,12 +119,13 @@ export const Relationships = ({
       ))
     }
   </div>
-)
+)}
 
 Relationships.propTypes = {
   isScreening: PropTypes.bool,
   onChange: PropTypes.func,
   onClick: PropTypes.func,
+  participants: PropTypes.arrayOf(PropTypes.object),
   pendingPeople: PropTypes.arrayOf(PropTypes.string),
   people: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,

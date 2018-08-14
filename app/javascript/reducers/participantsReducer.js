@@ -7,6 +7,7 @@ import {
   DELETE_PERSON_COMPLETE,
   UPDATE_PERSON_COMPLETE,
   CLEAR_PEOPLE,
+  MARK_PERSON_OLD,
 } from 'actions/personCardActions'
 import {SAVE_SCREENING_COMPLETE} from 'actions/screeningActions'
 import {createReducer} from 'utils/createReducer'
@@ -65,5 +66,14 @@ export default createReducer(List(), {
   },
   [CLEAR_PEOPLE]() {
     return List()
+  },
+  [MARK_PERSON_OLD](state, {payload: {person}, error}) {
+    if (error) {
+      return state
+    }
+    console.log(`Inside MARK_PERSON_OLD reducer state : ${JSON.stringify(state)}`)
+    console.log(`==============================`)
+    console.log(`Inside MARK_PERSON_OLD reducer person : ${JSON.stringify(person)}`)
+    return state
   },
 })

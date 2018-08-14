@@ -11,14 +11,41 @@ const textWrap = {whiteSpace: 'normal'}
 export default class ScreeningCreateRelationship extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {show: false}
+    this.state = {show: this.props.showModal}
     this.handleShowModal = this.handleShowModal.bind(this)
     this.closeModal = this.closeModal.bind(this)
     this.displayFormatter = this.displayFormatter.bind(this)
     this.modalTable = this.modalTable.bind(this)
   }
 
+  selectParticipant(person, participants) {
+    let selectedParticipant = ''
+    participants.map((participant) => {
+       console.log(`person: ${JSON.stringify(person.id)}`)
+       console.log(`participant: ${JSON.stringify(participant.id)}`)
+      console.log(`participant.newly_created_person: ${participant.newly_created_person}`)
+  
+     if (participant.id === person.id && participant.newly_created_person){
+      selectedParticipant  = participant
+     }
+    })
+    console.log(`selectedParticipant: ${JSON.stringify(selectedParticipant)}`)
+    return selectedParticipant
+  }
+
+  componentDidMount() {
+    const person  = this.props.person
+    const participants = this.props.participants
+    const newParticipant = this.selectParticipant(person, participants)
+    console.log(`In componenetDidMount person: ${JSON.stringify(newParticipant)}`)
+    console.log(`this.state.show: ${JSON.stringify(this.state.show)}`)
+    if (newParticipant.newly_created_person){
+      this.props.markThisPersonOld(newParticipant)
+    }
+  }
+
   handleShowModal() {
+    console.log('inside handleShowModal')
     this.setState({
       show: !this.state.show,
     })
@@ -119,5 +146,8 @@ export default class ScreeningCreateRelationship extends React.Component {
 }
 
 ScreeningCreateRelationship.propTypes = {
+  showModal: PropTypes.bool,
+  participants: PropTypes.arrayOf(PropTypes.object),
+  person: PropTypes.object,
   data: PropTypes.array,
 }
