@@ -71,9 +71,9 @@ export default createReducer(List(), {
     if (error) {
       return state
     }
-    console.log(`Inside MARK_PERSON_OLD reducer state : ${JSON.stringify(state)}`)
-    console.log(`==============================`)
-    console.log(`Inside MARK_PERSON_OLD reducer person : ${JSON.stringify(person)}`)
-    return state
+    
+    const updatedPerson = transformPerson(fromJS(person))
+    const personIndex = state.findIndex((x) => x.get('id') === updatedPerson.get('id'))
+    return state.setIn([personIndex,'newly_created_person'],false )
   },
 })
