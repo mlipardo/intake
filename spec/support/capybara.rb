@@ -15,10 +15,14 @@ ENV['TZ'] = 'Etc/GMT+7'
 Capybara.register_driver :accessible_selenium do |app|
   browser_options = Selenium::WebDriver::Firefox::Options.new()
   browser_options.args << '--headless'
+  browser_options.args << '--new-instance'
+  profile = Selenium::WebDriver::Firefox::Profile.new
+  profile.native_events = true
   driver = Capybara::Selenium::Driver.new(
     app,
     browser: :firefox,
-    options: browser_options
+    options: browser_options,
+    profile: profile
   )
   adaptor = Capybara::Accessible::SeleniumDriverAdapter.new
   Capybara::Accessible.setup(driver, adaptor)
@@ -27,7 +31,7 @@ end
 Capybara.register_driver :accessible_selenium_local do |app|
   driver = Capybara::Selenium::Driver.new(
     app,
-    browser: :firefox
+    browser: :firefox,
   )
   adaptor = Capybara::Accessible::SeleniumDriverAdapter.new
   Capybara::Accessible.setup(driver, adaptor)
@@ -59,13 +63,6 @@ Capybara.register_driver :accessible_poltergeist do |app|
 end
 
 Capybara.default_driver = ENV.fetch('DEFAULT_DRIVER', :accessible_selenium).to_sym
-
-Capybara.register_server :puma do |app, port, host|
-  require 'rack/handler/puma'
-  Rack::Handler::Puma.run(app, Host: host, Port: port, Threads: "0:1", config_files: ['-'])
-end
-
-Capybara.server = :puma
 
 Capybara.server_port = 8889 + ENV['TEST_ENV_NUMBER'].to_i
 Capybara.raise_server_errors = true
