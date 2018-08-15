@@ -212,6 +212,7 @@ feature 'Snapshot History of Involvement' do
       end
 
       within '#search-card', text: 'Search' do
+        page.find('strong', text: 'Marge').hover
         page.find('strong', text: 'Marge').click
       end
     end
@@ -413,6 +414,7 @@ feature 'Snapshot History of Involvement' do
       end
 
       within '#search-card', text: 'Search' do
+        page.find('strong', text: 'Marge').hover
         page.find('strong', text: 'Marge').click
       end
     end

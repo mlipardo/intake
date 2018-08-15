@@ -189,6 +189,7 @@ feature 'searching a participant in autocompleter' do
 
       scenario 'when clicking search result' do
         within '#search-card', text: 'Search' do
+          page.find('strong', text: 'Marge').hover
           page.find('strong', text: 'Marge').click
         end
 

@@ -62,6 +62,7 @@ feature 'Create Snapshot' do
 
         within '#search-card', text: 'Search' do
           fill_in 'Search for clients', with: 'Ma'
+          page.find('strong', text: 'Marge').hover
           page.find('strong', text: 'Marge').click
         end
 
@@ -159,6 +160,7 @@ feature 'Create Snapshot' do
 
         within '#search-card', text: 'Search' do
           fill_in 'Search for any person', with: 'Ma'
+          page.find('strong', text: 'Marge').hover
           page.find('strong', text: 'Marge').click
         end
 

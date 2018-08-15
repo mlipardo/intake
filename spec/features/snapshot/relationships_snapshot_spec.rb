@@ -110,6 +110,7 @@ feature 'Snapshot relationship card' do
       end
 
       within '#search-card', text: 'Search' do
+        page.find('strong', text: 'Marge').hover
         page.find('strong', text: 'Marge').click
       end
     end

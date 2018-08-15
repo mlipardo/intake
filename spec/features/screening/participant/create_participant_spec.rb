@@ -255,6 +255,7 @@ feature 'Create participant' do
       fill_in 'Search for any person', with: 'Homer'
     end
     within '#search-card', text: 'Search' do
+      find('strong', text: 'Homer Simpson').hover
       find('strong', text: 'Homer Simpson').click
     end
     expect(a_request(:get,
@@ -350,6 +351,7 @@ feature 'Create participant' do
           within '#search-card', text: 'Search' do
             accept_alert('You are not authorized to add this person.') do
               fill_in 'Search for any person', with: 'Marge'
+              find('strong', text: 'Marge Simpson').hover
               find('strong', text: 'Marge Simpson').click
             end
           end
@@ -383,6 +385,7 @@ feature 'Create participant' do
           ).and_return(json_body(created_participant_homer.to_json, status: 201))
           within '#search-card', text: 'Search' do
             fill_in 'Search for any person', with: 'Ho'
+            find('strong', text: 'Homer Simpson').hover
             find('strong', text: 'Homer Simpson').click
           end
           # The new participant was NOT added
@@ -420,6 +423,7 @@ feature 'Create participant' do
           ).and_return(json_body(created_participant_marge.to_json, status: 201))
           within '#search-card', text: 'Search' do
             fill_in 'Search for any person', with: 'Ma'
+            find('strong', text: 'Marge Simpson').hover
             find('strong', text: 'Marge Simpson').click
           end
           expect(
@@ -475,6 +479,7 @@ feature 'Create participant' do
           ).and_return(json_body(created_participant_homer.to_json, status: 201))
           within '#search-card', text: 'Search' do
             fill_in 'Search for any person', with: 'Ho'
+            find('strong', text: 'Homer Simpson').hover
             find('strong', text: 'Homer Simpson').click
           end
           expect(page)

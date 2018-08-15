@@ -77,6 +77,7 @@ feature 'Adding and removing a person from a snapshot' do
 
     within '#search-card', text: 'Search' do
       expect(page).not_to have_content 'Create a new person'
+      page.find('strong', text: 'Marge').hover
       page.find('strong', text: 'Marge').click
     end
 
@@ -137,6 +138,7 @@ feature 'Adding and removing a person from a snapshot' do
 
     within '#search-card', text: 'Search' do
       expect(page).not_to have_content 'Create a new person'
+      page.find('strong', text: 'Marge').hover
       page.find('strong', text: 'Marge').click
     end
 
