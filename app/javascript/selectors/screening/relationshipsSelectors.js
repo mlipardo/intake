@@ -17,16 +17,10 @@ const isPersonCardExists = (people, relationship) => {
 }
 
 const isPersonNewlyCreated = (participants, person) => {
-  // console.log(`inside isPersonNewlyCreate=====`)
   if (participants.size > 0 && person.id) {
     let personNewlyCreated = false
      personNewlyCreated = participants.some((participant) => { 
-      // console.log(`particiapnt.id: ${participant.get('id')}`)
-      // console.log(`person.id: ${person.id}`)
-      // console.log(`particiapnt.get('newly_created_person'): ${participant.get('newly_created_person')}`)
       return participant.get('id') === person.id && participant.get('newly_created_person') })
-      // console.log(`personNewlyCreated'): ${personNewlyCreated}`)
-
     return personNewlyCreated
   }
   return false

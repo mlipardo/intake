@@ -20,16 +20,11 @@ export default class ScreeningCreateRelationship extends React.Component {
 
   selectParticipant(person, participants) {
     let selectedParticipant = ''
-    participants.map((participant) => {
-      //  console.log(`person: ${JSON.stringify(person.name)}`)
-      //  console.log(`participant: ${JSON.stringify(participant.first_name)}`)
-      // console.log(`participant.newly_created_person: ${participant.newly_created_person}`)
-  
+    participants.map((participant) => {  
      if (participant.id === person.id && participant.newly_created_person){
       selectedParticipant  = participant
      }
     })
-    console.log(`selectedParticipant: ${JSON.stringify(selectedParticipant)}`)
     return selectedParticipant
   }
 
@@ -37,15 +32,13 @@ export default class ScreeningCreateRelationship extends React.Component {
     const person  = this.props.person
     const participants = this.props.participants
     const newParticipant = this.selectParticipant(person, participants)
-    console.log(`In componenetDidMount person: ${JSON.stringify(newParticipant)}`)
-    console.log(`this.state.show: ${JSON.stringify(this.state.show)}`)
+
     if (newParticipant.newly_created_person){
       this.props.markThisPersonOld(newParticipant)
     }
   }
 
   handleShowModal() {
-    console.log('inside handleShowModal')
     this.setState({
       show: !this.state.show,
     })

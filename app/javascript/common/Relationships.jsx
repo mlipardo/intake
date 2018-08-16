@@ -43,16 +43,12 @@ export const Relationships = ({
   isScreening,
   pendingPeople = [],
 }) => { 
-  people.map((person) => { console.log(`person: ${JSON.stringify(person.name)}`)
-  console.log(`person.newly_create_person: ${JSON.stringify(person.newly_created_person)}`)})
-  // console.log(`people in relationship: ${JSON.stringify(people)}`)
-  // console.log(`participants in relationship: ${JSON.stringify(participants)}`)
   return (
   <div className='card-body no-pad-top'>
     {
       isScreening && people.map((person, index) => (
         <div key={index}>
-          <div className='row' key={`new-${index}`}>
+          <div className='row' key={`newrl-${index}`}>
             <div className='col-md-12'>
               {
                 (person.relationships.length > 0) &&
@@ -73,7 +69,7 @@ export const Relationships = ({
               }
             </div>
           </div>
-          <div className='row'>
+          <div className='row' key={`crl-${index}`}>
                <div className='col-md-9' />
                 <div className='col-md-3'>
                   <CreateRelationshipContainer showModal={person.newly_created_person} participants={participants} person={person} data={createRelationsData(person, person.relationships)}/>
