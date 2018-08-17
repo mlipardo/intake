@@ -13,12 +13,34 @@ const textWrap = {whiteSpace: 'normal'}
 export default class ScreeningCreateRelationship extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {show: false}
+    this.state = {show: false, relationships: {}}
     this.handleShowModal = this.handleShowModal.bind(this)
     this.closeModal = this.closeModal.bind(this)
     this.displayFormatter = this.displayFormatter.bind(this)
     this.modalTable = this.modalTable.bind(this)
     this.batchCreateRelationship = this.batchCreateRelationship.bind(this)
+    this.onChange = this.onChange.bind(this)
+  }
+
+  componentDidMount(){
+    this.update()
+  }
+
+  update() {
+    const relationships = this.props.data
+    if (this.state.relationships !== this.props.relationships) {
+      this.setState({relationships: relationships})
+    }
+    console.log('inside update')
+    console.log(relationships)
+  }
+
+  onChange(event) {
+    // this.setState({relationships: {...this.state.relationships, [field]: value}})
+    // console.log(field)
+    // console.log(value)
+    console.log('inside onChange')
+    console.log(this.state.relationships)
   }
 
   handleShowModal() {
@@ -49,6 +71,7 @@ export default class ScreeningCreateRelationship extends React.Component {
     const relationships =  this.props.data
     console.log('batchCreateRelationship')
     console.log(relationships)
+    console.log(this.state)
     this.props.batchCreateRelationships(relationships)
     
   }
@@ -78,16 +101,17 @@ export default class ScreeningCreateRelationship extends React.Component {
 
   selectFieldFormat() {
     return (
-      <SelectField
+      <select
         id='change_relationship_type'
         label=''
-        onChange={() => {}}
+        onChange={(event)=>{this.onChange(event)}}
+      // value={this.state.relationship_code}
       >
         <option key=''/>
         {RELATIONSHIP_TYPES.map((relationship) =>
           <option key={relationship.value} value={relationship.value}>{relationship.label}</option>)
         }
-      </SelectField>
+      </select>
     )
   }
 
