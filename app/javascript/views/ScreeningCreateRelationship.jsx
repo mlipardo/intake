@@ -7,6 +7,8 @@ import {RELATIONSHIP_TYPES} from 'enums/RelationshipTypes'
 import {GENDERS_LEGACY} from 'enums/Genders'
 import GENDERS from 'enums/Genders'
 
+
+
 const textWrap = {whiteSpace: 'normal'}
 export default class ScreeningCreateRelationship extends React.Component {
   constructor(props) {
@@ -16,6 +18,7 @@ export default class ScreeningCreateRelationship extends React.Component {
     this.closeModal = this.closeModal.bind(this)
     this.displayFormatter = this.displayFormatter.bind(this)
     this.modalTable = this.modalTable.bind(this)
+    this.batchCreateRelationship = this.batchCreateRelationship.bind(this)
   }
 
   handleShowModal() {
@@ -40,6 +43,14 @@ export default class ScreeningCreateRelationship extends React.Component {
         </ul>
       </div>
     )
+  }
+
+  batchCreateRelationship () {
+    const relationships =  this.props.data
+    console.log('batchCreateRelationship')
+    console.log(relationships)
+    this.props.batchCreateRelationships(relationships)
+    
   }
 
   modalTable(data) {
@@ -84,7 +95,7 @@ export default class ScreeningCreateRelationship extends React.Component {
     return (
       <div>
         <button aria-label='Cancel' className='btn btn-default' onClick={this.closeModal}> Cancel </button>
-        <button aria-label='Create Relationship' className='btn btn-primary'>Create Relationship </button>
+        <button aria-label='Create Relationship' className='btn btn-primary' onClick={this.batchCreateRelationship} >Create Relationship </button>
       </div>
     )
   }
@@ -120,4 +131,5 @@ export default class ScreeningCreateRelationship extends React.Component {
 
 ScreeningCreateRelationship.propTypes = {
   data: PropTypes.array,
+  batchCreateRelationship: PropTypes.func,
 }

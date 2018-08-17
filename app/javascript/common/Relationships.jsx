@@ -3,7 +3,7 @@ import React from 'react'
 import ActionMenu from 'common/relationship/ActionMenu'
 import AttachLink from 'common/relationship/AttachLink'
 import RelationCard from 'common/relationship/RelationCard'
-import ScreeningCreateRelationship from 'views/ScreeningCreateRelationship'
+import CreateRelationshipContainer from 'containers/screenings/CreateRelationshipContainer'
 
 const actionsMenu = (
   row,
@@ -63,7 +63,7 @@ export const Relationships = ({
               }
             </div>
           </div>
-          <ScreeningCreateRelationship data={createRelationsData(person, person.relationships)}/>
+          <CreateRelationshipContainer data={createRelationsData(person, person.relationships)}/>
         </div>
       ))
     }
