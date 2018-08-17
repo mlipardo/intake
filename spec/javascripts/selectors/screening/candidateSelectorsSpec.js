@@ -7,12 +7,13 @@ import * as matchers from 'jasmine-immutable-matchers'
 describe('candidateSelectors', () => {
   beforeEach(() => jasmine.addMatchers(matchers))
 
-  const emptyState = fromJS({candidate: []})
+  const emptyState = fromJS({relationships: []})
 
   describe('getCandidateSelector', () => {
     it('returns a list of candidates or an empty list if there are no people', () => {
       const relationships = [
         {
+          id: '1',
           date_of_birth: '1986-01-15',
           legacy_id: '3',
           first_name: 'Ricky',
@@ -20,7 +21,7 @@ describe('candidateSelectors', () => {
           last_name: 'Robinson',
           age: 20,
           age_unit: 'Y',
-          relationships: [{}],
+          relationships: [],
           candidate_to: [
             {
               candidate_id: '4157',
@@ -49,14 +50,17 @@ describe('candidateSelectors', () => {
       ]
 
       const state = fromJS({relationships})
-      expect(getCandidateSelector(state)).toEqualImmutable(fromJS([
+      const personId = '1'
+      expect(getCandidateSelector(state, personId)).toEqualImmutable(fromJS([
         {
-          dateOfBirth: '01/15/1986',
-          legacy_id: '3',
-          name: 'Ricky Robinson',
-          gender: 'M',
-          age: '20 yrs',
-          candidate_to: [
+          person: {
+            dateOfBirth: '01/15/1986',
+            legacy_id: '3',
+            name: 'Ricky Robinson',
+            gender: 'M',
+            age: '20 yrs',
+          },
+          candidate:
             {
               candidate_id: '4157',
               name: 'New York C Pechan, Sr',
@@ -64,15 +68,22 @@ describe('candidateSelectors', () => {
               dateOfBirth: '11/11/1958',
               age: '30 yrs',
             },
-            {
-              candidate_id: '4158',
-              name: 'Walter A White, Sr',
-              gender: 'M',
-              dateOfBirth: '11/11/1968',
-              age: '40 yrs',
-            },
-          ],
-
+        },
+        {
+          person: {
+            dateOfBirth: '01/15/1986',
+            legacy_id: '3',
+            name: 'Ricky Robinson',
+            gender: 'M',
+            age: '20 yrs',
+          },
+          candidate: {
+            candidate_id: '4158',
+            name: 'Walter A White, Sr',
+            gender: 'M',
+            dateOfBirth: '11/11/1968',
+            age: '40 yrs',
+          },
         }]))
       expect(getCandidateSelector(emptyState)).toEqualImmutable(fromJS([]))
     })
