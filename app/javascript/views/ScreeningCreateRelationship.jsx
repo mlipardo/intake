@@ -7,7 +7,28 @@ import {RELATIONSHIP_TYPES} from 'enums/RelationshipTypes'
 import {GENDERS_LEGACY} from 'enums/Genders'
 import GENDERS from 'enums/Genders'
 
-
+const rel_data = [
+  {
+    "client_id": "ZXY123",
+    "relative_id": "ABC987",
+    "relationship_type": 190,
+    "absent_parent_indicator": true,
+    "same_home_status": "Y",
+    "start_date": "1999-10-01",
+    "end_date": "2010-10-01",
+    "legacy_id": "A1b2x"
+  },
+  {
+    "client_id": "ZXY124",
+    "relative_id": "ABC987",
+    "relationship_type": 191,
+    "absent_parent_indicator": true,
+    "same_home_status": "Y",
+    "start_date": "1999-10-01",
+    "end_date": "2010-10-01",
+    "legacy_id": "A1b2x"
+  }
+]
 
 const textWrap = {whiteSpace: 'normal'}
 export default class ScreeningCreateRelationship extends React.Component {
@@ -19,7 +40,9 @@ export default class ScreeningCreateRelationship extends React.Component {
     this.displayFormatter = this.displayFormatter.bind(this)
     this.modalTable = this.modalTable.bind(this)
     this.batchCreateRelationship = this.batchCreateRelationship.bind(this)
-    this.onChange = this.onChange.bind(this)
+    this.setRelationshipCode = this.setRelationshipCode.bind(this)
+    this.selectFieldFormat = this.selectFieldFormat.bind(this)
+    this.createRelationshipDropDown = this.createRelationshipDropDown.bind(this)
   }
 
   componentDidMount(){
@@ -33,14 +56,6 @@ export default class ScreeningCreateRelationship extends React.Component {
     }
     console.log('inside update')
     console.log(relationships)
-  }
-
-  onChange(event) {
-    // this.setState({relationships: {...this.state.relationships, [field]: value}})
-    // console.log(field)
-    // console.log(value)
-    console.log('inside onChange')
-    console.log(this.state.relationships)
   }
 
   handleShowModal() {
@@ -68,12 +83,23 @@ export default class ScreeningCreateRelationship extends React.Component {
   }
 
   batchCreateRelationship () {
-    const relationships =  this.props.data
+    const relationships =  rel_data
     console.log('batchCreateRelationship')
     console.log(relationships)
     console.log(this.state)
     this.props.batchCreateRelationships(relationships)
     
+  }
+
+  setRelationshipCode(event) {
+    // this.setState({relationships: {...this.state.relationships, [field]: value}})
+    // console.log(field)
+    // console.log(value)
+    console.log(event.target.id)
+    console.log(event.target.value)
+    console.log(event.target)
+    console.log('inside onChange')
+    console.log(this.state.relationships)
   }
 
   modalTable(data) {
@@ -82,7 +108,7 @@ export default class ScreeningCreateRelationship extends React.Component {
         <TableHeaderColumn className = 'FocusPersonDetails' dataField='focus_person' dataFormat={this.displayFormatter} tdStyle= {textWrap}>
           Focus Person
         </TableHeaderColumn>
-        <TableHeaderColumn dataField='relationship' dataFormat={this.selectFieldFormat}>
+        <TableHeaderColumn dataField='related_person' dataFormat={this.selectFieldFormat}>
           Relationship<br/>
           <div className='text-helper'>Focus Person / Related Person</div>
         </TableHeaderColumn>
@@ -99,19 +125,30 @@ export default class ScreeningCreateRelationship extends React.Component {
     </b>)
   }
 
-  selectFieldFormat() {
+  createRelationshipDropDown(name){
+    console.log('createRelationshipDropDown')
+    console.log(name)
+    // this.selectFieldFormat()
+  }
+
+  selectFieldFormat(related_person) {
+    // console.log(row.focus_person.name)
+    const myid = related_person.name
     return (
-      <select
-        id='change_relationship_type'
+      <SelectField
+        id={myid}
         label=''
-        onChange={(event)=>{this.onChange(event)}}
+        onChange={(event)=>{
+           this.setRelationshipCode(event)
+        }
+        }
       // value={this.state.relationship_code}
       >
         <option key=''/>
         {RELATIONSHIP_TYPES.map((relationship) =>
           <option key={relationship.value} value={relationship.value}>{relationship.label}</option>)
         }
-      </select>
+      </SelectField>
     )
   }
 
