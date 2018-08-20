@@ -1,6 +1,6 @@
 import {fromJS} from 'immutable'
 import {
-  getCandidateSelector,
+  selectCandidateSelector,
 } from 'selectors/screening/candidateSelectors'
 import * as matchers from 'jasmine-immutable-matchers'
 
@@ -9,7 +9,7 @@ describe('candidateSelectors', () => {
 
   const emptyState = fromJS({relationships: []})
 
-  describe('getCandidateSelector', () => {
+  describe('selectCandidateSelector', () => {
     it('returns a list of candidates or an empty list if there are no people', () => {
       const relationships = [
         {
@@ -51,7 +51,7 @@ describe('candidateSelectors', () => {
 
       const state = fromJS({relationships})
       const personId = '1'
-      expect(getCandidateSelector(state, personId)).toEqualImmutable(fromJS([
+      expect(selectCandidateSelector(state, personId)).toEqualImmutable(fromJS([
         {
           person: {
             dateOfBirth: '01/15/1986',
@@ -85,7 +85,7 @@ describe('candidateSelectors', () => {
             age: '40 yrs',
           },
         }]))
-      expect(getCandidateSelector(emptyState)).toEqualImmutable(fromJS([]))
+      expect(selectCandidateSelector(emptyState)).toEqualImmutable(fromJS([]))
     })
   })
 })

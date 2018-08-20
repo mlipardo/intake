@@ -23,6 +23,7 @@ export const getPeopleSelector = createSelector(
   (participants, people, relationshipTypes) => people.map((person) => Map({
     dateOfBirth: dateFormatter(person.get('date_of_birth')),
     legacy_id: person.get('legacy_id'),
+    personId: person.get('id'),
     name: nameFormatter({...person.toJS()}),
     gender: person.get('gender') || '',
     age: ageFormatter({
