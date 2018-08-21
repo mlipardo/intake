@@ -1,6 +1,7 @@
 import {takeLatest, put, call} from 'redux-saga/effects'
 import {BATCH_CREATE_RELATIONSHIPS} from 'actions/relationshipsActions'
 import {batchCreateRelationshipsSuccess,batchCreateRelationshipsFaliure} from 'actions/relationshipsActions'
+import {getScreeningIdValueSelector} from 'selectors/screeningSelectors'
 import {post} from 'utils/http'
 
 
@@ -11,6 +12,8 @@ export function* batchCreateRelationships({payload: relationships}){
     const create_relationships_url = '/api/v1/relationships'
     const response = yield call(post, create_relationships_url, relationships)
     yield put( batchCreateRelationshipsSuccess(response))
+    const screeningId = yield select(getScreeningIdValueSelector)
+    yield put(fetchRelationships([], screeningId))
   }
   catch(error){
     console.log('error')

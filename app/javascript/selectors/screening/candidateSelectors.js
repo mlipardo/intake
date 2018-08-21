@@ -10,7 +10,6 @@ import {ageFormatter} from 'utils/ageFormatter'
   const candidates = person.get('candidate_to')
   return candidates.map((candidate) => (Map({
     person: Map({
-      recordId: person.get('id') + '-' + candidate.get('candidate_id'),
       personId: person.get('id'),
       dateOfBirth: dateFormatter(person.get('date_of_birth')),
       legacyId: person.get('legacy_id'),

@@ -7,34 +7,12 @@ import {RELATIONSHIP_TYPES} from 'enums/RelationshipTypes'
 import {GENDERS_LEGACY} from 'enums/Genders'
 import GENDERS from 'enums/Genders'
 
-const rel_data = [
-  {
-    "client_id": "ZXY123",
-    "relative_id": "ABC987",
-    "relationship_type": 190,
-    "absent_parent_indicator": true,
-    "same_home_status": "Y",
-    "start_date": "1999-10-01",
-    "end_date": "2010-10-01",
-    "legacy_id": "A1b2x"
-  },
-  {
-    "client_id": "ZXY124",
-    "relative_id": "ABC987",
-    "relationship_type": 191,
-    "absent_parent_indicator": true,
-    "same_home_status": "Y",
-    "start_date": "1999-10-01",
-    "end_date": "2010-10-01",
-    "legacy_id": "A1b2x"
-  }
-]
 
 const textWrap = {whiteSpace: 'normal'}
 export default class ScreeningCreateRelationship extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {show: false, candidates: {}, relationships_to_create: {}}
+    this.state = {show: false, candidates: {}, relationshipCandidates: {}}
     this.handleShowModal = this.handleShowModal.bind(this)
     this.closeModal = this.closeModal.bind(this)
     this.displayFormatter = this.displayFormatter.bind(this)
@@ -42,7 +20,7 @@ export default class ScreeningCreateRelationship extends React.Component {
     this.batchCreateRelationship = this.batchCreateRelationship.bind(this)
     this.setRelationshipCode = this.setRelationshipCode.bind(this)
     this.selectFieldFormat = this.selectFieldFormat.bind(this)
-    this.createRelationshipDropDown = this.createRelationshipDropDown.bind(this)
+    this.getRelationshipCode = this.getRelationshipCode.bind(this)
   }
 
   componentDidMount(){
@@ -50,16 +28,33 @@ export default class ScreeningCreateRelationship extends React.Component {
   }
 
   update() {
-    const candidates = this.props.candidates
-    if (this.state.candidates !== candidates) {
-      this.setState({candidates: candidates})
-    }
+    
   }
 
   handleShowModal() {
     this.setState({
       show: !this.state.show,
     })
+    const candidates = this.props.candidates
+    if (this.state.candidates !== candidates) {
+      this.setState({candidates: candidates})
+    }
+    let relationshipCandidates = []
+    const sysDate = new Date().toJSON().slice(0,10)
+    candidates.map((rec)=>{
+      relationshipCandidates.push({
+        client_id: rec.person.personId,
+        relative_id: rec.candidate.candidateId,
+        relationship_type: null,
+        absent_parent_indicator: true,
+        same_home_status: 'Y',
+        start_date: sysDate ,
+        end_date: null,
+        legacy_id: rec.person.legacy_id,
+        })
+    })
+    this.setState({relationshipCandidates: relationshipCandidates})
+
   }
 
   closeModal() {
@@ -81,42 +76,58 @@ export default class ScreeningCreateRelationship extends React.Component {
   }
 
   batchCreateRelationship () {
-    const candidates =  rel_data
+    const relationshipCandidates = this.state.relationshipCandidates
     console.log('batchCreateRelationship')
-    console.log(candidates)
-    console.log(this.state)
-    this.props.batchCreateRelationships(candidates)
+    console.log(relationshipCandidates)
+    this.props.batchCreateRelationships(relationshipCandidates)
+    this.closeModal()
     
   }
 
   setRelationshipCode(event) {
-    // this.setState({candidates: {...this.state.candidates, [field]: value}})
-    // console.log(field)
-    // console.log(value)
-    console.log(event.target.id)
-    console.log(event.target.value)
-    console.log(event.target)
-    console.log('inside onChange')
-    console.log(this.state.candidates)
+    const relationship_type = event.target.value
+    const candidateId = event.target.id
+    let relationshipCandidates = this.state.relationshipCandidates
+    console.log(relationshipCandidates)
+    relationshipCandidates.map((rec)=>{
+      if (rec.relative_id === candidateId) {
+          rec.relationship_type = relationship_type
+      }
+    })
+    this.setState({relationshipCandidates: relationshipCandidates})
   }
 
-  createRelationshipDropDown(name){
-    console.log('createRelationshipDropDown')
-    console.log(name)
-    // this.selectFieldFormat()
+  getRelationshipCode(candidateId){
+    let relationship_type = null
+    console.log('inside get relationships code')
+    console.log(JSON.stringify(this.state.relationshipCandidates))
+    this.state.relationshipCandidates.map((rec)=>{
+      if (rec.relative_id === candidateId) {
+          relationship_type = rec.relationship_type
+      }
+    })
+    return relationship_type
   }
 
-  selectFieldFormat(person) {
-    // console.log(row.focus_person.name)
+
+  selectFieldFormat(candidate) {
+   const candidateId = candidate.candidateId
+   const relationshipType = this.getRelationshipCode(candidateId)
+   
+   console.log('candidateId')
+   console.log(candidateId)
+   console.log('relationshipType')
+   console.log(relationshipType)
+
     return (
       <SelectField
-        id={person.recordId}
+        id={candidateId}
         label=''
         onChange={(event)=>{
            this.setRelationshipCode(event)
         }
         }
-      // value={this.state.relationship_code}
+      value={relationshipType}
       >
         <option key=''/>
         {RELATIONSHIP_TYPES.map((relationship) =>
@@ -138,7 +149,7 @@ export default class ScreeningCreateRelationship extends React.Component {
         <TableHeaderColumn className = 'FocusPersonDetails' dataField='person' dataFormat={this.displayFormatter} tdStyle= {textWrap}>
           Focus Person
         </TableHeaderColumn>
-        <TableHeaderColumn dataField='person' dataFormat={this.selectFieldFormat}>
+        <TableHeaderColumn dataField='candidate' dataFormat={this.selectFieldFormat}>
           Relationship<br/>
           <div className='text-helper'>Focus Person / Related Person</div>
         </TableHeaderColumn>
@@ -176,7 +187,7 @@ export default class ScreeningCreateRelationship extends React.Component {
           <ModalComponent
             closeModal={this.closeModal}
             showModal={this.state.show}
-            modalBody={this.modalTable(this.state.candidates)}
+            modalBody={this.modalTable(this.props.candidates)}
             modalFooter={this.modalFooter()}
             modalSize='large'
             modalTitle={'Create Relationship'}
