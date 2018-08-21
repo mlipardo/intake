@@ -34,7 +34,7 @@ const textWrap = {whiteSpace: 'normal'}
 export default class ScreeningCreateRelationship extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {show: false, relationships: {}}
+    this.state = {show: false, candidates: {}, relationships_to_create: {}}
     this.handleShowModal = this.handleShowModal.bind(this)
     this.closeModal = this.closeModal.bind(this)
     this.displayFormatter = this.displayFormatter.bind(this)
@@ -50,12 +50,10 @@ export default class ScreeningCreateRelationship extends React.Component {
   }
 
   update() {
-    const relationships = this.props.data
-    if (this.state.relationships !== this.props.relationships) {
-      this.setState({relationships: relationships})
+    const candidates = this.props.candidates
+    if (this.state.candidates !== candidates) {
+      this.setState({candidates: candidates})
     }
-    console.log('inside update')
-    console.log(relationships)
   }
 
   handleShowModal() {
@@ -83,46 +81,23 @@ export default class ScreeningCreateRelationship extends React.Component {
   }
 
   batchCreateRelationship () {
-    const relationships =  rel_data
+    const candidates =  rel_data
     console.log('batchCreateRelationship')
-    console.log(relationships)
+    console.log(candidates)
     console.log(this.state)
-    this.props.batchCreateRelationships(relationships)
+    this.props.batchCreateRelationships(candidates)
     
   }
 
   setRelationshipCode(event) {
-    // this.setState({relationships: {...this.state.relationships, [field]: value}})
+    // this.setState({candidates: {...this.state.candidates, [field]: value}})
     // console.log(field)
     // console.log(value)
     console.log(event.target.id)
     console.log(event.target.value)
     console.log(event.target)
     console.log('inside onChange')
-    console.log(this.state.relationships)
-  }
-
-  modalTable(data) {
-    return (
-      <BootstrapTable className='displayTable' bordered={false} data={data}>
-        <TableHeaderColumn className = 'FocusPersonDetails' dataField='focus_person' dataFormat={this.displayFormatter} tdStyle= {textWrap}>
-          Focus Person
-        </TableHeaderColumn>
-        <TableHeaderColumn dataField='related_person' dataFormat={this.selectFieldFormat}>
-          Relationship<br/>
-          <div className='text-helper'>Focus Person / Related Person</div>
-        </TableHeaderColumn>
-        <TableHeaderColumn className = 'relatedPersonDetails' dataField='related_person' dataFormat={this.displayFormatter} isKey={true} tdStyle= {textWrap}>
-          Related Person
-        </TableHeaderColumn>
-      </BootstrapTable>
-    )
-  }
-
-  modalTitle() {
-    return (<b>
-      Create Relationship Type
-    </b>)
+    console.log(this.state.candidates)
   }
 
   createRelationshipDropDown(name){
@@ -131,12 +106,11 @@ export default class ScreeningCreateRelationship extends React.Component {
     // this.selectFieldFormat()
   }
 
-  selectFieldFormat(related_person) {
+  selectFieldFormat(person) {
     // console.log(row.focus_person.name)
-    const myid = related_person.name
     return (
       <SelectField
-        id={myid}
+        id={person.recordId}
         label=''
         onChange={(event)=>{
            this.setRelationshipCode(event)
@@ -149,6 +123,29 @@ export default class ScreeningCreateRelationship extends React.Component {
           <option key={relationship.value} value={relationship.value}>{relationship.label}</option>)
         }
       </SelectField>
+    )
+  }
+
+  modalTitle() {
+    return (<b>
+      Create Relationship Type
+    </b>)
+  }
+
+  modalTable(candidates) {
+    return (
+      <BootstrapTable className='displayTable' bordered={false} data={candidates}>
+        <TableHeaderColumn className = 'FocusPersonDetails' dataField='person' dataFormat={this.displayFormatter} tdStyle= {textWrap}>
+          Focus Person
+        </TableHeaderColumn>
+        <TableHeaderColumn dataField='person' dataFormat={this.selectFieldFormat}>
+          Relationship<br/>
+          <div className='text-helper'>Focus Person / Related Person</div>
+        </TableHeaderColumn>
+        <TableHeaderColumn className = 'relatedPersonDetails' dataField='candidate' dataFormat={this.displayFormatter} isKey={true} tdStyle= {textWrap}>
+          Related Person
+        </TableHeaderColumn>
+      </BootstrapTable>
     )
   }
 
@@ -179,7 +176,7 @@ export default class ScreeningCreateRelationship extends React.Component {
           <ModalComponent
             closeModal={this.closeModal}
             showModal={this.state.show}
-            modalBody={this.modalTable(this.props.data)}
+            modalBody={this.modalTable(this.state.candidates)}
             modalFooter={this.modalFooter()}
             modalSize='large'
             modalTitle={'Create Relationship'}
@@ -191,6 +188,6 @@ export default class ScreeningCreateRelationship extends React.Component {
 }
 
 ScreeningCreateRelationship.propTypes = {
-  data: PropTypes.array,
+  candidates: PropTypes.array,
   batchCreateRelationship: PropTypes.func,
 }

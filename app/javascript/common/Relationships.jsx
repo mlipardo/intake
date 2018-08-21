@@ -3,7 +3,7 @@ import React from 'react'
 import ActionMenu from 'common/relationship/ActionMenu'
 import AttachLink from 'common/relationship/AttachLink'
 import RelationCard from 'common/relationship/RelationCard'
-import CreateRelationshipContainer from 'containers/screenings/CreateRelationshipContainer'
+import ScreeningCreateRelationshipContainer from 'containers/screenings/ScreeningCreateRelationshipContainer'
 
 const actionsMenu = (
   row,
@@ -24,13 +24,14 @@ const actionsMenu = (
     screeningId={screeningId}
   />
 
-const createRelationsData = (person, data) => {
-  const relationData = []
-  data.map((relatedPerson) => relationData.push({focus_person: person, related_person: relatedPerson}))
-  return relationData
-}
+// const createRelationsData = (person, data) => {
+//   const relationData = []
+//   data.map((relatedPerson) => relationData.push({focus_person: person, related_person: relatedPerson}))
+//   return relationData
+// }
 
 export const Relationships = ({
+  candidates,
   people,
   onChange,
   onClick,
@@ -63,7 +64,7 @@ export const Relationships = ({
               }
             </div>
           </div>
-          <CreateRelationshipContainer data={createRelationsData(person, person.relationships)}/>
+          <ScreeningCreateRelationshipContainer personId={person.personId} candidates= {candidates} />
         </div>
       ))
     }
@@ -107,6 +108,22 @@ export const Relationships = ({
 )
 
 Relationships.propTypes = {
+  candidates: PropTypes.arrayOf(PropTypes.shape({
+    candidate: PropTypes.objectOf(PropTypes.shape({
+      age: PropTypes.number,
+      candidate_id: PropTypes.string,
+      dateOfBirth: PropTypes.string,
+      gender: PropTypes.string,
+      name: PropTypes.string,
+    })),
+    person: PropTypes.objectOf(PropTypes.shape({
+      age: PropTypes.number,
+      legacy_id: PropTypes.string,
+      dateOfBirth: PropTypes.string,
+      gender: PropTypes.string,
+      name: PropTypes.string,
+    })),
+  })),
   isScreening: PropTypes.bool,
   onChange: PropTypes.func,
   onClick: PropTypes.func,
