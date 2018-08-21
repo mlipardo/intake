@@ -42,17 +42,17 @@ export default class ScreeningCreateRelationship extends React.Component {
     )
   }
 
-  modalTable(data) {
+  modalTable(candidates) {
     return (
-      <BootstrapTable className='displayTable' bordered={false} data={data}>
-        <TableHeaderColumn className = 'FocusPersonDetails' dataField='focus_person' dataFormat={this.displayFormatter} tdStyle= {textWrap}>
+      <BootstrapTable className='displayTable' bordered={false} data={candidates}>
+        <TableHeaderColumn className = 'FocusPersonDetails' dataField='person' dataFormat={this.displayFormatter} tdStyle= {textWrap}>
           Focus Person
         </TableHeaderColumn>
         <TableHeaderColumn dataField='relationship' dataFormat={this.selectFieldFormat}>
           Relationship<br/>
           <div className='text-helper'>Focus Person / Related Person</div>
         </TableHeaderColumn>
-        <TableHeaderColumn className = 'relatedPersonDetails' dataField='related_person' dataFormat={this.displayFormatter} isKey={true} tdStyle= {textWrap}>
+        <TableHeaderColumn className = 'relatedPersonDetails' dataField='candidate' dataFormat={this.displayFormatter} isKey={true} tdStyle= {textWrap}>
           Related Person
         </TableHeaderColumn>
       </BootstrapTable>
@@ -107,7 +107,7 @@ export default class ScreeningCreateRelationship extends React.Component {
           <ModalComponent
             closeModal={this.closeModal}
             showModal={this.state.show}
-            modalBody={this.modalTable(this.props.data)}
+            modalBody={this.modalTable(this.props.candidates)}
             modalFooter={this.modalFooter()}
             modalSize='large'
             modalTitle={'Create Relationship'}
