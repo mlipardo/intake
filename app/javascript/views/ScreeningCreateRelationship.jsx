@@ -18,9 +18,9 @@ export default class ScreeningCreateRelationship extends React.Component {
     this.displayFormatter = this.displayFormatter.bind(this)
     this.modalTable = this.modalTable.bind(this)
     this.batchCreateRelationship = this.batchCreateRelationship.bind(this)
-    this.setRelationshipCode = this.setRelationshipCode.bind(this)
+    this.setRelationshipType = this.setRelationshipType.bind(this)
     this.selectFieldFormat = this.selectFieldFormat.bind(this)
-    this.getRelationshipCode = this.getRelationshipCode.bind(this)
+    this.getRelationshipType = this.getRelationshipType.bind(this)
   }
 
   componentDidMount(){
@@ -77,18 +77,15 @@ export default class ScreeningCreateRelationship extends React.Component {
 
   batchCreateRelationship () {
     const relationshipCandidates = this.state.relationshipCandidates
-    console.log('batchCreateRelationship')
-    console.log(relationshipCandidates)
     this.props.batchCreateRelationships(relationshipCandidates)
     this.closeModal()
     
   }
 
-  setRelationshipCode(event) {
+  setRelationshipType(event) {
     const relationship_type = event.target.value
     const candidateId = event.target.id
     let relationshipCandidates = this.state.relationshipCandidates
-    console.log(relationshipCandidates)
     relationshipCandidates.map((rec)=>{
       if (rec.relative_id === candidateId) {
           rec.relationship_type = relationship_type
@@ -97,10 +94,8 @@ export default class ScreeningCreateRelationship extends React.Component {
     this.setState({relationshipCandidates: relationshipCandidates})
   }
 
-  getRelationshipCode(candidateId){
+  getRelationshipType(candidateId){
     let relationship_type = null
-    console.log('inside get relationships code')
-    console.log(JSON.stringify(this.state.relationshipCandidates))
     this.state.relationshipCandidates.map((rec)=>{
       if (rec.relative_id === candidateId) {
           relationship_type = rec.relationship_type
@@ -112,19 +107,13 @@ export default class ScreeningCreateRelationship extends React.Component {
 
   selectFieldFormat(candidate) {
    const candidateId = candidate.candidateId
-   const relationshipType = this.getRelationshipCode(candidateId)
-   
-   console.log('candidateId')
-   console.log(candidateId)
-   console.log('relationshipType')
-   console.log(relationshipType)
-
+   const relationshipType = this.getRelationshipType(candidateId)
     return (
       <SelectField
         id={candidateId}
         label=''
         onChange={(event)=>{
-           this.setRelationshipCode(event)
+           this.setRelationshipType(event)
         }
         }
       value={relationshipType}

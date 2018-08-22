@@ -9,23 +9,14 @@ import {post} from 'utils/http'
 
 export function* batchCreateRelationships({payload: relationships}){
   try{ 
-    console.log('inside batchCreateRelationships in saga')
-    console.log(relationships)
     const create_relationships_url = '/api/v1/relationships'
     const response = yield call(post, create_relationships_url, relationships)
     yield put( batchCreateRelationshipsSuccess(response))
-    const clientIds = [] //yield select(selectClientIds)
+    const clientIds = [] 
     const screeningId = yield select(getScreeningIdValueSelector)
-    console.log('clientIds')
-    console.log(clientIds)
-    console.log('screeningId')
-    console.log(screeningId)
-
     yield put(fetchRelationships(clientIds, screeningId))
   }
   catch(error){
-    console.log('error')
-    console.log(error)
     yield put(batchCreateRelationshipsFaliure(error))
   }
 }
