@@ -12,7 +12,7 @@ export const selectCandidateSelector = (state, personId) => {
   return candidates.map((candidate) => (Map({
     person: Map({
       dateOfBirth: dateFormatter(person.get('date_of_birth')),
-      legacy_id: person.get('legacy_id'),
+      legacyId: person.get('legacy_id'),
       name: nameFormatter({...person.toJS()}),
       gender: person.get('gender') || '',
       age: ageFormatter({
@@ -21,7 +21,7 @@ export const selectCandidateSelector = (state, personId) => {
       }),
     }),
     candidate: Map({
-      candidate_id: candidate.get('candidate_id'),
+      candidateId: candidate.get('candidate_id'),
       name: nameFormatter({
         first_name: candidate.get('candidate_first_name'),
         last_name: candidate.get('candidate_last_name'),

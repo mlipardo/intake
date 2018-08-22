@@ -29,8 +29,8 @@ describe('ScreeningCreateRelationshipContainer', () => {
     expect(component.find('ScreeningCreateRelationship').props()).toEqual({
       personId: '1',
       candidates: [{
-        person: {dateOfBirth: '01/15/2014', legacy_id: undefined, name: 'Mohammed John', gender: 'male', age: ''},
-        candidate: {candidate_id: '5508', name: 'Tina Carwithan', gender: undefined, dateOfBirth: '', age: ''}}],
+        person: {dateOfBirth: '01/15/2014', legacyId: undefined, name: 'Mohammed John', gender: 'male', age: ''},
+        candidate: {candidateId: '5508', name: 'Tina Carwithan', gender: undefined, dateOfBirth: '', age: ''}}],
     })
   })
 })

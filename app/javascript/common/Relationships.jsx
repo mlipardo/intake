@@ -103,20 +103,20 @@ export const Relationships = ({
 
 Relationships.propTypes = {
   candidates: PropTypes.arrayOf(PropTypes.shape({
-    candidate: PropTypes.objectOf(PropTypes.shape({
-      age: PropTypes.number,
+    candidate: PropTypes.shape({
+      age: PropTypes.string,
       candidate_id: PropTypes.string,
       dateOfBirth: PropTypes.string,
       gender: PropTypes.string,
       name: PropTypes.string,
-    })),
-    person: PropTypes.objectOf(PropTypes.shape({
-      age: PropTypes.number,
+    }),
+    person: PropTypes.shape({
+      age: PropTypes.string,
       legacy_id: PropTypes.string,
       dateOfBirth: PropTypes.string,
       gender: PropTypes.string,
       name: PropTypes.string,
-    })),
+    }),
   })),
   isScreening: PropTypes.bool,
   onChange: PropTypes.func,

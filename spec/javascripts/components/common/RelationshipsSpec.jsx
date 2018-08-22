@@ -1,19 +1,22 @@
 import React from 'react'
 import AttachLink from 'common/relationship/AttachLink'
-import {shallow, mount} from 'enzyme'
+import {shallow} from 'enzyme'
 import {EmptyRelationships, Relationships} from 'common/Relationships'
 
 describe('Relationships for Screening', () => {
   const getProps = (component, cardNumber) => (
     component.find('RelationCard').at(cardNumber).props()
   )
-  const getCellValue = (component, cardNumber, rowNumber, colNumber) => (
-    component.find('RelationCard').at(cardNumber).find('BootstrapTable').find('TableBody').find('TableRow').at(rowNumber).find('TableColumn').at(colNumber)
-  )
 
   let onClick
   let component
-  const renderRelationships = (props) => mount(<Relationships {...props} isScreening={true} screeningId={'1'} pendingPeople = {['1']} onClick={onClick} />, {disableLifecycleMethods: true})
+  const renderRelationships = (props) => shallow(<Relationships {...props} isScreening={true} screeningId={'1'} pendingPeople = {['1']} onClick={onClick} />, {disableLifecycleMethods: true})
+  const candidates = [
+    {
+      candidate: {age: '20', candidate_id: '123', dateOfBirth: '01/01/2001', gender: 'male', name: 'John Doe'},
+      person: {age: '30', legacy_id: '12345', dateOfBirth: '02/02/2002', gender: 'male', name: 'Larry Doe'},
+    },
+  ]
   const people = [
     {
       name: 'Sally Jones',
@@ -48,11 +51,15 @@ describe('Relationships for Screening', () => {
 
   beforeEach(() => {
     onClick = jasmine.createSpy('onClick')
-    component = renderRelationships({people})
+    component = renderRelationships({people, candidates})
   })
 
   it('renders a RelationCard component for each person with relationships', () => {
     expect(component.find('RelationCard').length).toEqual(4)
+  })
+
+  it('render ScreeningCreateRelationshipContainer for each person', () => {
+    expect(component.find('Connect(ScreeningCreateRelationship)').length).toEqual(7)
   })
 
   it('passes correct props name to RelationCard component', () => {
@@ -77,28 +84,10 @@ describe('Relationships for Screening', () => {
     expect(getProps(component, 3).data[1].secondaryRelationship).toEqual('daughter')
   })
 
-  it('shows Attach link for each unattached person', () => {
+  it('passes the props to RelationCard', () => {
     expect(getProps(component, 0).name).toEqual('Sally Jones')
     expect(getProps(component, 0).data[0].name).toEqual('Kim Johnson')
-    expect(getCellValue(component, 0, 0, 3).text()).toContain('Attach')
-
     expect(getProps(component, 1).name).toEqual('Nate Starbringer')
-    expect(getCellValue(component, 1, 0, 0).text()).toEqual('Jim Johnson')
-    expect(getCellValue(component, 1, 0, 3).text()).not.toContain('Attach')
-  })
-
-  it('hides Attach link for people in the pending list', () => {
-    expect(getProps(component, 3).name).toEqual('Cecilia Gomez')
-    expect(getCellValue(component, 3, 0, 0).text()).toEqual('Jose Gomez')
-    expect(getCellValue(component, 3, 0, 3).text()).not.toContain('Attach')
-    expect(getCellValue(component, 3, 1, 0).text()).toEqual('Julie Gomez')
-    expect(getCellValue(component, 3, 1, 3).text()).toContain('Attach')
-  })
-
-  it('calls onClick when the Attach Link is clicked', () => {
-    const attachLink = getCellValue(component, 0, 0, 3).find('a').first()
-    attachLink.simulate('click')
-    expect(onClick).toHaveBeenCalled()
   })
 
   it('renders people with no relationships', () => {

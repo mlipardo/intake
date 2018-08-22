@@ -55,14 +55,14 @@ describe('candidateSelectors', () => {
         {
           person: {
             dateOfBirth: '01/15/1986',
-            legacy_id: '3',
+            legacyId: '3',
             name: 'Ricky Robinson',
             gender: 'M',
             age: '20 yrs',
           },
           candidate:
             {
-              candidate_id: '4157',
+              candidateId: '4157',
               name: 'New York C Pechan, Sr',
               gender: 'M',
               dateOfBirth: '11/11/1958',
@@ -72,13 +72,13 @@ describe('candidateSelectors', () => {
         {
           person: {
             dateOfBirth: '01/15/1986',
-            legacy_id: '3',
+            legacyId: '3',
             name: 'Ricky Robinson',
             gender: 'M',
             age: '20 yrs',
           },
           candidate: {
-            candidate_id: '4158',
+            candidateId: '4158',
             name: 'Walter A White, Sr',
             gender: 'M',
             dateOfBirth: '11/11/1968',
