@@ -23,14 +23,6 @@ export default class ScreeningCreateRelationship extends React.Component {
     this.getRelationshipType = this.getRelationshipType.bind(this)
   }
 
-  componentDidMount(){
-    this.update()
-  }
-
-  update() {
-    console.log(JSON.stringify(this.props.candidates))
-  }
-
   handleShowModal() {
     this.setState({
       show: !this.state.show,
