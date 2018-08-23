@@ -28,7 +28,7 @@ export default class ScreeningCreateRelationship extends React.Component {
   }
 
   update() {
-    
+    console.log(JSON.stringify(this.props.candidates))
   }
 
   handleShowModal() {

@@ -4,8 +4,8 @@ import ScreeningCreateRelationship from 'views/ScreeningCreateRelationship'
 
 describe('ScreeningCreateRelationship', () => {
   const data = [{
-    focus_person: 'Sally Fields 25 yrs Male',
-    related_person: 'Sam Fields 30 yrs Male',
+    person: 'Sally Fields 25 yrs Male',
+    candidate: 'Sam Fields 30 yrs Male',
   }]
   const cell = {name: 'Sally Fields', age: '25 yrs', gender: 'M'}
   const wrapper = shallow(<ScreeningCreateRelationship data={data}/>)
@@ -49,8 +49,8 @@ describe('ScreeningCreateRelationship', () => {
 })
 describe('Display Gender if the data is male/female/unknown/intersex', () => {
   const genderData = [{
-    focus_person: 'Sally Fields 25 yrs Male',
-    related_person: 'Sam Fields 30 yrs Male',
+    person: 'Sally Fields 25 yrs Male',
+    candidate: 'Sam Fields 30 yrs Male',
   }]
   const cell = {name: 'Sally Fields', age: '25 yrs', gender: 'male'}
   const wrapper = shallow(<ScreeningCreateRelationship data={genderData}/>)
@@ -65,8 +65,8 @@ describe('Display Gender if the data is male/female/unknown/intersex', () => {
 })
 describe('Display Gender if the data is M/F/I/U', () => {
   const genderData = [{
-    focus_person: 'Sally Fields 25 yrs Male',
-    related_person: 'Sam Fields 30 yrs Male',
+    person: 'Sally Fields 25 yrs Male',
+    candidate: 'Sam Fields 30 yrs Male',
   }]
   const cell = {name: 'Sally Fields', age: '25 yrs', gender: 'M'}
   const wrapper = shallow(<ScreeningCreateRelationship data={genderData}/>)

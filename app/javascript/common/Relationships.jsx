@@ -24,12 +24,6 @@ const actionsMenu = (
     screeningId={screeningId}
   />
 
-// const createRelationsData = (person, data) => {
-//   const relationData = []
-//   data.map((relatedPerson) => relationData.push({focus_person: person, related_person: relatedPerson}))
-//   return relationData
-// }
-
 export const Relationships = ({
   candidates,
   people,
@@ -64,7 +58,7 @@ export const Relationships = ({
               }
             </div>
           </div>
-          <ScreeningCreateRelationshipContainer personId={person.personId} candidates= {candidates} />
+          <ScreeningCreateRelationshipContainer personId={person.personId} />
         </div>
       ))
     }
