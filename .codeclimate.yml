@@ -11,7 +11,7 @@ plugins:
         ruby:
           mass_threshold: 25
         javascript:
-          mass_threshold: 170
+          mass_threshold: 120
   eslint:
     enabled: true
     config:
