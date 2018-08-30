@@ -97,7 +97,7 @@ feature 'login' do
           execute_script('$(".fa.fa-user").click()')
           click_link 'Logout'
           expect(page.current_url).not_to have_content root_path(accessCode: 'tempToken123')
-          expect(page.current_url).to have_content auth_logout_url
+          expect(page.current_url).to have_content '/logout'
         end
       end
 

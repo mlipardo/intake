@@ -3,23 +3,28 @@ import {shallow} from 'enzyme'
 import AllegationsForm from 'views/AllegationsForm'
 
 describe('AllegationsForm', () => {
-  const renderAllegationsForm = ({allegations = [], ...args}) => {
-    const props = {allegations, ...args}
+  const renderAllegationsForm = ({allegations = [], onCancel = () => {}, onSave = () => {}, ...args}) => {
+    const props = {allegations, onCancel, onSave, ...args}
     return shallow(<AllegationsForm {...props}/>, {disableLifecycleMethods: true})
   }
 
-  it('calls onSave when the save button is clicked', () => {
-    const onSave = jasmine.createSpy('onSave')
-    const component = renderAllegationsForm({onSave})
-    component.find('.btn-primary').simulate('click')
-    expect(onSave).toHaveBeenCalled()
+  it('renders a card action row', () => {
+    const component = renderAllegationsForm({})
+    expect(component.find('CardActionRow').exists()).toEqual(true)
   })
 
-  it('calls onCancel when the cancel button is clicked', () => {
+  it('canceling edit calls onCancel', () => {
     const onCancel = jasmine.createSpy('onCancel')
     const component = renderAllegationsForm({onCancel})
-    component.find('.btn-default').simulate('click')
+    component.find('CardActionRow').props().onCancel()
     expect(onCancel).toHaveBeenCalled()
+  })
+
+  it('saving changes calls onSave', () => {
+    const onSave = jasmine.createSpy('onSave')
+    const component = renderAllegationsForm({onSave})
+    component.find('CardActionRow').props().onSave()
+    expect(onSave).toHaveBeenCalled()
   })
 
   it('displays an alert error message if one is passed', () => {

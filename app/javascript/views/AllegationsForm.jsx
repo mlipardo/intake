@@ -2,6 +2,7 @@ import AlertErrorMessage from 'common/AlertErrorMessage'
 import React from 'react'
 import PropTypes from 'prop-types'
 import Select from 'react-select'
+import CardActionRow from 'screenings/CardActionRow'
 
 const AllegationsForm = ({
   alertErrorMessage,
@@ -55,14 +56,7 @@ const AllegationsForm = ({
         </table>
       </div>
     </div>
-    <div className='row'>
-      <div className='col-md-12'>
-        <div className='pull-right'>
-          <button className='btn btn-default' onClick={onCancel}>Cancel</button>
-          <button className='btn btn-primary' onClick={onSave}>Save</button>
-        </div>
-      </div>
-    </div>
+    <CardActionRow onCancel={onCancel} onSave={onSave} />
   </div>
 )
 

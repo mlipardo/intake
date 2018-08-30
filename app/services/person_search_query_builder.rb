@@ -96,9 +96,9 @@ class PersonSearchQueryBuilder
        date_of_birth date_of_death ssn languages races ethnicity client_counties
        addresses.id addresses.effective_start_date addresses.street_name addresses.street_number
        addresses.city addresses.state_code addresses.zip addresses.type addresses.legacy_descriptor
-       addresses.phone_numbers.number addresses.phone_numbers.type
-       phone_numbers.id phone_numbers.number phone_numbers.type
-       highlight legacy_descriptor sensitivity_indicator race_ethnicity]
+       addresses.phone_numbers.number addresses.phone_numbers.type legacy_descriptor highlight
+       phone_numbers.id phone_numbers.number phone_numbers.type sensitivity_indicator race_ethnicity
+       open_case_responsible_agency_code]
   end
 
   def auto_bar_highlight

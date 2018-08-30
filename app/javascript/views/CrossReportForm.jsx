@@ -14,6 +14,7 @@ import {
   DISTRICT_ATTORNEY,
   LAW_ENFORCEMENT,
 } from 'enums/CrossReport'
+import CardActionRow from 'screenings/CardActionRow'
 
 const CrossReportForm = ({
   allegationsRequireCrossReports,
@@ -183,14 +184,7 @@ const CrossReportForm = ({
           </fieldset>
         }
       </div>
-      <div className='row'>
-        <div className='col-md-12'>
-          <div className='pull-right'>
-            <button className='btn btn-default' onClick={cancel}>Cancel</button>
-            <button className='btn btn-primary' onClick={save}>Save</button>
-          </div>
-        </div>
-      </div>
+      <CardActionRow onCancel={cancel} onSave={save} />
     </div>
   )
 }

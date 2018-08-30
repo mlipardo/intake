@@ -337,12 +337,9 @@ describe('CrossReportForm', () => {
       expect(component.find('AlertInfoMessage').exists()).toEqual(false)
     })
   })
-  it('displays the save and cancel button', () => {
+  it('renders a card action row', () => {
     const component = renderCrossReportForm({})
-    const saveButton = component.find('button.btn-primary')
-    expect(saveButton.text()).toContain('Save')
-    const cancelButton = component.find('button.btn-default')
-    expect(cancelButton.text()).toContain('Cancel')
+    expect(component.find('CardActionRow').exists()).toEqual(true)
   })
   describe('clicking on cancel', () => {
     it('calls onShow, fires clearCardEdits', () => {
@@ -350,7 +347,9 @@ describe('CrossReportForm', () => {
       const onShow = jasmine.createSpy('onShow')
       const cardName = 'cross-report-card'
       const component = renderCrossReportForm({actions: {clearCardEdits}, cardName, onShow})
-      component.find('.btn.btn-default').simulate('click')
+
+      component.find('CardActionRow').props().onCancel()
+
       expect(onShow).toHaveBeenCalled()
       expect(clearCardEdits).toHaveBeenCalledWith(cardName)
     })
@@ -364,7 +363,9 @@ describe('CrossReportForm', () => {
       const screeningWithEdits = {id: 123, crossReports: []}
       const cardName = 'cross-report-card'
       const component = renderCrossReportForm({actions: {saveCard, saveCrossReport, touchAllFields}, screeningWithEdits, cardName, onShow})
-      component.find('button.btn-primary').simulate('click')
+
+      component.find('CardActionRow').props().onSave()
+
       expect(saveCard).toHaveBeenCalledWith(cardName)
       expect(saveCrossReport).toHaveBeenCalledWith(screeningWithEdits)
       expect(touchAllFields).toHaveBeenCalled()

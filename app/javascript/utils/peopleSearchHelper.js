@@ -29,6 +29,7 @@ export const mapLanguages = (state, result) => buildSelector(
 
 export const mapIsSensitive = (result) => (result.get('sensitivity_indicator', '').toUpperCase() === 'S')
 export const mapIsSealed = (result) => (result.get('sensitivity_indicator', '').toUpperCase() === 'R')
+export const mapIsProbationYouth = (result) => (result.get('open_case_responsible_agency_code', '').toUpperCase() === 'P')
 
 export const mapRaces = (state, result) => buildSelector(
   selectEthnicityTypes,
@@ -106,6 +107,7 @@ export const mapDoraPersonToParticipant = (state, person) => Map({
   ssn: person.get('ssn'),
   sealed: mapIsSealed(person),
   sensitive: mapIsSensitive(person),
+  probation_youth: mapIsProbationYouth(person),
   phone_numbers: mapPhoneNumber(person),
   name_suffix: person.get('name_suffix'),
   addresses: List([(mapAddress(state, person) || Map())

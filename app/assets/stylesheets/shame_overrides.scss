@@ -182,3 +182,39 @@
   padding: 0 1.5rem;
   text-align: center;
 }
+
+// set page header to fixed
+header {
+  position: fixed;
+  width: 100%;
+  z-index: 1001;
+}
+
+.page-header-container {
+  margin-top: $banner-height;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+}
+
+.side-bar-container {
+  position: fixed;
+}
+
+.back-to-dashboard {
+  padding-top: $page-header-height + $banner-height;
+}
+
+.hotline-inner-container,
+.snapshot-inner-container,
+.back-to-dashboard {
+  z-index: 999;
+}
+
+.page-header-mast {
+  z-index: 1001;
+}
+
+.profile-avatar ul {
+  z-index: 1002;
+}

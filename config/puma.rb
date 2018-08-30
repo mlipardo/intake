@@ -11,6 +11,8 @@ rails_env = ENV.fetch('RAILS_ENV') { 'development' }
 threads_count = ENV.fetch('RAILS_MAX_THREADS') { rails_env == 'production' ? 5 : 1 }.to_i
 threads threads_count, threads_count
 
+queue_requests true
+
 # Specifies the `port` that Puma will listen on to receive requests,
 # default is 3000.
 #

@@ -52,8 +52,9 @@ export const HomePage = ({snapshot, hotline, actions: {createSnapshot, createScr
       />
       <BreadCrumb />
     </div>
+    <div className='shim'/>
     <div className='container'>
-      <div className='col-sm-12 gap-top'>
+      <div className='col-sm-12 gap-top homepage-container'>
         { hotline && <ScreeningsTable /> }
       </div>
     </div>

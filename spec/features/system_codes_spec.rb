@@ -18,6 +18,9 @@ feature 'System codes' do
         .and_return(json_body([].to_json, status: 200))
       visit root_path(accessCode: access_code)
       click_button 'Start Screening'
+      within '#screening-information-card' do
+        fill_in('Title/Name of Screening', with: 'Need to wait for request to finish')
+      end
       expect(a_request(:get, ferb_api_url(FerbRoutes.lov_path))).to have_been_made.once
     end
   end

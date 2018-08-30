@@ -42,7 +42,7 @@ class ScreeningsTable extends React.Component {
 
   render() {
     return (
-      <div className='table-responsive'>
+      <div className='table-responsive homepage-inner-container'>
         <BootstrapTable withoutTabIndex
           bordered={false} data={this.props.screenings} options={{sortName: 'started_at', sortOrder: 'asc'}} tdStyle={textWrap}
         >

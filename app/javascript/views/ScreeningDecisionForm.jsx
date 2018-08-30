@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import SelectField from 'common/SelectField'
 import InputField from 'common/InputField'
 import FormField from 'common/FormField'
+import CardActionRow from 'screenings/CardActionRow'
 
 const ScreeningDecisionForm = ({
   accessRestriction,
@@ -134,14 +135,7 @@ const ScreeningDecisionForm = ({
         <a href={sdmPath} target='_blank' id='complete_sdm'>Complete SDM</a>
       </div>
     </div>
-    <div className='row'>
-      <div className='col-md-12'>
-        <div className='pull-right'>
-          <button className='btn btn-default' onClick={onCancel}>Cancel</button>
-          <button className='btn btn-primary' onClick={onSave}>Save</button>
-        </div>
-      </div>
-    </div>
+    <CardActionRow onCancel={onCancel} onSave={onSave} />
   </div>
 )
 

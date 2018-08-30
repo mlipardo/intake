@@ -64,6 +64,8 @@ describe('PersonCard', () => {
           edit={<p>Editing</p>}
           editable={true}
           mode='show'
+          onCancel={() => {}}
+          onSave={() => {}}
           personId='1234'
           personName='Bob Smith'
           isDeceased={true}
@@ -72,8 +74,9 @@ describe('PersonCard', () => {
       )
       expect(component.find('.card-body').children('p').at(0).text()).toEqual('Showing')
     })
-    it('does not render save and cancel buttons', () => {
+    it('does not render a card action row', () => {
       const component = renderPersonCard({mode: 'show'})
+      expect(component.find('CardActionRow').exists()).toEqual(false)
       expect(component.find('button.btn-primary').exists()).toEqual(false)
       expect(component.find('button.btn-default').exists()).toEqual(false)
     })
@@ -117,6 +120,8 @@ describe('PersonCard', () => {
           edit={<p>Editing</p>}
           editable={true}
           mode='edit'
+          onCancel={() => {}}
+          onSave={() => {}}
           personId='1234'
           personName='Bob Smith'
           show={<p>Showing</p>}
@@ -124,20 +129,24 @@ describe('PersonCard', () => {
       )
       expect(component.find('.card-body').children('p').at(0).text()).toEqual('Editing')
     })
-    it('does render save and cancel buttons', () => {
-      const onSave = jasmine.createSpy('onSave')
+
+    it('renders a card action row', () => {
+      const component = renderPersonCard({mode: 'edit'})
+      expect(component.find('CardActionRow').exists()).toEqual(true)
+    })
+
+    it('canceling edit calls onCancel', () => {
       const onCancel = jasmine.createSpy('onCancel')
-      const component = renderPersonCard({
-        onCancel,
-        onSave,
-        mode: 'edit',
-      })
-      const btnPrimary = component.find('button.btn-primary')
-      const btnDefault = component.find('button.btn-default')
-      expect(btnPrimary.exists()).toEqual(true)
-      expect(btnPrimary.props().onClick).toEqual(onSave)
-      expect(btnDefault.exists()).toEqual(true)
-      expect(btnDefault.props().onClick).toEqual(onCancel)
+      const component = renderPersonCard({onCancel, mode: 'edit'})
+      component.find('CardActionRow').props().onCancel()
+      expect(onCancel).toHaveBeenCalled()
+    })
+
+    it('saving changes calls onSave', () => {
+      const onSave = jasmine.createSpy('onSave')
+      const component = renderPersonCard({onSave, mode: 'edit'})
+      component.find('CardActionRow').props().onSave()
+      expect(onSave).toHaveBeenCalled()
     })
   })
 })

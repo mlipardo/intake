@@ -10,6 +10,7 @@ import {
   mapLanguages,
   mapIsSensitive,
   mapIsSealed,
+  mapIsProbationYouth,
   mapRaces,
   mapEthnicities,
   mapAddress,
@@ -93,6 +94,7 @@ export const getPeopleResultsSelector = (state) => getPeopleSearchSelector(state
       phoneNumber: formatPhoneNumber(mapPhoneNumber(result).first()),
       isSensitive: mapIsSensitive(result),
       isSealed: mapIsSealed(result),
+      isProbationYouth: mapIsProbationYouth(result),
     })
   })
 

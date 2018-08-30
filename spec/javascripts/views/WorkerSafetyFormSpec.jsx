@@ -5,9 +5,9 @@ import {shallow} from 'enzyme'
 describe('WorkerSafetyForm', () => {
   function renderWorkerSafety({
     alertOptions = [],
-    onCancel,
+    onCancel = () => {},
     onChange,
-    onSave,
+    onSave = () => {},
     safetyAlerts = {value: []},
     safetyInformation = {value: ''},
   }) {
@@ -58,17 +58,22 @@ describe('WorkerSafetyForm', () => {
     expect(onChange).toHaveBeenCalledWith('safety_information', 'something dangerous')
   })
 
+  it('renders a card action row', () => {
+    const component = renderWorkerSafety({})
+    expect(component.find('CardActionRow').exists()).toEqual(true)
+  })
+
   it('canceling edit calls onCancel', () => {
     const onCancel = jasmine.createSpy('onCancel')
     const component = renderWorkerSafety({onCancel})
-    component.find('.btn.btn-default').simulate('click')
+    component.find('CardActionRow').props().onCancel()
     expect(onCancel).toHaveBeenCalled()
   })
 
   it('saving changes calls onSave', () => {
     const onSave = jasmine.createSpy('onSave')
     const component = renderWorkerSafety({onSave})
-    component.find('.btn.btn-primary').simulate('click')
+    component.find('CardActionRow').props().onSave()
     expect(onSave).toHaveBeenCalled()
   })
 })

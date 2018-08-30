@@ -50,13 +50,14 @@ describe PersonSearchQueryBuilder do
             'addresses.legacy_descriptor',
             'addresses.phone_numbers.number',
             'addresses.phone_numbers.type',
+            'legacy_descriptor',
+            'highlight',
             'phone_numbers.id',
             'phone_numbers.number',
             'phone_numbers.type',
-            'highlight',
-            'legacy_descriptor',
             'sensitivity_indicator',
-            'race_ethnicity'
+            'race_ethnicity',
+            'open_case_responsible_agency_code'
           ],
           highlight: {
             order: 'score',
@@ -208,13 +209,14 @@ describe PersonSearchQueryBuilder do
             'addresses.legacy_descriptor',
             'addresses.phone_numbers.number',
             'addresses.phone_numbers.type',
+            'legacy_descriptor',
+            'highlight',
             'phone_numbers.id',
             'phone_numbers.number',
             'phone_numbers.type',
-            'highlight',
-            'legacy_descriptor',
             'sensitivity_indicator',
-            'race_ethnicity'
+            'race_ethnicity',
+            'open_case_responsible_agency_code'
           ],
           highlight: {
             order: 'score',

@@ -122,6 +122,7 @@ describe('peopleSearchSelectors', () => {
               legacy_table_description: 'Client',
             },
             sensitivity_indicator: 'S',
+            open_case_responsible_agency_code: 'P',
           },
         }],
       }
@@ -149,6 +150,7 @@ describe('peopleSearchSelectors', () => {
           },
           dateOfBirth: '1990-02-13',
           isDeceased: true,
+          isProbationYouth: true,
           ssn: '123-45-6789',
           clientCounties: ['SysCode Nowhere', 'SysCode Places'],
           address: {

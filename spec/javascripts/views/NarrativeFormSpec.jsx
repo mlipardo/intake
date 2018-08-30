@@ -3,8 +3,11 @@ import React from 'react'
 import {shallow} from 'enzyme'
 
 describe('NarrativeForm', () => {
-  const renderNarrative = ({...props}) => (
-    shallow(<NarrativeForm {...props} />, {disableLifecycleMethods: true})
+  const renderNarrative = ({onCancel = () => {}, onSave = () => {}, ...props}) => (
+    shallow(
+      <NarrativeForm onCancel={onCancel} onSave={onSave} {...props} />,
+      {disableLifecycleMethods: true}
+    )
   )
 
   it('displays the narrative text field', () => {
@@ -33,17 +36,22 @@ describe('NarrativeForm', () => {
     expect(onBlur).toHaveBeenCalledWith('report_narrative')
   })
 
+  it('renders a card action row', () => {
+    const component = renderNarrative({})
+    expect(component.find('CardActionRow').exists()).toEqual(true)
+  })
+
   it('canceling edit calls onCancel', () => {
     const onCancel = jasmine.createSpy('onCancel')
     const component = renderNarrative({onCancel})
-    component.find('.btn.btn-default').simulate('click')
+    component.find('CardActionRow').props().onCancel()
     expect(onCancel).toHaveBeenCalled()
   })
 
   it('saving changes calls onSave', () => {
     const onSave = jasmine.createSpy('onSave')
     const component = renderNarrative({onSave})
-    component.find('.btn.btn-primary').simulate('click')
+    component.find('CardActionRow').props().onSave()
     expect(onSave).toHaveBeenCalled()
   })
 })

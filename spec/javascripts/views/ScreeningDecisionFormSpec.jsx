@@ -13,6 +13,8 @@ describe('ScreeningDecisionForm', () => {
     decisionDetailOptions = [],
     restrictionRationale = {},
     isAdditionalInfoRequired = false,
+    onCancel = () => {},
+    onSave = () => {},
     ...options
   }) => {
     const props = {
@@ -25,6 +27,8 @@ describe('ScreeningDecisionForm', () => {
       decisionDetailOptions,
       restrictionRationale,
       isAdditionalInfoRequired,
+      onCancel,
+      onSave,
       ...options,
     }
     return shallow(<ScreeningDecisionForm {...props}/>, {disableLifecycleMethods: true})
@@ -44,33 +48,23 @@ describe('ScreeningDecisionForm', () => {
     expect(sdmLink.props().target).toEqual('_blank')
     expect(sdmLink.text()).toEqual('Complete SDM')
   })
-
-  it('renders a save button', () => {
+  it('renders a card action row', () => {
     const component = renderScreeningDecisionForm({})
-    const saveButton = component.find('button[children="Save"]')
-    expect(saveButton.exists()).toEqual(true)
+    expect(component.find('CardActionRow').exists()).toEqual(true)
   })
 
-  it('calls onSave when the save button is clicked', () => {
-    const onSave = jasmine.createSpy('onSave')
-    const component = renderScreeningDecisionForm({onSave})
-    const saveButton = component.find('button[children="Save"]')
-    saveButton.simulate('click')
-    expect(onSave).toHaveBeenCalled()
-  })
-
-  it('renders a cancel button', () => {
-    const component = renderScreeningDecisionForm({})
-    const cancelButton = component.find('button[children="Cancel"]')
-    expect(cancelButton.exists()).toEqual(true)
-  })
-
-  it('calls onCancel when the save button is clicked', () => {
+  it('canceling edit calls onCancel', () => {
     const onCancel = jasmine.createSpy('onCancel')
     const component = renderScreeningDecisionForm({onCancel})
-    const cancelButton = component.find('button[children="Cancel"]')
-    cancelButton.simulate('click')
+    component.find('CardActionRow').props().onCancel()
     expect(onCancel).toHaveBeenCalled()
+  })
+
+  it('saving changes calls onSave', () => {
+    const onSave = jasmine.createSpy('onSave')
+    const component = renderScreeningDecisionForm({onSave})
+    component.find('CardActionRow').props().onSave()
+    expect(onSave).toHaveBeenCalled()
   })
 
   it('displays an alert error message if one is passed', () => {

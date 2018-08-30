@@ -104,6 +104,7 @@ describe('peopleSearchHelper', () => {
       const participant = {
         date_of_birth: '1994-09-29',
         date_of_death: '1996-09-21',
+        probation_youth: false,
         approximate_age: null,
         approximate_age_units: null,
         first_name:	'Mohammed',

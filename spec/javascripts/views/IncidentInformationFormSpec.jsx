@@ -3,8 +3,17 @@ import {shallow} from 'enzyme'
 import IncidentInformationForm from 'views/IncidentInformationForm'
 
 describe('IncidentInformationForm', () => {
-  const renderIncidentInformationForm = ({errors = {incident_address: {}}, address = {}, counties = [], locationTypes = [], usStates = [], ...args}) => {
-    const props = {errors, address, counties, locationTypes, usStates, ...args}
+  const renderIncidentInformationForm = ({
+    errors = {incident_address: {}},
+    address = {},
+    counties = [],
+    locationTypes = [],
+    usStates = [],
+    onCancel = () => {},
+    onSave = () => {},
+    ...args
+  }) => {
+    const props = {errors, address, counties, locationTypes, usStates, onCancel, onSave, ...args}
     return shallow(<IncidentInformationForm {...props}/>, {disableLifecycleMethods: true})
   }
 
@@ -231,17 +240,22 @@ describe('IncidentInformationForm', () => {
     })
   })
 
-  it('renders the save button', () => {
-    const onSave = jasmine.createSpy('onSave')
-    const component = renderIncidentInformationForm({onSave})
-    component.find('.btn.btn-primary').simulate('click')
-    expect(onSave).toHaveBeenCalled()
+  it('renders a card action row', () => {
+    const component = renderIncidentInformationForm({})
+    expect(component.find('CardActionRow').exists()).toEqual(true)
   })
 
-  it('renders the cancel button', () => {
+  it('canceling edit calls onCancel', () => {
     const onCancel = jasmine.createSpy('onCancel')
     const component = renderIncidentInformationForm({onCancel})
-    component.find('.btn.btn-default').simulate('click')
+    component.find('CardActionRow').props().onCancel()
     expect(onCancel).toHaveBeenCalled()
+  })
+
+  it('saving changes calls onSave', () => {
+    const onSave = jasmine.createSpy('onSave')
+    const component = renderIncidentInformationForm({onSave})
+    component.find('CardActionRow').props().onSave()
+    expect(onSave).toHaveBeenCalled()
   })
 })

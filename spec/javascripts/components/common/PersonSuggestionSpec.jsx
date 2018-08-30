@@ -53,7 +53,19 @@ describe('PersonSuggestion', () => {
       expect(component.html()).not.toContain('Deceased')
     })
   })
+  describe('probation youth', () => {
+    it('renders when open case responsible agence code is P - Probation', () => {
+      const props = {isProbationYouth: true}
+      const component = shallow(<PersonSuggestion {...props} />, {disableLifecycleMethods: true})
+      expect(component.html()).toContain('Probation Youth')
+    })
 
+    it('does not renders when open case responsible agence code is not P - Probation', () => {
+      const props = {isProbationYouth: false}
+      const component = shallow(<PersonSuggestion {...props} />, {disableLifecycleMethods: true})
+      expect(component.html()).not.toContain('Probation Youth')
+    })
+  })
   describe('sealed', () => {
     it('renders when is_sealed', () => {
       const props = {isSealed: true}

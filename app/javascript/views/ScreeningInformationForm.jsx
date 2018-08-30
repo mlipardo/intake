@@ -4,7 +4,8 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import SelectField from 'common/SelectField'
 import AlertInfoMessage from 'common/AlertInfoMessage'
-import {SafelySurrenderedBabyMessage} from './ScreeningInformationHelpTextBox'
+import {SafelySurrenderedBabyMessage} from 'views/ScreeningInformationHelpTextBox'
+import CardActionRow from 'screenings/CardActionRow'
 
 const ScreeningInformationForm = ({
   assignee,
@@ -96,14 +97,7 @@ const ScreeningInformationForm = ({
         {communicationMethods.map(({value, label}) => <option key={value} value={value}>{label}</option>)}
       </SelectField>
     </div>
-    <div className='row'>
-      <div className='col-md-12'>
-        <div className='pull-right'>
-          <button className='btn btn-default' onClick={onCancel}>Cancel</button>
-          <button className='btn btn-primary' onClick={onSave}>Save</button>
-        </div>
-      </div>
-    </div>
+    <CardActionRow onCancel={onCancel} onSave={onSave} />
   </div>
 )
 ScreeningInformationForm.propTypes = {

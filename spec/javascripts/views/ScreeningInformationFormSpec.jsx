@@ -8,9 +8,11 @@ describe('ScreeningInformationForm', () => {
     errors = {},
     communicationMethods = [],
     reportTypes = [],
+    onCancel = () => {},
+    onSave = () => {},
     ...args
   }) {
-    const props = {errors, communicationMethods, reportTypes, ...args}
+    const props = {errors, communicationMethods, reportTypes, onCancel, onSave, ...args}
     return shallow(<ScreeningInformationForm {...props} />, {disableLifecycleMethods: true})
   }
 
@@ -235,23 +237,22 @@ describe('ScreeningInformationForm', () => {
     expect(selectOptions[3].props.value).toEqual('option_3')
   })
 
-  it('renders the save and cancel button', () => {
+  it('renders a card action row', () => {
     const component = renderScreeningInformationForm({})
-    expect(component.find('.btn.btn-primary').text()).toEqual('Save')
-    expect(component.find('.btn.btn-default').text()).toEqual('Cancel')
+    expect(component.find('CardActionRow').exists()).toEqual(true)
   })
 
-  it('fires the onSave function when save is clicked', () => {
-    const onSave = jasmine.createSpy('onSave')
-    renderScreeningInformationForm({onSave})
-      .find('.btn.btn-primary').simulate('click')
-    expect(onSave).toHaveBeenCalled()
-  })
-
-  it('fires the onCancel function when cancel is clicked', () => {
+  it('canceling edit calls onCancel', () => {
     const onCancel = jasmine.createSpy('onCancel')
-    renderScreeningInformationForm({onCancel})
-      .find('.btn.btn-default').simulate('click')
+    const component = renderScreeningInformationForm({onCancel})
+    component.find('CardActionRow').props().onCancel()
     expect(onCancel).toHaveBeenCalled()
+  })
+
+  it('saving changes calls onSave', () => {
+    const onSave = jasmine.createSpy('onSave')
+    const component = renderScreeningInformationForm({onSave})
+    component.find('CardActionRow').props().onSave()
+    expect(onSave).toHaveBeenCalled()
   })
 })

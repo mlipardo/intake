@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import SideBarPeople from 'views/SideBarPeople'
 
 const ScreeningSideBar = (props) => (
-  <div className='col-xs-4 col-md-3 hide-mobile hidden-print pad-top'>
+  <div className='col-xs-4 col-md-3 hide-mobile hidden-print pad-top side-bar-container'>
     <h2 className='hidden'>Navigation</h2>
     <SideBar>
       <NavLinks>
