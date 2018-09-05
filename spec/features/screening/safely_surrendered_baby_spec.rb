@@ -46,7 +46,10 @@ feature 'safely surrendered baby' do
       sealed: false,
       sensitive: false,
       safely_surrendered_babies: {
-        surrendered_by: 'Unknown Doe'
+        surrendered_by: 'Unknown Doe',
+        relation_to_child: '1592',
+        parent_guardian_given_bracelet_id: 'U',
+        parent_guardian_provided_med_questionaire: 'U'
       }
     }
   end
@@ -56,10 +59,10 @@ feature 'safely surrendered baby' do
       id: '111',
       safely_surrendered_babies: {
         surrendered_by: 'Unknown Doe',
-        relation_to_child: nil,
+        relation_to_child: '1592',
+        parent_guardian_given_bracelet_id: 'U',
+        parent_guardian_provided_med_questionaire: 'U',
         bracelet_id: nil,
-        parent_guardian_given_bracelet_id: nil,
-        parent_guardian_provided_med_questionaire: nil,
         med_questionaire_return_date: nil,
         comments: nil,
         participant_child: '111'

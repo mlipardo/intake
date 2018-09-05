@@ -230,9 +230,6 @@ describe ParticipantRepository do
           )
         )
 
-      expect(IntakeAPI).not_to receive(:make_api_call)
-        .with(security_token, '/api/v1/screenings/1/people', :post)
-
       expect do
         described_class.authorize(security_token, participant_id)
       end.to raise_error(described_class::AuthorizationError)

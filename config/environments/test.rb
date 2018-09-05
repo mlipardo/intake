@@ -43,6 +43,5 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   config.log_level = :fatal
-  config.intake[:api_url] = 'http://localhost:3001'
   config.intake[:dora_api_url] = 'http://dora_api_url'
 end

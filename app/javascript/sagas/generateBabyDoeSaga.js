@@ -13,6 +13,7 @@ import {
 } from 'actions/screeningActions'
 import {cardName as allegationsCardName} from 'containers/screenings/AllegationsFormContainer'
 import {babyDoe, caretakerDoe} from 'data/participants'
+import {quietlySaveScreeningCard} from 'sagas/saveScreeningCardSaga'
 import {
   getScreeningWithEditsSelector as getScreeningWithScreeningInformationEditsSelector,
 } from 'selectors/screening/screeningInformationFormSelectors'
@@ -59,7 +60,8 @@ function* createBabyAndCaretaker(screening_id, idNew) {
       perpetratorId: caretaker.id,
       allegationTypes: ['Caretaker absent/incapacity'],
     }))
-    yield put(saveCard(allegationsCardName))
+    const response = yield* quietlySaveScreeningCard(saveCard(allegationsCardName))
+    yield put(saveSuccess(response))
   } catch (error) {
     yield put(createPersonFailure(error && error.responseJSON))
   }

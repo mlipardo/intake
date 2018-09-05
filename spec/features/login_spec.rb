@@ -30,12 +30,12 @@ feature 'login' do
     end
   end
 
-  scenario 'user has not logged in', browser: :poltergeist do
+  scenario 'user has not logged in' do
     visit root_path
     expect(page.current_url).to have_content(auth_login_url)
   end
 
-  context 'user provides valid security access code', browser: :poltergeist do
+  context 'user provides valid security access code' do
     let(:staff_url) { ferb_api_url(FerbRoutes.staff_path(1234)) }
     before do
       stub_request(:get, ferb_api_url(FerbRoutes.screenings_path))
@@ -112,14 +112,14 @@ feature 'login' do
     end
   end
 
-  scenario 'user provides invalid access code', browser: :poltergeist do
+  scenario 'user provides invalid access code' do
     stub_request(:get, auth_access_code_url).and_return(json_body('', status: 401))
     visit root_path(accessCode: 'tempToken123')
     expect(a_request(:get, auth_access_code_url)).to have_been_made
     expect(page.current_url).to have_content auth_login_url
   end
 
-  scenario 'user has already logged in', browser: :poltergeist do
+  scenario 'user has already logged in' do
     stub_request(:get, ferb_api_url(FerbRoutes.screenings_path))
       .and_return(json_body(screening_results, status: 200))
     stub_request(:get, auth_access_code_url).and_return(json_body('123', status: 200))
@@ -219,12 +219,12 @@ feature 'login perry v1' do
     end
   end
 
-  scenario 'user has not logged in', browser: :poltergeist do
+  scenario 'user has not logged in' do
     visit root_path
     expect(page.current_url).to have_content(auth_login_url)
   end
 
-  context 'user provides valid security token', browser: :poltergeist do
+  context 'user provides valid security token' do
     let(:staff_url) { ferb_api_url(FerbRoutes.staff_path(1234)) }
     before do
       stub_request(:get, ferb_api_url(FerbRoutes.screenings_path))
@@ -276,14 +276,14 @@ feature 'login perry v1' do
     end
   end
 
-  scenario 'user provides invalid security token', browser: :poltergeist do
+  scenario 'user provides invalid security token' do
     stub_request(:get, auth_validation_url).and_return(status: 401)
     visit root_path(token: 123)
     expect(a_request(:get, auth_validation_url)).to have_been_made
     expect(page.current_url).to have_content auth_login_url
   end
 
-  scenario 'user has already logged in', browser: :poltergeist do
+  scenario 'user has already logged in' do
     stub_request(:get, ferb_api_url(FerbRoutes.screenings_path))
       .and_return(json_body(screening_results, status: 200))
     stub_request(:get, auth_validation_url).and_return(status: 200)

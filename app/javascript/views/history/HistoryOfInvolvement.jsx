@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {SHOW_MODE} from 'actions/screeningPageActions'
 import CardView from 'views/CardView'
 
 class HistoryOfInvolvement extends React.Component {
@@ -9,7 +10,7 @@ class HistoryOfInvolvement extends React.Component {
       <CardView
         id='history-card'
         title='History'
-        mode='show'
+        mode={SHOW_MODE}
         show={historyIsEmpty ? empty : notEmpty}
       />
     )

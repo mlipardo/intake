@@ -58,8 +58,6 @@ group :test do
   gem 'capybara-screenshot'
   gem 'chromedriver-helper', '1.2.0'
   gem 'faker'
-  gem 'headless', '2.3.1', require: false
-  gem 'poltergeist'
   gem 'rails-controller-testing'
   gem 'rspec_junit_formatter', require: false
   gem 'selenium-webdriver', '3.11.0'

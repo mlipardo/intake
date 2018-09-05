@@ -3,22 +3,27 @@ import PropTypes from 'prop-types'
 import CheckboxField from 'common/CheckboxField'
 import DateField from 'common/DateField'
 import {RELATIONSHIP_TYPES} from 'enums/RelationshipTypes'
+import relationshipDropdown from 'common/relationship/relationship_dropdown/relationshipDropdown'
 
 const isAbsentParentDisabled = (type) => (
   !type.toLowerCase().match(/\bfather\b|\bmother\b|\bparent\b/)
 )
 const findTypeLabel = (typeCode) => {
   const types = (RELATIONSHIP_TYPES.find((type) =>
-    type.value === typeCode.toString()
+    type.value === typeCode
   ).label).split('/')
   return {
     secondary: types.pop(),
     index: types.pop(),
   }
 }
-const EditRelationshipForm = ({editFormRelationship, onChange, person, relationship}) => {
-  const type = findTypeLabel(editFormRelationship.relationship_type)
 
+const EditRelationshipForm = ({editFormRelationship, onChange, person, relationship}) => {
+  const relationshipTypeList = relationshipDropdown(
+    person,
+    relationship
+  )
+  const type = findTypeLabel(editFormRelationship.relationship_type)
   return (
     <div>
       <table className='table'>
@@ -57,7 +62,7 @@ const EditRelationshipForm = ({editFormRelationship, onChange, person, relations
                 }}
               >
                 <option key=''/>
-                {RELATIONSHIP_TYPES.map((relationship) =>
+                {relationshipTypeList.map((relationship) =>
                   <option key={relationship.value} value={relationship.value}>
                     {relationship.label}
                   </option>

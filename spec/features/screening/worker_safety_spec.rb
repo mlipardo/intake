@@ -86,10 +86,14 @@ feature 'worker safety card' do
     existing_screening[:safety_alerts] = ['Dangerous Environment', 'Firearms in Home']
     stub_request(
       :put, ferb_api_url(FerbRoutes.intake_screening_path(existing_screening[:id]))
-    ).and_return(json_body(existing_screening.to_json))
+    ).and_return(proc {
+      sleep 2
+      json_body(existing_screening.to_json)
+    })
 
     within '#worker-safety-card.edit' do
       click_button 'Save'
+      expect(page).to have_button('Saving', disabled: true)
     end
 
     expect(
@@ -98,7 +102,7 @@ feature 'worker safety card' do
       ).with(body: hash_including(existing_screening.as_json))
     ).to have_been_made
 
-    within '#worker-safety-card.show' do
+    within '#worker-safety-card.show', wait: 4 do
       expect(page).to have_content 'Something else'
       expect(page).to have_content 'Dangerous Environment'
       expect(page).to have_content 'Firearms in Home'

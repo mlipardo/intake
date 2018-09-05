@@ -31,3 +31,7 @@ yarn-error.log
 
 # Ignore package-lock file
 package-lock.json
+
+# Ignore chrome driver helper files
+.chromedriver-helper
+.chromedriver-helper/*

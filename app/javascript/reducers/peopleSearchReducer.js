@@ -1,6 +1,7 @@
 import {createReducer} from 'utils/createReducer'
 import {fromJS} from 'immutable'
 import {
+  TOGGLE_ADDRESS_SEARCH,
   PEOPLE_SEARCH_CLEAR,
   PEOPLE_SEARCH_FETCH,
   PEOPLE_SEARCH_FETCH_COMPLETE,
@@ -13,6 +14,7 @@ const initialState = fromJS({
   results: [],
   searchTerm: '',
   total: 0,
+  isAddressIncluded: false,
 })
 export default createReducer(initialState, {
   [PEOPLE_SEARCH_FETCH](state, {payload: {searchTerm}}) {
@@ -49,5 +51,8 @@ export default createReducer(initialState, {
     } else {
       return state.update('results', (arr) => arr.concat(fromJS(results)))
     }
+  },
+  [TOGGLE_ADDRESS_SEARCH](state) {
+    return state.set('isAddressIncluded', !state.get('isAddressIncluded'))
   },
 })

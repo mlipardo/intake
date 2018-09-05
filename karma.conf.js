@@ -4,6 +4,7 @@
 //
 var webpack = require('webpack')
 var webpackConfig = require('./config/webpack/test.js')
+const isDocker = require('is-docker')
 
 module.exports = function(config) {
   config.set({
@@ -25,11 +26,25 @@ module.exports = function(config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome_no_sandbox', 'Firefox'],
+    browsers: isDocker() ? ['chrome_headless', 'firefox_headless'] : ['Chrome_no_sandbox', 'Firefox'],
     customLaunchers: {
       Chrome_no_sandbox: {
         base: 'Chrome',
         flags: ['--no-sandbox'],
+      },
+      chrome_headless: {
+        base: 'Chrome',
+        flags: [
+          '--no-sandbox',
+          '--headless',
+          '--disable-gpu',
+          '--disable-dev-shm-usage',
+          ' --remote-debugging-port=9222'
+        ],
+      },
+      firefox_headless: {
+        base: 'Firefox',
+        flags: ['--headless', '--start-debugger-server'],
       },
     },
     captureTimeout: 60000,

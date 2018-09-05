@@ -4,6 +4,7 @@ import React from 'react'
 import CardActionRow from 'screenings/CardActionRow'
 
 const NarrativeForm = ({
+  isSaving,
   onBlur,
   onCancel,
   onChange,
@@ -28,11 +29,12 @@ const NarrativeForm = ({
         />
       </FormField>
     </div>
-    <CardActionRow onCancel={onCancel} onSave={onSave} />
+    <CardActionRow onCancel={onCancel} onSave={onSave} isSaving={isSaving}/>
   </div>
 )
 
 NarrativeForm.propTypes = {
+  isSaving: PropTypes.bool,
   onBlur: PropTypes.func,
   onCancel: PropTypes.func,
   onChange: PropTypes.func,

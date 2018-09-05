@@ -1,3 +1,4 @@
+import {EDIT_MODE, SHOW_MODE} from 'actions/screeningPageActions'
 import * as IntakeConfig from 'common/config'
 import React from 'react'
 import {ScreeningPage} from 'screenings/ScreeningPage'
@@ -69,11 +70,11 @@ describe('ScreeningPage', () => {
 
   it('renders a breadCrumb', () => {
     const screeningPage = renderScreeningPage({})
-    expect(screeningPage.find('BreadCrumb').exists()).toEqual(true)
+    expect(screeningPage.find('Connect(BreadCrumb)').exists()).toEqual(true)
   })
 
   describe('componentDidMount', () => {
-    it("sets the page mode to 'edit' when url mode is 'edit' and editable is true", () => {
+    it("sets the page mode to EDIT_MODE when url mode is 'edit' and editable is true", () => {
       const id = '222'
       const setPageMode = jasmine.createSpy('setPageMode')
       renderScreeningPageWithLifecycle({
@@ -81,10 +82,10 @@ describe('ScreeningPage', () => {
         actions: {setPageMode},
         params: {mode: 'edit', id: id},
       })
-      expect(setPageMode).toHaveBeenCalledWith('edit')
+      expect(setPageMode).toHaveBeenCalledWith(EDIT_MODE)
     })
 
-    it("sets the page mode to 'edit' when url mode is 'edit' and editable is true and id is undefined", () => {
+    it("sets the page mode to EDIT_MODE when url mode is 'edit' and editable is true and id is undefined", () => {
       const setPageMode = jasmine.createSpy('setPageMode')
       const id = undefined
       renderScreeningPageWithLifecycle({
@@ -92,10 +93,10 @@ describe('ScreeningPage', () => {
         actions: {setPageMode},
         params: {mode: 'edit', id: id},
       })
-      expect(setPageMode).toHaveBeenCalledWith('edit')
+      expect(setPageMode).toHaveBeenCalledWith(EDIT_MODE)
     })
 
-    it("sets the page mode to 'show' when url mode is 'show' and editable is true", () => {
+    it("sets the page mode to SHOW_MODE when url mode is 'show' and editable is true", () => {
       const id = '333'
       const setPageMode = jasmine.createSpy('setPageMode')
       renderScreeningPageWithLifecycle({
@@ -103,7 +104,7 @@ describe('ScreeningPage', () => {
         actions: {setPageMode},
         params: {mode: 'show', id: id},
       })
-      expect(setPageMode).toHaveBeenCalledWith('show')
+      expect(setPageMode).toHaveBeenCalledWith(SHOW_MODE)
     })
 
     describe('when the screening page URL ID is present', () => {
@@ -153,7 +154,7 @@ describe('ScreeningPage', () => {
       it('renders the error detail card', () => {
         const submitReferralErrors = ['a', 'b', 'c']
         const component = renderScreeningPage({
-          mode: 'edit',
+          mode: EDIT_MODE,
           submitReferralErrors,
           hasApiValidationErrors: true,
         })
@@ -166,7 +167,7 @@ describe('ScreeningPage', () => {
       it('does not render the error detail card', () => {
         const submitReferralErrors = []
         const component = renderScreeningPage({
-          mode: 'edit',
+          mode: EDIT_MODE,
           submitReferralErrors,
           hasApiValidationErrors: false,
         })
@@ -177,7 +178,7 @@ describe('ScreeningPage', () => {
     describe('in edit mode', () => {
       let component
       beforeEach(() => {
-        component = renderScreeningPage({mode: 'edit'})
+        component = renderScreeningPage({mode: EDIT_MODE})
       })
 
       it('does not render home and edit links', () => {
@@ -197,7 +198,7 @@ describe('ScreeningPage', () => {
 
       it('renders the referral id, if present', () => {
         const heading = renderScreeningPage({
-          mode: 'show',
+          mode: SHOW_MODE,
           referralId: '123456',
         }).find('h1')
         expect(heading.text()).toEqual('Referral #123456')
@@ -212,7 +213,7 @@ describe('ScreeningPage', () => {
       let component
       beforeEach(() => {
         component = renderScreeningPage({
-          mode: 'show',
+          mode: SHOW_MODE,
           participants: [{id: 'id-1'}, {id: 'id-2'}],
           params: {id: '1'},
         })

@@ -27,7 +27,10 @@ feature 'cross reports' do
     ).and_return(json_body(existing_screening.to_json, status: 200))
     stub_request(
       :put, ferb_api_url(FerbRoutes.intake_screening_path(existing_screening[:id]))
-    ).and_return(json_body(existing_screening.to_json, status: 200))
+    ).and_return(proc {
+      sleep 2
+      json_body(existing_screening.to_json, status: 200)
+    })
     stub_empty_relationships
     stub_empty_history_for_screening(existing_screening)
     visit edit_screening_path(id: existing_screening[:id])
@@ -49,6 +52,7 @@ feature 'cross reports' do
         eq(reported_on.strftime('%m/%d/%Y %l:%M %p'))
       select communication_method, from: 'Communication Method'
       click_button 'Save'
+      expect(page).to have_button('Saving', disabled: true)
     end
 
     expect(
@@ -70,6 +74,10 @@ feature 'cross reports' do
         )
       )
     ).to have_been_made
+
+    within '#cross-report-card.show', wait: 4 do
+      expect(page).to_not have_button('Saving', disabled: true)
+    end
   end
 
   scenario 'editing cross reports to an existing screening' do

@@ -25,7 +25,10 @@ feature 'screening information card' do
     stub_request(:get, ferb_api_url(FerbRoutes.intake_screening_path(screening[:id])))
       .and_return(json_body(screening.to_json, status: 200))
     stub_request(:put, ferb_api_url(FerbRoutes.intake_screening_path(screening[:id])))
-      .and_return(json_body(screening.to_json, status: 200))
+      .and_return(proc {
+        sleep 2
+        json_body(screening.to_json, status: 200)
+      })
     stub_empty_relationships
     stub_empty_history_for_screening(screening)
     visit edit_screening_path(id: screening[:id])
@@ -55,9 +58,10 @@ feature 'screening information card' do
       select 'Safely Surrendered Baby', from: 'Report Type'
       select 'Phone', from: 'Communication Method'
       click_button 'Save'
+      expect(page).to have_button('Saving', disabled: true)
     end
 
-    within '#screening-information-card.show' do
+    within '#screening-information-card.show', wait: 4 do
       expect(page).to have_content('Safely Surrendered Baby')
       expect(page).to have_content('This screening was flagged as a safely surrendered baby report')
     end

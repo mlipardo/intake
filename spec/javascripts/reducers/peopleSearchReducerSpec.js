@@ -3,6 +3,7 @@ import {
   clear,
   fetchFailure,
   fetchSuccess,
+  toggleAddressSearch,
   search,
   setSearchTerm,
   loadMoreResultsSuccess,
@@ -139,6 +140,26 @@ describe('peopleSearchReducer', () => {
       it('leaves state unchanged', () => {
         expect(peopleSearchReducer(initialState, action)).toEqualImmutable(initialState)
       })
+    })
+  })
+
+  describe('on TOGGLE_ADDRESS_SEARCH', () => {
+    const action = toggleAddressSearch()
+    it('toggle isAddressIncluded flag from false to true', () => {
+      const initialState = fromJS({isAddressIncluded: false})
+      expect(peopleSearchReducer(initialState, action)).toEqualImmutable(
+        fromJS({
+          isAddressIncluded: true,
+        })
+      )
+    })
+    it('toggle isAddressIncluded flag from true to false', () => {
+      const initialState = fromJS({isAddressIncluded: true})
+      expect(peopleSearchReducer(initialState, action)).toEqualImmutable(
+        fromJS({
+          isAddressIncluded: false,
+        })
+      )
     })
   })
 })

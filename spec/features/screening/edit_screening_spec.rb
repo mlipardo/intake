@@ -281,7 +281,7 @@ feature 'Edit Screening' do
       end
     end
 
-    scenario 'cannot edit an existing screening', browser: :poltergeist do
+    scenario 'cannot edit an existing screening' do
       visit edit_screening_path(id: existing_screening[:id])
       expect(page).to have_content('Sorry, this is not the page you want')
     end

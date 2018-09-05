@@ -41,13 +41,16 @@ feature 'Relationship card' do
         first_name: participant.first_name,
         last_name: participant.last_name,
         relationships: [].push(jane, jake, john),
-        candidate_to: [],
+        candidate_to: [].push(nagato),
         age: 20,
         age_unit: 'Y',
-        legacy_id: 'jane_legacy_id'
+        legacy_id: 'jane_legacy_id',
+        gender: 'female',
+        date_of_birth: '1999-08-10'
       }
     ]
   end
+
   let(:new_participant) do
     FactoryBot.create(
       :participant,
@@ -60,6 +63,8 @@ feature 'Relationship card' do
     {
       absent_parent_code: 'Y',
       relationship_id: '23',
+      reversed: false,
+      related_person_gender: 'M',
       related_person_first_name: 'Jake',
       related_person_last_name: 'Campbell',
       relationship: 'Sister/Brother (Half)',
@@ -79,6 +84,8 @@ feature 'Relationship card' do
   let(:jane) do
     {
       relationship_id: '24',
+      reversed: false,
+      related_person_gender: 'F',
       related_person_id: new_participant.id,
       related_person_legacy_id: '280',
       related_person_first_name: 'Jane',
@@ -98,6 +105,8 @@ feature 'Relationship card' do
   let(:john) do
     {
       relationship_id: '25',
+      reversed: false,
+      related_person_gender: 'M',
       related_person_first_name: 'John',
       related_person_last_name: 'Florence',
       related_person_name_suffix: 'phd.',
@@ -141,8 +150,28 @@ feature 'Relationship card' do
       absent_parent_indicator: true,
       same_home_status: 'Y',
       start_date: '',
-      end_date: ''
+      end_date: '',
+      reversed: false
     }
+  end
+  let(:nagato) do
+    {
+      candidate_age: 23,
+      candidate_first_name: 'Nagato',
+      candidate_id: '768',
+      candidate_last_name: 'Uzumaki',
+      candidate_middle_name: '',
+      candidate_name_suffix: ''
+    }
+  end
+  let(:create_relationships) do
+    [{
+      client_id: participant.id.to_s,
+      relative_id: '768',
+      relationship_type: 180,
+      absent_parent_indicator: false,
+      same_home_status: 'N'
+    }]
   end
   let(:hoi) do
     {
@@ -415,7 +444,6 @@ feature 'Relationship card' do
                 expect(page).to have_content('20 yrs')
               end
             end
-
             scenario 'allows saving relationship' do
               assign_relationship(tag: 'td', element_text: 'Jake Campbell', link_text: 'Edit')
               within 'div.modal-content' do
@@ -437,6 +465,53 @@ feature 'Relationship card' do
                 find('button', text: 'CANCEL').click
               end
               expect(page).to have_no_content('Edit Relationship Type')
+            end
+          end
+
+          describe 'create new relationships of a participant' do
+            before(:each) do
+              stub_request(:post,
+                ferb_api_url(FerbRoutes.screening_relationships))
+                .with(body: create_relationships.to_json)
+                .and_return(json_body(create_relationships.to_json))
+            end
+
+            scenario 'opens the modal create relationships of a particiapnt' do
+              within '#relationships-card.card' do
+                click_button 'Create Relationship'
+              end
+              within 'div.modal-body' do
+                expect(page).to have_content(
+                  "#{relationships.first[:first_name]} #{relationships.first[:last_name]}"
+                )
+                expect(page).to have_content('Nagato Uzumaki')
+              end
+            end
+
+            scenario 'saving created relationships of a particiapnt' do
+              within '#relationships-card.card' do
+                click_button 'Create Relationship'
+              end
+              within 'div.modal-content' do
+                select 'Brother/Brother (Half)', from: 'change_relationship_type'
+                click_button 'Create Relationship'
+              end
+              expect(
+                a_request(:post,
+                  ferb_api_url(
+                    FerbRoutes.screening_relationships
+                  )).with(json_body(create_relationships.to_json))
+              ).to have_been_made
+            end
+
+            scenario 'closes the create relationship modal' do
+              within '#relationships-card.card' do
+                click_button 'Create Relationship'
+              end
+              within 'div.modal-footer' do
+                click_button 'Cancel'
+              end
+              expect(page).to have_no_content('Create Relationships')
             end
           end
         end

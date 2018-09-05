@@ -45,44 +45,50 @@ describe('ScreeningInformationFormContainer', () => {
     describe('when saving', () => {
       it('saves the card, touches the fields, and sets card to show mode', () => {
         const dispatch = jasmine.createSpy('dispatch')
+        const onSave = jasmine.createSpy('onSave')
         const onShow = jasmine.createSpy('onShow')
-        const onSave = mergeProps({screeningId: '3'}, {dispatch}, {onShow}).onSave
+        const props = mergeProps({screeningId: '3'}, {dispatch}, {onSave, onShow})
 
-        onSave()
+        props.onSave()
 
         expect(dispatch).toHaveBeenCalledWith(saveCard(cardName))
         expect(dispatch).not.toHaveBeenCalledWith(generateBabyDoe('3'))
 
         expect(dispatch).toHaveBeenCalledWith(touchAllFields())
-        expect(onShow).toHaveBeenCalled()
+        expect(onSave).toHaveBeenCalled()
+        expect(onShow).not.toHaveBeenCalled()
       })
 
       it('triggers SSB when report type changes to SSB', () => {
         const dispatch = jasmine.createSpy('dispatch')
+        const onSave = jasmine.createSpy('onSave')
         const onShow = jasmine.createSpy('onShow')
-        const onSave = mergeProps({persistedReportType: '', screeningId: '3', reportType: 'ssb'}, {dispatch}, {onShow}).onSave
+        const props = mergeProps({persistedReportType: '', screeningId: '3', reportType: 'ssb'}, {dispatch}, {onSave, onShow})
 
-        onSave()
+        props.onSave()
 
         expect(dispatch).not.toHaveBeenCalledWith(saveCard(cardName))
         expect(dispatch).toHaveBeenCalledWith(generateBabyDoe('3'))
 
         expect(dispatch).toHaveBeenCalledWith(touchAllFields())
-        expect(onShow).toHaveBeenCalled()
+        expect(onSave).toHaveBeenCalled()
+        expect(onShow).not.toHaveBeenCalled()
       })
 
       it('does not trigger SSB when report type was already SSB', () => {
         const dispatch = jasmine.createSpy('dispatch')
+        const onSave = jasmine.createSpy('onSave')
         const onShow = jasmine.createSpy('onShow')
-        const onSave = mergeProps({persistedReportType: 'ssb', screeningId: '3', reportType: 'ssb'}, {dispatch}, {onShow}).onSave
+        const props = mergeProps({persistedReportType: 'ssb', screeningId: '3', reportType: 'ssb'}, {dispatch}, {onSave, onShow})
 
-        onSave()
+        props.onSave()
 
         expect(dispatch).toHaveBeenCalledWith(saveCard(cardName))
         expect(dispatch).not.toHaveBeenCalledWith(generateBabyDoe('3'))
 
         expect(dispatch).toHaveBeenCalledWith(touchAllFields())
-        expect(onShow).toHaveBeenCalled()
+        expect(onSave).toHaveBeenCalled()
+        expect(onShow).not.toHaveBeenCalled()
       })
     })
   })

@@ -5,6 +5,7 @@ import {shallow} from 'enzyme'
 describe('WorkerSafetyForm', () => {
   function renderWorkerSafety({
     alertOptions = [],
+    isSaving,
     onCancel = () => {},
     onChange,
     onSave = () => {},
@@ -13,6 +14,7 @@ describe('WorkerSafetyForm', () => {
   }) {
     const props = {
       alertOptions,
+      isSaving,
       onCancel,
       onChange,
       onSave,
@@ -61,6 +63,12 @@ describe('WorkerSafetyForm', () => {
   it('renders a card action row', () => {
     const component = renderWorkerSafety({})
     expect(component.find('CardActionRow').exists()).toEqual(true)
+    expect(component.find('CardActionRow').props().isSaving).not.toBeTruthy()
+  })
+
+  it('passes isSaving through to CardActionRow', () => {
+    const component = renderWorkerSafety({isSaving: true})
+    expect(component.find('CardActionRow').props().isSaving).toEqual(true)
   })
 
   it('canceling edit calls onCancel', () => {

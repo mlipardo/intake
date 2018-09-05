@@ -1,16 +1,16 @@
-import LoadingIndicator from 'common/LoadingIndicator'
+import SavingIndicator from 'common/SavingIndicator'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-const LoadingButton = ({text = ''}) => (
+const SavingButton = ({text = ''}) => (
   <button className='btn btn-primary btn-icon' disabled={true}>
-    <LoadingIndicator />
+    <SavingIndicator />
     {text}
   </button>
 )
 
-LoadingButton.propTypes = {
+SavingButton.propTypes = {
   text: PropTypes.string,
 }
 
-export default LoadingButton
+export default SavingButton

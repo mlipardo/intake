@@ -1,5 +1,5 @@
-import {CREATE_PERSON_COMPLETE} from 'actions/personCardActions'
-import {FETCH_SCREENING_COMPLETE} from 'actions/actionTypes'
+import {CREATE_PERSON_COMPLETE, UPDATE_PERSON_COMPLETE} from 'actions/personCardActions'
+import {CREATE_SCREENING_COMPLETE, FETCH_SCREENING_COMPLETE} from 'actions/actionTypes'
 import {Map} from 'immutable'
 import {
   SET_SCREENING_PAGE_MODE,
@@ -7,7 +7,9 @@ import {
   SET_SCREENING_CARD_MODE,
   EDIT_MODE,
   SHOW_MODE,
+  SAVING_MODE,
 } from 'actions/screeningPageActions'
+import {SAVE_SCREENING, SAVE_SCREENING_COMPLETE} from 'actions/screeningActions'
 import {createReducer} from 'utils/createReducer'
 
 function cards(mode) {
@@ -38,6 +40,11 @@ function modeOnScreeningFetch(state, referralId) {
   }
 }
 
+const savingToShow = (mode) => (mode === SAVING_MODE ? SHOW_MODE : mode)
+
+const setAllSavingToShow = (state, _action) =>
+  state.update('cards', Map(), (cards) => cards.map(savingToShow))
+
 export default createReducer(Map(), {
   [SET_SCREENING_PAGE_MODE]: (state, {payload: {mode}}) => state.set('mode', mode),
   [SET_PERSON_CARD_MODE]: (state, {payload: {personId, mode}}) => state.setIn(['peopleCards', personId], mode),
@@ -59,4 +66,11 @@ export default createReducer(Map(), {
       return state.setIn(['peopleCards', person.id], EDIT_MODE)
     }
   },
+  [UPDATE_PERSON_COMPLETE]: (state, {payload: {person, personId}, error}) => {
+    const id = error ? personId : person.id
+    return state.updateIn(['peopleCards', id], savingToShow)
+  },
+  [SAVE_SCREENING]: (state, {payload: {card}}) => state.setIn(['cards', card], SAVING_MODE),
+  [CREATE_SCREENING_COMPLETE]: setAllSavingToShow,
+  [SAVE_SCREENING_COMPLETE]: setAllSavingToShow,
 })

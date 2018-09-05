@@ -21,6 +21,10 @@ describe('Participants', () => {
 
     it('has SSB info', () => {
       expect(babyDoe.safely_surrendered_babies).toBeDefined()
+      expect(babyDoe.safely_surrendered_babies.surrendered_by).toBe('Unknown Doe')
+      expect(babyDoe.safely_surrendered_babies.relation_to_child).toBe('1592')
+      expect(babyDoe.safely_surrendered_babies.parent_guardian_given_bracelet_id).toBe('U')
+      expect(babyDoe.safely_surrendered_babies.parent_guardian_provided_med_questionaire).toBe('U')
     })
   })
 

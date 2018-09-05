@@ -37,21 +37,21 @@ describe('CardActionRow', () => {
     })
   })
 
-  describe('when isLoading', () => {
+  describe('when isSaving', () => {
     it('renders a row with a Saving button and no Cancel button', () => {
-      const component = render({isLoading: true})
+      const component = render({isSaving: true})
 
       const row = component.find('.row .col-md-12 .pull-right')
       expect(row.exists()).toEqual(true)
-      expect(row.find('LoadingButton').exists()).toEqual(true)
-      expect(row.find('LoadingButton').props().text).toEqual('Saving')
+      expect(row.find('SavingButton').exists()).toEqual(true)
+      expect(row.find('SavingButton').props().text).toEqual('Saving')
       expect(row.find('button').length).toEqual(0)
     })
 
     it('does not call onSave again when saving button is clicked', () => {
       const onSave = jasmine.createSpy('onSave')
-      const component = render({onSave, isLoading: true})
-      const saveButton = component.find('LoadingButton')
+      const component = render({onSave, isSaving: true})
+      const saveButton = component.find('SavingButton')
 
       expect(saveButton.props().onClick).not.toBeDefined()
     })

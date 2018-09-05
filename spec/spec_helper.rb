@@ -32,25 +32,9 @@ if ENV['GENERATE_TEST_REPORTS'] == 'yes'
 end
 
 RSpec.configure do |config|
-  config.before :suite do
-    if ENV['USE_XVFB'] == 'true'
-      require 'headless'
-      display = 100 + ENV['TEST_ENV_NUMBER'].to_i
-      Headless.new(display: display, reuse: true, destroy_at_exit: false).start
-    end
-  end
-
   config.before :each do
     # we try stub_system_codes because it is only loaded in feature tests
     try(:stub_system_codes)
-  end
-
-  config.after :suite do
-    if ENV['USE_XVFB'] == 'true'
-      require 'headless'
-      display = 100 + ENV['TEST_ENV_NUMBER'].to_i
-      Headless.new(display: display, reuse: true, destroy_at_exit: false).destroy
-    end
   end
 
   # rspec-expectations config goes here. You can use an alternate
@@ -81,12 +65,5 @@ RSpec.configure do |config|
     WebMock.disable_net_connect!(allow: allowed_sites)
     example.run
     WebMock.allow_net_connect!
-  end
-
-  config.around(:example, type: :feature, browser: :poltergeist) do |example|
-    tmp_driver = Capybara.default_driver
-    Capybara.default_driver = :accessible_poltergeist
-    example.run
-    Capybara.default_driver = tmp_driver
   end
 end

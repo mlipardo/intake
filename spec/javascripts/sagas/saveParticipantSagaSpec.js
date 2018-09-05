@@ -63,7 +63,7 @@ describe('saveParticipant', () => {
     )
     const error = {responseJSON: 'some error'}
     expect(gen.throw(error).value).toEqual(
-      put(personCardActions.updatePersonFailure('some error'))
+      put(personCardActions.updatePersonFailure('some error', id))
     )
   })
 })

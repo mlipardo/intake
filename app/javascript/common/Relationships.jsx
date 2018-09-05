@@ -5,7 +5,6 @@ import RelationCard from 'common/relationship/RelationCard'
 import ScreeningCreateRelationshipContainer from 'containers/screenings/ScreeningCreateRelationshipContainer'
 
 export const Relationships = ({
-  candidates,
   editFormRelationship,
   isScreening,
   onClick,
@@ -44,7 +43,7 @@ export const Relationships = ({
               }
             </div>
           </div>
-          <ScreeningCreateRelationshipContainer personId={person.id} candidates={candidates} />
+          <ScreeningCreateRelationshipContainer personId={person.id}/>
         </div>
       ))
     }

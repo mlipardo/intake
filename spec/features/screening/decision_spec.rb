@@ -28,7 +28,7 @@ feature 'decision card' do
     visit edit_screening_path(id: screening[:id])
   end
 
-  scenario 'initial configuration, persisting data', browser: :poltergeist do
+  scenario 'initial configuration, persisting data' do
     new_window = nil
     within '#decision-card.edit' do
       expect(page).to have_select('Screening Decision', options: [
@@ -107,7 +107,10 @@ feature 'decision card' do
       access_restrictions: 'sensitive'
     )
     stub_request(:put, ferb_api_url(FerbRoutes.intake_screening_path(screening[:id])))
-      .and_return(json_body(screening.to_json))
+      .and_return(proc {
+        sleep 2
+        json_body(screening.to_json)
+      })
 
     within '#decision-card.edit' do
       expect(page).to have_select('Screening Decision', selected: 'Promote to referral')
@@ -122,8 +125,9 @@ feature 'decision card' do
       select 'Mark as Sensitive', from: 'Access Restrictions'
       fill_in 'Restrictions Rationale', with: 'Someone in this screening has sensitive information'
       click_button 'Save'
+      expect(page).to have_button('Saving', disabled: true)
     end
-    within '#decision-card.show' do
+    within '#decision-card.show', wait: 4 do
       expect(page).to have_content('SDM Hotline Tool')
       expect(page).to have_content(
         'Determine Decision and Response Time by using Structured Decision Making'

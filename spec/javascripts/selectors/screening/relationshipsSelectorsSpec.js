@@ -25,6 +25,7 @@ describe('relationshipsSelectors', () => {
           name: 'Ricky Robinson',
           relationships: [],
           gender: 'Male',
+          gender_code: 'M',
           age: '20 yrs',
         },
         {
@@ -34,6 +35,7 @@ describe('relationshipsSelectors', () => {
           name: 'Johny Robinson',
           relationships: [],
           gender: 'Male',
+          gender_code: 'M',
           age: '30 yrs',
         },
         {
@@ -43,6 +45,7 @@ describe('relationshipsSelectors', () => {
           name: 'Will Carlson',
           relationships: [],
           gender: 'Male',
+          gender_code: 'M',
           age: '40 yrs',
         },
       ]))
@@ -51,11 +54,11 @@ describe('relationshipsSelectors', () => {
 
     it('returns a list of people with an empty gender', () => {
       const relationships = [
-        {legacy_id: '10', first_name: 'Ricky', last_name: 'Robinson', gender: '', date_of_birth: '1986-01-15', age: 20, age_unit: 'Y', id: '12345'},
+        {legacy_id: '10', first_name: 'Ricky', last_name: 'Robinson', gender: '', date_of_birth: '1986-01-15', age: 20, age_unit: 'Y', id: '808'},
       ]
       const state = fromJS({relationships})
       expect(getPeopleSelector(state)).toEqualImmutable(fromJS(
-        [{dateOfBirth: '01/15/1986', legacy_id: '10', id: '12345', name: 'Ricky Robinson', relationships: [], gender: '', age: '20 yrs'}]
+        [{id: '808', dateOfBirth: '01/15/1986', legacy_id: '10', name: 'Ricky Robinson', relationships: [], gender: '', gender_code: '', age: '20 yrs'}]
       ))
     })
 
@@ -184,6 +187,7 @@ describe('relationshipsSelectors', () => {
           legacy_id: '3',
           name: 'Ricky Robinson',
           gender: 'Male',
+          gender_code: 'M',
           id: '23',
           age: '20 yrs',
           relationships: [
@@ -191,6 +195,7 @@ describe('relationshipsSelectors', () => {
               absent_parent_code: 'Y',
               dateOfBirth: '03/15/1990',
               gender: 'Male',
+              gender_code: 'M',
               name: 'Johny Robinson',
               legacy_descriptor: {legacy_id: '2'},
               type: 'Brother',
@@ -207,6 +212,7 @@ describe('relationshipsSelectors', () => {
               absent_parent_code: 'N',
               dateOfBirth: '02/15/1991',
               gender: 'Male',
+              gender_code: 'M',
               name: 'Will Carlson',
               legacy_descriptor: {legacy_id: '1'},
               type: 'Nephew (Paternal)',
@@ -227,12 +233,14 @@ describe('relationshipsSelectors', () => {
           name: 'Johny Robinson',
           id: '805',
           gender: 'Male',
+          gender_code: 'M',
           age: '20 yrs',
           relationships: [
             {
               absent_parent_code: 'Y',
               dateOfBirth: '01/15/1986',
               gender: 'Male',
+              gender_code: 'M',
               name: 'Ricky Robinson',
               legacy_descriptor: {legacy_id: '3'},
               type: 'Brother',
@@ -249,6 +257,7 @@ describe('relationshipsSelectors', () => {
               absent_parent_code: 'N',
               dateOfBirth: '02/15/1991',
               gender: 'Male',
+              gender_code: 'M',
               name: 'Will Carlson',
               legacy_descriptor: {legacy_id: '1'},
               type: 'Nephew (Paternal)',
@@ -287,6 +296,7 @@ describe('relationshipsSelectors', () => {
         name: 'Android 18',
         relationships: [],
         gender: 'Female',
+        gender_code: 'F',
         age: '18 yrs',
       }]))
     })
@@ -298,6 +308,7 @@ describe('relationshipsSelectors', () => {
         first_name: 'Android',
         last_name: '18',
         gender: 'F',
+        gender_code: 'F',
         date_of_birth: '1986-01-15',
         age: 18,
         age_unit: 'Y',
@@ -326,11 +337,13 @@ describe('relationshipsSelectors', () => {
         legacy_id: '10',
         name: 'Android 18',
         gender: 'Female',
+        gender_code: 'F',
         age: '18 yrs',
         relationships: [{
           absent_parent_code: 'Y',
           dateOfBirth: '03/15/1990',
           gender: 'Unknown',
+          gender_code: 'U',
           name: 'Cell Android',
           legacy_descriptor: {legacy_id: '2'},
           type: 'Brother',

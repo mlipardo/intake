@@ -26,11 +26,13 @@ const CrossReportForm = ({
   countyAgencies,
   countyLicensing,
   districtAttorney,
-  hasAgencies,
   errors,
+  hasAgencies,
   inform_date,
+  isSaving,
   lawEnforcement,
   method,
+  onSave,
   onShow,
   screeningWithEdits,
   userCounty,
@@ -57,7 +59,7 @@ const CrossReportForm = ({
     saveCard(cardName)
     saveCrossReport(screeningWithEdits)
     touchAllFields()
-    onShow()
+    onSave()
   }
   const agencyFieldActions = {
     setAgencyTypeField,
@@ -184,7 +186,7 @@ const CrossReportForm = ({
           </fieldset>
         }
       </div>
-      <CardActionRow onCancel={cancel} onSave={save} />
+      <CardActionRow onCancel={cancel} onSave={save} isSaving={isSaving} />
     </div>
   )
 }
@@ -203,8 +205,10 @@ CrossReportForm.propTypes = {
   errors: PropTypes.object.isRequired,
   hasAgencies: PropTypes.bool.isRequired,
   inform_date: PropTypes.string,
+  isSaving: PropTypes.bool,
   lawEnforcement: PropTypes.object.isRequired,
   method: PropTypes.string,
+  onSave: PropTypes.func.isRequired,
   onShow: PropTypes.func.isRequired,
   screeningWithEdits: PropTypes.object,
   userCounty: PropTypes.string,

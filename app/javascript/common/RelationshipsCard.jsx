@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import {SHOW_MODE} from 'actions/screeningPageActions'
 import {EmptyRelationships} from 'common/Relationships'
 import RelationshipsScreeningContainer from 'screenings/RelationshipsContainer'
 import RelationshipsSnapshotContainer from 'containers/snapshot/RelationshipsContainer'
@@ -13,7 +14,7 @@ const RelationshipsCard = ({areRelationshipsEmpty, isScreening}) => (
   <CardView
     id='relationships-card'
     title='Relationships'
-    mode='show'
+    mode={SHOW_MODE}
     show={areRelationshipsEmpty ? <EmptyRelationships /> : getRelationshipsContainer(isScreening)}
   />
 )

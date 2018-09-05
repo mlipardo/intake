@@ -5,7 +5,7 @@ require 'rails_helper'
 describe ApiController do
   controller do
     def custom
-      IntakeAPI.make_api_call('my_security_token', '/some_test_path', :get)
+      FerbAPI.make_api_call('my_security_token', '/some_test_path', :get)
     end
   end
 

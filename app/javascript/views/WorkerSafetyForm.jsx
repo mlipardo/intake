@@ -5,6 +5,7 @@ import CardActionRow from 'screenings/CardActionRow'
 
 const WorkerSafetyForm = ({
   alertOptions,
+  isSaving,
   onCancel,
   onChange,
   onSave,
@@ -38,7 +39,7 @@ const WorkerSafetyForm = ({
         />
       </div>
     </div>
-    <CardActionRow onCancel={onCancel} onSave={onSave} />
+    <CardActionRow onCancel={onCancel} onSave={onSave} isSaving={isSaving} />
   </div>
 )
 
@@ -47,6 +48,7 @@ WorkerSafetyForm.propTypes = {
     label: PropTypes.string,
     value: PropTypes.string,
   })).isRequired,
+  isSaving: PropTypes.bool,
   onCancel: PropTypes.func,
   onChange: PropTypes.func,
   onSave: PropTypes.func,

@@ -1,28 +1,25 @@
 import {mapDispatchToProps} from 'containers/screenings/WorkerSafetyFormContainer'
-import * as Navigation from 'utils/navigation'
 
 describe('WorkerSafetyFormContainer', () => {
   describe('mapDispatchToProps', () => {
     let dispatch
+    let onSave
     let onShow
     let props
     beforeEach(() => {
       dispatch = jasmine.createSpy('dispatch')
+      onSave = jasmine.createSpy('onSave')
       onShow = jasmine.createSpy('onShow')
-      spyOn(Navigation, 'setHash')
 
-      props = mapDispatchToProps(dispatch, {onShow})
+      props = mapDispatchToProps(dispatch, {onSave, onShow})
     })
     describe('when saving', () => {
-      it('sets the card to show mode', () => {
-        const {onSave} = props
-        onSave()
-        expect(onShow).toHaveBeenCalled()
+      it('sets the card to saving mode', () => {
+        props.onSave()
+        expect(onSave).toHaveBeenCalled()
       })
       it('navigates to the card', () => {
-        const {onSave} = props
-        onSave()
-        expect(Navigation.setHash).toHaveBeenCalledWith('#worker-safety-card-anchor')
+        props.onSave()
       })
     })
     describe('when canceling', () => {
@@ -34,7 +31,6 @@ describe('WorkerSafetyFormContainer', () => {
       it('navigates to the card', () => {
         const {onCancel} = props
         onCancel()
-        expect(Navigation.setHash).toHaveBeenCalledWith('#worker-safety-card-anchor')
       })
     })
   })

@@ -69,19 +69,18 @@ feature 'Allegations Sibling At Risk Validations' do
       within '.card.edit', text: 'Allegations' do
         fill_in_react_select "allegations_#{victim.id}_#{perpetrator.id}",
           with: 'At risk, sibling abused'
-        allegations.first[:types] = ['At risk, sibling abused']
+        allegation = allegations.first
+        allegation[:types] = ['At risk, sibling abused']
         expect(page).to have_content(sibling_at_risk_error)
         stub_screening_put_request_with_anything_and_return(
           screening,
           with_updated_attributes: {
-            allegations: allegations.collect do |allegation|
-              {
-                allegation_types: allegation[:types],
-                victim_id: allegation[:victim_person_id],
-                perpetrator_id: allegation[:perpetrator_person_id],
-                screening_id: screening[:id]
-              }
-            end
+            allegations: [{
+              types: allegation[:types],
+              victim_person_id: allegation[:victim_person_id],
+              perpetrator_person_id: allegation[:perpetrator_person_id],
+              screening_id: screening[:id]
+            }]
           }
         )
 
@@ -112,9 +111,9 @@ feature 'Allegations Sibling At Risk Validations' do
           with_updated_attributes: {
             allegations: allegations.collect do |allegation|
               {
-                allegation_types: allegation[:types],
-                victim_id: allegation[:victim_person_id],
-                perpetrator_id: allegation[:perpetrator_person_id],
+                types: allegation[:types],
+                victim_person_id: allegation[:victim_person_id],
+                perpetrator_person_id: allegation[:perpetrator_person_id],
                 screening_id: screening[:id]
               }
             end
@@ -180,9 +179,9 @@ feature 'Allegations Sibling At Risk Validations' do
           with_updated_attributes: {
             allegations: allegations.collect do |allegation|
               {
-                allegation_types: allegation[:types],
-                victim_id: allegation[:victim_person_id],
-                perpetrator_id: allegation[:perpetrator_person_id],
+                types: allegation[:types],
+                victim_person_id: allegation[:victim_person_id],
+                perpetrator_person_id: allegation[:perpetrator_person_id],
                 screening_id: screening[:id]
               }
             end
@@ -283,9 +282,9 @@ feature 'Allegations Sibling At Risk Validations' do
           with_updated_attributes: {
             allegations: allegations.collect do |allegation|
               {
-                allegation_types: allegation[:types],
-                victim_id: allegation[:victim_person_id],
-                perpetrator_id: allegation[:perpetrator_person_id],
+                types: allegation[:types],
+                victim_person_id: allegation[:victim_person_id],
+                perpetrator_person_id: allegation[:perpetrator_person_id],
                 screening_id: screening[:id]
               }
             end
@@ -367,9 +366,9 @@ feature 'Allegations Sibling At Risk Validations' do
           with_updated_attributes: {
             allegations: allegations.collect do |allegation|
               {
-                allegation_types: allegation[:types],
-                victim_id: allegation[:victim_person_id],
-                perpetrator_id: allegation[:perpetrator_person_id],
+                types: allegation[:types],
+                victim_person_id: allegation[:victim_person_id],
+                perpetrator_person_id: allegation[:perpetrator_person_id],
                 screening_id: screening[:id]
               }
             end

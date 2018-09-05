@@ -1,3 +1,4 @@
+import {EDIT_MODE, SAVING_MODE, SHOW_MODE} from 'actions/screeningPageActions'
 import {
   getCardModeValueSelector,
   getCardIsEditableSelector,
@@ -10,30 +11,37 @@ import {fromJS} from 'immutable'
 describe('screeningPageSelectors', () => {
   describe('getCardModeValueSelector', () => {
     it('returns the current mode for a given card', () => {
-      const screeningPage = {cards: {'some-card': 'show'}}
+      const screeningPage = {cards: {'some-card': 'limbo'}}
       const state = fromJS({screeningPage})
-      expect(getCardModeValueSelector(state, 'some-card')).toEqual('show')
+      expect(getCardModeValueSelector(state, 'some-card')).toEqual('limbo')
     })
   })
 
   describe('getCardIsEditableSelector', () => {
     it('returns false if the screening is read only', () => {
       const screening = {referral_id: '123'}
-      const screeningPage = {cards: {'some-card': 'show'}}
+      const screeningPage = {cards: {'some-card': SHOW_MODE}}
       const state = fromJS({screening, screeningPage})
       expect(getCardIsEditableSelector(state, 'some-card')).toEqual(false)
     })
 
     it('returns false if the card is already in edit mode', () => {
       const screening = {referral_id: ''}
-      const screeningPage = {cards: {'some-card': 'edit'}}
+      const screeningPage = {cards: {'some-card': EDIT_MODE}}
+      const state = fromJS({screening, screeningPage})
+      expect(getCardIsEditableSelector(state, 'some-card')).toEqual(false)
+    })
+
+    it('returns false if the card is in process of saving', () => {
+      const screening = {referral_id: ''}
+      const screeningPage = {cards: {'some-card': SAVING_MODE}}
       const state = fromJS({screening, screeningPage})
       expect(getCardIsEditableSelector(state, 'some-card')).toEqual(false)
     })
 
     it('returns true if the card is in show mode and the screening is not read only', () => {
       const screening = {referral_id: ''}
-      const screeningPage = {cards: {'some-card': 'show'}}
+      const screeningPage = {cards: {'some-card': SHOW_MODE}}
       const state = fromJS({screening, screeningPage})
       expect(getCardIsEditableSelector(state, 'some-card')).toEqual(true)
     })
@@ -42,8 +50,8 @@ describe('screeningPageSelectors', () => {
   describe('getAllCardsAreSavedValueSelector', () => {
     it('returns true when all cards are in show mode', () => {
       const screeningPage = {
-        peopleCards: {some_id: 'show', other_id: 'show'},
-        cards: {some_card: 'show', other_card: 'show'},
+        peopleCards: {some_id: SHOW_MODE, other_id: SHOW_MODE},
+        cards: {some_card: SHOW_MODE, other_card: SHOW_MODE},
       }
       const state = fromJS({screeningPage})
       expect(getAllCardsAreSavedValueSelector(state)).toEqual(true)
@@ -51,8 +59,8 @@ describe('screeningPageSelectors', () => {
 
     it('returns false when any cards are in edit mode', () => {
       const screeningPage = {
-        peopleCards: {some_id: 'show', other_id: 'show'},
-        cards: {some_card: 'show', other_card: 'edit'},
+        peopleCards: {some_id: SHOW_MODE, other_id: SHOW_MODE},
+        cards: {some_card: SHOW_MODE, other_card: EDIT_MODE},
       }
       const state = fromJS({screeningPage})
       expect(getAllCardsAreSavedValueSelector(state)).toEqual(false)
@@ -60,8 +68,8 @@ describe('screeningPageSelectors', () => {
 
     it('returns false when any person cards are in edit mode', () => {
       const screeningPage = {
-        peopleCards: {some_id: 'show', other_id: 'edit'},
-        cards: {some_card: 'show', other_card: 'show'},
+        peopleCards: {some_id: SHOW_MODE, other_id: EDIT_MODE},
+        cards: {some_card: SHOW_MODE, other_card: SHOW_MODE},
       }
       const state = fromJS({screeningPage})
       expect(getAllCardsAreSavedValueSelector(state)).toEqual(false)

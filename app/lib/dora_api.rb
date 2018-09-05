@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# The connection object will be used to talk to the Intake API
+# The connection object will be used to talk to the Dora API
 class DoraAPI < JsonAPI
   class << self
     def api_url

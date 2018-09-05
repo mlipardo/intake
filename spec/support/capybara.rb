@@ -3,7 +3,6 @@
 require 'capybara/rspec'
 require 'support/capybara/screenshot'
 require 'capybara/accessible'
-require 'capybara/poltergeist'
 require 'selenium-webdriver'
 
 # Tests must be run in the correct timezone because
@@ -64,12 +63,6 @@ Capybara.register_driver :accessible_selenium_chrome do |app|
     switches: switches
   )
   adaptor = Capybara::Accessible::SeleniumDriverAdapter.new
-  Capybara::Accessible.setup(driver, adaptor)
-end
-
-Capybara.register_driver :accessible_poltergeist do |app|
-  driver = Capybara::Poltergeist::Driver.new(app, js_errors: false, inspector: true)
-  adaptor = Capybara::Accessible::PoltergeistDriverAdapter.new
   Capybara::Accessible.setup(driver, adaptor)
 end
 

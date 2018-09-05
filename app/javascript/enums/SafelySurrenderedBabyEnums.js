@@ -26,12 +26,16 @@ export const RELATIONS = Object.freeze({
   1608: 'Unable to Identify',
 })
 
+export const PARENT_RELATION = '1592'
+
 export const GIVEN_BRACELET_RESPONSES = Object.freeze({
   U: 'Unknown',
   Y: 'Yes',
   N: 'No',
   A: 'Attempted',
 })
+
+export const GIVEN_BRACELET_UNKNOWN = 'U'
 
 export const GIVEN_MED_QUESTIONAIRE_RESPONSES = Object.freeze({
   U: 'Unknown',
@@ -40,3 +44,5 @@ export const GIVEN_MED_QUESTIONAIRE_RESPONSES = Object.freeze({
   N: 'Provided/Never Returned',
   D: 'Declined',
 })
+
+export const GIVEN_MED_QUESTIONAIRE_UNKNOWN = 'U'

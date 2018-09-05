@@ -77,7 +77,7 @@ feature 'Create participant' do
     end
     stub_request(:put,
       ferb_api_url(FerbRoutes.screening_participant_path(existing_screening[:id], marge.id)))
-      .and_return(json_body(marge.to_json, status: 201))
+      .and_return(json_body(marge.to_json, status: 200))
 
     within edit_participant_card_selector(marge.id) do
       click_button 'Save'

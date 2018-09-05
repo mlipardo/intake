@@ -96,12 +96,6 @@ module WebmockHelpers
     { body: json, headers: { 'Content-Type' => 'application/json' } }.merge(options)
   end
 
-  def intake_api_url(path)
-    base_path = Rails.application.config.intake[:api_url].sub(%r{/$}, '')
-    specific_path = path.sub(%r{^/}, '')
-    "#{base_path}/#{specific_path}"
-  end
-
   def ferb_api_url(path)
     "#{Rails.application.config.intake[:ferb_api_url]}#{path}"
   end

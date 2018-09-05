@@ -80,12 +80,16 @@ feature 'screening incident information card' do
     existing_screening[:incident_date] = '2015-10-05'
     stub_request(
       :put, ferb_api_url(FerbRoutes.intake_screening_path(existing_screening[:id]))
-    ).and_return(json_body(existing_screening.to_json))
+    ).and_return(proc {
+      sleep 2
+      json_body(existing_screening.to_json)
+    })
     stub_empty_relationships
     stub_empty_history_for_screening(existing_screening)
 
     within '#incident-information-card.edit' do
       click_button 'Save'
+      expect(page).to have_button('Saving', disabled: true)
     end
 
     expect(
@@ -93,7 +97,7 @@ feature 'screening incident information card' do
         .with(body: hash_including(existing_screening))
     ).to have_been_made
 
-    within '#incident-information-card.show' do
+    within '#incident-information-card.show', wait: 4 do
       expect(page).to have_content('10/05/2015')
       expect(page).to have_content('Colusa')
       expect(page).to have_content('Springfield')

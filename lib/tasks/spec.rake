@@ -3,7 +3,6 @@
 def host_env_string
   'AUTHENTICATION=false '\
   'DEFAULT_DRIVER=accessible_selenium_chrome '\
-  'API_URL=http://api '\
   'FERB_API_URL=https://ferb_api '\
   'MARIONETTE=false'
 end
@@ -71,18 +70,6 @@ namespace :spec do # rubocop:disable BlockLength
     end
   end
 
-  desc 'Run specs in api container'
-  task :api do
-    system "docker-compose run --rm -e AUTHENTICATION=false api bundle exec rspec #{file_list}"
-  end
-
-  namespace :api do
-    desc 'Run ALL THE SPECS, & RUBOCOP!!!'
-    task :full do
-      system('rubocop ../intake_api') && Rake::Task['spec:api'].invoke
-    end
-  end
-
-  desc 'Run specs and linters for both intake and api'
-  task full: ['spec:api:full', 'spec:intake:full']
+  desc 'Run specs and linters for intake'
+  task full: ['spec:intake:full']
 end

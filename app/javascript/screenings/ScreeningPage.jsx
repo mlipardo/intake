@@ -1,3 +1,4 @@
+import {SHOW_MODE} from 'actions/screeningPageActions'
 import PersonCardView from 'screenings/PersonCardView'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -17,7 +18,7 @@ import NarrativeCard from 'screenings/NarrativeCard'
 import ScreeningInformationCard from 'screenings/ScreeningInformationCard'
 import WorkerSafetyCard from 'screenings/WorkerSafetyCard'
 import PageHeader from 'common/PageHeader'
-import {BreadCrumb} from 'common/BreadCrumb'
+import BreadCrumb from 'containers/common/BreadCrumb'
 import {urlHelper} from 'common/url_helper.js.erb'
 
 const isDuplicatePerson = (participants, personOnScreening) => (
@@ -41,7 +42,7 @@ export class ScreeningPage extends React.Component {
       params: {mode, id},
     } = this.props
     if (id) {
-      setPageMode(mode || 'show')
+      setPageMode(mode || SHOW_MODE)
       fetchScreening(id)
       fetchHistoryOfInvolvements('screenings', id)
     } else {
@@ -107,7 +108,7 @@ export class ScreeningPage extends React.Component {
 
   renderScreeningFooter() {
     const {mode, editable} = this.props
-    return mode === 'show' && (
+    return mode === SHOW_MODE && (
       <div>
         <Link to='/' className='gap-right'>Home</Link>
         {editable && <Link to={`/screenings/${this.props.params.id}/edit`}>Edit</Link>}

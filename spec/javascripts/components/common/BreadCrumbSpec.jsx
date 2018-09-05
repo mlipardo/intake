@@ -19,4 +19,28 @@ describe('BreadCrumb', () => {
     expect(breadCrumb.text()).toContain('Back to:')
     expect(breadCrumb.find('a').length).toEqual(2)
   })
+
+  it('uses container and back-to-dashboard-error classes with errors', () => {
+    const navigationElements = [<a key='' href='/'>CaseLoad</a>]
+    const breadCrumb = shallow(
+      <BreadCrumb
+        hasError={true}
+        navigationElements={navigationElements}
+      />
+    )
+    expect(breadCrumb.hasClass('container')).toEqual(true)
+    expect(breadCrumb.hasClass('back-to-dashboard-error')).toEqual(true)
+  })
+
+  it('uses container and back-to-dashboard class without errors', () => {
+    const navigationElements = [<a key='' href='/'>CaseLoad</a>]
+    const breadCrumb = shallow(
+      <BreadCrumb
+        hasError={false}
+        navigationElements={navigationElements}
+      />
+    )
+    expect(breadCrumb.hasClass('container')).toEqual(true)
+    expect(breadCrumb.hasClass('back-to-dashboard')).toEqual(true)
+  })
 })

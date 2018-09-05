@@ -310,7 +310,10 @@ feature 'edit allegations' do
     screening[:allegations] << persisted_allegation
 
     stub_request(:put, ferb_api_url(FerbRoutes.intake_screening_path(screening[:id])))
-      .and_return(json_body(screening.to_json, status: 200))
+      .and_return(proc {
+        sleep 2
+        json_body(screening.to_json, status: 200)
+      })
 
     within '.card.edit', text: 'Allegations' do
       fill_in_react_select "allegations_#{lisa.id}_#{marge.id}", with: 'General neglect'
@@ -320,6 +323,7 @@ feature 'edit allegations' do
         "allegations_#{lisa.id}_#{marge.id}", with: ['General neglect']
       )
       click_button 'Save'
+      expect(page).to have_button('Saving', disabled: true)
     end
 
     expect(
@@ -327,7 +331,7 @@ feature 'edit allegations' do
         .with(body: hash_including(screening))
     ).to have_been_made
 
-    within '.card.show', text: 'Allegations' do
+    within '.card.show', text: 'Allegations', wait: 4 do
       within 'table tbody tr' do
         expect(page).to have_content('Lisa')
         expect(page).to have_content('Marge')

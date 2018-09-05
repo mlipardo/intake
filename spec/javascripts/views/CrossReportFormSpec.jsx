@@ -62,7 +62,9 @@ describe('CrossReportForm', () => {
     hasAgencies = false,
     screening = {},
     screeningWithEdits = {},
+    onSave = () => null,
     onShow = () => null,
+    isSaving,
   }) {
     const props = {
       actions,
@@ -83,7 +85,9 @@ describe('CrossReportForm', () => {
       hasAgencies,
       screening,
       screeningWithEdits,
+      onSave,
       onShow,
+      isSaving,
     }
     return shallow(<CrossReportForm {...props} />, {disableLifecycleMethods: true})
   }
@@ -340,6 +344,11 @@ describe('CrossReportForm', () => {
   it('renders a card action row', () => {
     const component = renderCrossReportForm({})
     expect(component.find('CardActionRow').exists()).toEqual(true)
+    expect(component.find('CardActionRow').props().isSaving).not.toBeTruthy()
+  })
+  it('passes isSaving through to CardActionRow', () => {
+    const component = renderCrossReportForm({isSaving: true})
+    expect(component.find('CardActionRow').props().isSaving).toEqual(true)
   })
   describe('clicking on cancel', () => {
     it('calls onShow, fires clearCardEdits', () => {
@@ -355,21 +364,21 @@ describe('CrossReportForm', () => {
     })
   })
   describe('clicking on save', () => {
-    it('calls onShow, fires saveCard', () => {
+    it('calls onSave, fires saveCard', () => {
       const saveCard = jasmine.createSpy('saveCard')
       const touchAllFields = jasmine.createSpy('touchAllFields')
       const saveCrossReport = jasmine.createSpy('saveCrossReport')
-      const onShow = jasmine.createSpy('onShow')
+      const onSave = jasmine.createSpy('onSave')
       const screeningWithEdits = {id: 123, crossReports: []}
       const cardName = 'cross-report-card'
-      const component = renderCrossReportForm({actions: {saveCard, saveCrossReport, touchAllFields}, screeningWithEdits, cardName, onShow})
+      const component = renderCrossReportForm({actions: {saveCard, saveCrossReport, touchAllFields}, screeningWithEdits, cardName, onSave})
 
       component.find('CardActionRow').props().onSave()
 
       expect(saveCard).toHaveBeenCalledWith(cardName)
       expect(saveCrossReport).toHaveBeenCalledWith(screeningWithEdits)
       expect(touchAllFields).toHaveBeenCalled()
-      expect(onShow).toHaveBeenCalled()
+      expect(onSave).toHaveBeenCalled()
     })
   })
 })

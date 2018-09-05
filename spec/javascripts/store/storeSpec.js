@@ -19,6 +19,7 @@ describe('Store', () => {
     jasmine.addMatchers(matchers)
     initialState = fromJS({
       allegationsForm: [],
+      candidatesForm: {},
       crossReportForm: {},
       errors: {},
       incidentInformationForm: {},
@@ -31,6 +32,7 @@ describe('Store', () => {
         results: [],
         searchTerm: '',
         total: 0,
+        isAddressIncluded: false,
       },
       relationship: {},
       relationships: [],

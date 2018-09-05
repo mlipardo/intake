@@ -4,7 +4,6 @@ development:
     authentication: <%= ENV.fetch('AUTHENTICATION', false) %>
     perry_version_two: true
     centralized_sessions: true
-    hoi_from_intake_api: false
     snapshot: true
     screenings: true
     enable_newrelic_analytics: true
@@ -14,7 +13,6 @@ test:
     authentication: false
     perry_version_two: false
     centralized_sessions: true
-    hoi_from_intake_api: false
     snapshot: true
     screenings: true
     enable_newrelic_analytics: true
@@ -24,7 +22,6 @@ production:
     authentication: <%= ENV.fetch('AUTHENTICATION', false) %>
     perry_version_two: <%= ENV.fetch('PERRY_VERSION_TWO', true) %>
     centralized_sessions: <%= ENV.fetch('CENTRALIZED_SESSIONS', false) %>
-    hoi_from_intake_api: <%= ENV.fetch('HOI_FROM_INTAKE_API', false) %>
     snapshot: <%= ENV.fetch('SNAPSHOT', true) %>
     screenings: <%= ENV.fetch('SCREENINGS', true) %>
     enable_newrelic_analytics: <%= ENV.fetch('ENABLE_NEWRELIC_ANALYTICS', true) %>

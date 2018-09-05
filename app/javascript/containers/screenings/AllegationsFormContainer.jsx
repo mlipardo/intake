@@ -20,7 +20,7 @@ const mapStateToProps = (state) => (
   }
 )
 
-export const mapDispatchToProps = (dispatch, {onShow}) => ({
+export const mapDispatchToProps = (dispatch, {onSave, onShow}) => ({
   onCancel: () => {
     dispatch(clearCardEdits(cardName))
     onShow()
@@ -30,7 +30,7 @@ export const mapDispatchToProps = (dispatch, {onShow}) => ({
   },
   onSave: () => {
     dispatch(saveCard(cardName))
-    onShow()
+    onSave()
   },
   dispatch,
 })

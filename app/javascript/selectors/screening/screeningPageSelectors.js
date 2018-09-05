@@ -1,7 +1,7 @@
 import {Map} from 'immutable'
 import {selectParticipants} from 'selectors/participantSelectors'
 import {getScreeningIsReadOnlySelector} from 'selectors/screeningSelectors'
-import {EDIT_MODE, SHOW_MODE} from 'actions/screeningPageActions'
+import {SHOW_MODE} from 'actions/screeningPageActions'
 import {getErrorsSelector as crossReportErrorsSelector} from 'selectors/screening/crossReportShowSelectors'
 import {getErrorsSelector as narrativeErrorsSelector} from 'selectors/screening/narrativeShowSelectors'
 import {getErrorsSelector as screeningInformationErrorsSelector} from 'selectors/screening/screeningInformationShowSelectors'
@@ -16,10 +16,10 @@ export const getCardModeValueSelector = (state, card) => (
 export const getCardIsEditableSelector = (state, card) => {
   if (getScreeningIsReadOnlySelector(state)) {
     return false
-  } else if (getCardModeValueSelector(state, card) === EDIT_MODE) {
-    return false
-  } else {
+  } else if (getCardModeValueSelector(state, card) === SHOW_MODE) {
     return true
+  } else {
+    return false
   }
 }
 

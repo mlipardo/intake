@@ -10,7 +10,6 @@ services:
       - "4857:4857"
     environment:
       RAILS_ENV: ${RAILS_ENV:-development}
-      API_URL: "http://api:3000"
       FERB_API_URL: "https://ferbapi.preint.cwds.io"
       DORA_API_URL: "https://doraapi.preint.cwds.io"
       NODE_ENV: development
@@ -26,31 +25,11 @@ services:
       - ca_intake_rubygems:/ruby_gems
       - ca_intake_node_modules:/ca_intake/node_modules
     links:
-      - api
       - redis
     tty: true
     stdin_open: true
     cap_add:
       - SYS_ADMIN
-  api:
-    extends:
-      file: ../intake_api/docker-compose.common.yml
-      service: api
-    links:
-      - db
-    ports:
-      - "3001:3000"
-    environment:
-      AUTHENTICATION_URL: ${AUTHENTICATION_URL:-https://web.preint.cwds.io/perry}
-      AUTHENTICATION: ${AUTHENTICATION:-true}
-      DORA_URL: 'https://doraapi.preint.cwds.io/'
-      FERB_URL: 'https://ferbapi.preint.cwds.io'
-    tty: true
-    stdin_open: true
-  db:
-    extends:
-      file: ../intake_api/docker-compose.common.yml
-      service: db
   redis:
     image: 'redis:3.0'
     ports:
@@ -58,4 +37,3 @@ services:
 volumes:
   ca_intake_rubygems:
   ca_intake_node_modules:
-  casebook_api_rubygems:

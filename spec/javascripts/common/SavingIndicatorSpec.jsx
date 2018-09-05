@@ -1,15 +1,15 @@
 import {shallow} from 'enzyme'
-import LoadingIndicator from 'common/LoadingIndicator'
+import SavingIndicator from 'common/SavingIndicator'
 import React from 'react'
 
-describe('LoadingIndicator', () => {
-  it('renders a loading icon', () => {
-    const root = shallow(<LoadingIndicator />)
+describe('SavingIndicator', () => {
+  it('renders a saving icon', () => {
+    const root = shallow(<SavingIndicator />)
     expect(root.find('.fa.fa-spinner').exists()).toEqual(true)
   })
 
   it('spins faster', () => {
-    const root = shallow(<LoadingIndicator />)
+    const root = shallow(<SavingIndicator />)
     expect(root.find('.fa-spin-faster').exists()).toEqual(true)
   })
 })

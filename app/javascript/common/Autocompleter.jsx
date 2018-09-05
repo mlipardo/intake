@@ -7,6 +7,7 @@ import CreateUnknownPerson from 'screenings/CreateUnknownPerson'
 import ShowMoreResults from 'common/ShowMoreResults'
 import {logEvent} from 'utils/analytics'
 import moment from 'moment'
+import SearchByAddress from 'common/SearchByAddress'
 
 const MIN_SEARCHABLE_CHARS = 2
 
@@ -33,6 +34,14 @@ export default class Autocompleter extends Component {
     this.renderMenu = this.renderMenu.bind(this)
     this.onChangeInput = this.onChangeInput.bind(this)
     this.renderItem = this.renderItem.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  handleSubmit() {
+    const {onSearch, searchTerm} = this.props
+    onSearch(searchTerm)
+    this.showMenu()
+    this.inputRef.focus()
   }
 
   isSearchable(value) {
@@ -98,7 +107,10 @@ export default class Autocompleter extends Component {
   }
 
   renderMenu(items, _searchTerm, _style) {
-    return (<div className='autocomplete-menu'>{items}</div>)
+    if (this.props.isAddressIncluded) {
+      return <div className='autocomplete-menu menu-with-address'>{items}</div>
+    }
+    return <div className='autocomplete-menu menu-without-address'>{items}</div>
   }
 
   renderEachItem(item, id, isHighlighted) {
@@ -143,8 +155,8 @@ export default class Autocompleter extends Component {
   }
 
   onChangeInput(_, value) {
-    const {onSearch, onChange} = this.props
-    if (this.isSearchable(value)) {
+    const {onSearch, onChange, isAddressIncluded} = this.props
+    if (this.isSearchable(value) && !isAddressIncluded) {
       onSearch(value)
       this.showMenu()
     } else {
@@ -165,7 +177,7 @@ export default class Autocompleter extends Component {
   }
 
   render() {
-    const {searchTerm, id, results, canCreateNewPerson, total} = this.props
+    const {searchTerm, id, results, canCreateNewPerson, total, isAddressIncluded, onToggleAddressSearch} = this.props
     const showMoreResults = {showMoreResults: 'Show More Results', posInSet: 'show-more', setSize: 'the-same'}
     const createNewPerson = {createNewPerson: 'Create New Person', posInSet: 'create-new', setSize: 'the-same'}
     const suggestionHeader = [{suggestionHeader: 'suggestion Header'}]
@@ -173,7 +185,7 @@ export default class Autocompleter extends Component {
     //Sequentually numbering items
     addPosAndSetAttr(results)
     const newResults = suggestionHeader.concat(results.concat(canLoadMoreResults ? showMoreResults : [], canCreateNewPerson ? createNewPerson : []))
-    return (
+    return (<div>
       <Autocomplete
         ref={(el) => (this.element_ref = el)}
         getItemValue={(_) => searchTerm}
@@ -188,19 +200,22 @@ export default class Autocompleter extends Component {
         wrapperStyle={{display: 'block', position: 'relative'}}
         renderInput={(props) => this.renderInput(props)}
       />
-    )
+      <SearchByAddress isAddressIncluded={isAddressIncluded} toggleAddressSearch={onToggleAddressSearch} onSubmit={this.handleSubmit} />
+    </div>)
   }
 }
 
 Autocompleter.propTypes = {
   canCreateNewPerson: PropTypes.bool,
   id: PropTypes.string,
+  isAddressIncluded: PropTypes.bool,
   isSelectable: PropTypes.func,
   onChange: PropTypes.func.isRequired,
   onClear: PropTypes.func.isRequired,
   onLoadMoreResults: PropTypes.func.isRequired,
   onSearch: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,
+  onToggleAddressSearch: PropTypes.func,
   results: PropTypes.array,
   searchTerm: PropTypes.string,
   staffId: PropTypes.string,

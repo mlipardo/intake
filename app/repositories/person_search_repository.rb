@@ -45,7 +45,7 @@ class PersonSearchRepository
     end
 
     # These fields are slightly different than the fields search uses. The set
-    # was chosen in order to preserve the same data returned by IntakeAPI, but
+    # was chosen in order to preserve the same data returned by FerbAPI, but
     # in the future find should return the same fields (or a superset) of
     # those returned by search. See person_search_query_builder.rb.
     def find_fields

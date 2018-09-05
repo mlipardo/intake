@@ -264,9 +264,7 @@ describe('HistoryTableContainer', () => {
   let component
   beforeEach(() => {
     const context = {store}
-    const features = {
-      hoi_from_intake_api: false,
-    }
+    const features = {}
     spyOn(IntakeConfig, 'isFeatureActive').and.callFake((feature) => features[feature])
     component = shallow(<HistoryTableContainer />, {context})
   })

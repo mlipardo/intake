@@ -3,18 +3,20 @@ import {mapDispatchToProps} from 'containers/screenings/IncidentInformationFormC
 describe('IncidentInformationFormContainer', () => {
   describe('mapDispatchToProps', () => {
     let dispatch
+    let onSave
     let onShow
     let props
     beforeEach(() => {
       dispatch = jasmine.createSpy('dispatch')
+      onSave = jasmine.createSpy('onSave')
       onShow = jasmine.createSpy('onShow')
-      props = mapDispatchToProps(dispatch, {onShow})
+      props = mapDispatchToProps(dispatch, {onSave, onShow})
     })
     describe('when saving', () => {
-      it('sets the card to show mode', () => {
-        const {onSave} = props
-        onSave()
-        expect(onShow).toHaveBeenCalled()
+      it('sets the card to saving mode', () => {
+        props.onSave()
+        expect(onSave).toHaveBeenCalled()
+        expect(onShow).not.toHaveBeenCalled()
       })
     })
     describe('when canceling', () => {

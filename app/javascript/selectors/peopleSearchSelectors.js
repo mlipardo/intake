@@ -23,6 +23,9 @@ const getPeopleSearchSelector = (state) => state.get('peopleSearch')
 export const getSearchTermValueSelector = (state) => (
   getPeopleSearchSelector(state).get('searchTerm')
 )
+export const getSearchAddressValueSelector = (state) => (
+  getPeopleSearchSelector(state).get('isAddressIncluded')
+)
 export const getResultsTotalValueSelector = (state) => (
   getPeopleSearchSelector(state).get('total')
 )

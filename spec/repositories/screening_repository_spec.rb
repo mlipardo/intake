@@ -103,30 +103,6 @@ describe ScreeningRepository do
   describe '.history_of_involvements' do
     let(:screening_id) { '11' }
 
-    context 'when hoi_from_intake_api is enabled' do
-      let(:screening_one) { { id: '123456789' } }
-      let(:screening_two) { { id: '987654321' } }
-      let(:screenings) { [screening_one, screening_two] }
-      let(:response) { double(:response, body: screenings.to_json) }
-
-      around do |example|
-        Feature.run_with_activated(:hoi_from_intake_api) do
-          example.run
-        end
-      end
-
-      it 'returns the history of involvements from intake api' do
-        expect(IntakeAPI).to receive(:make_api_call)
-          .with(security_token, "/api/v1/screenings/#{screening_id}/history_of_involvements", :get)
-          .and_return(response)
-        screenings = JSON.parse(
-          described_class.history_of_involvements(security_token, screening_id)
-        )
-        expect(screenings[0]['id']).to eq('123456789')
-        expect(screenings[1]['id']).to eq('987654321')
-      end
-    end
-
     describe 'in hotline' do
       let(:cases) { [{ legacy_descriptor: '1234' }, { legacy_descriptor: '1235' }] }
       let(:referrals) { [{ legacy_descriptor: '1236' }, { legacy_descriptor: '1237' }] }

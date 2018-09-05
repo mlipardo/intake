@@ -1,13 +1,15 @@
+import {EDIT_MODE, SHOW_MODE, SAVING_MODE} from 'actions/screeningPageActions'
 import PersonCard from 'views/people/PersonCard'
 import React from 'react'
 import {shallow} from 'enzyme'
+import * as Navigation from 'utils/navigation'
 
 describe('PersonCard', () => {
   function renderPersonCard({
     deletable = false,
     editable = false,
     informationFlag = undefined,
-    mode = 'show',
+    mode = SHOW_MODE,
     onCancel = () => null,
     onDelete = () => null,
     onEdit = () => null,
@@ -29,7 +31,7 @@ describe('PersonCard', () => {
       personName,
       informationPill,
     }
-    return shallow(<PersonCard {...props}/>, {disableLifecycleMethods: true})
+    return shallow(<PersonCard {...props}/>)
   }
 
   describe('mode is show', () => {
@@ -50,7 +52,7 @@ describe('PersonCard', () => {
     })
     it('renders div with id', () => {
       const component = renderPersonCard({
-        mode: 'show',
+        mode: SHOW_MODE,
         personId: '42',
       })
       const div = component.find('div.card')
@@ -91,7 +93,7 @@ describe('PersonCard', () => {
         informationFlag: 'Sensitive Or Sealed',
         personName: 'John Q. Public',
         informationPill: 'Deceased',
-        mode: 'edit',
+        mode: EDIT_MODE,
         onDelete,
         onEdit,
       })
@@ -106,7 +108,7 @@ describe('PersonCard', () => {
     })
     it('renders div with id', () => {
       const component = renderPersonCard({
-        mode: 'edit',
+        mode: EDIT_MODE,
         personId: '42',
       })
       const div = component.find('div.card')
@@ -119,7 +121,7 @@ describe('PersonCard', () => {
           deletable={true}
           edit={<p>Editing</p>}
           editable={true}
-          mode='edit'
+          mode={EDIT_MODE}
           onCancel={() => {}}
           onSave={() => {}}
           personId='1234'
@@ -131,22 +133,98 @@ describe('PersonCard', () => {
     })
 
     it('renders a card action row', () => {
-      const component = renderPersonCard({mode: 'edit'})
+      const component = renderPersonCard({mode: EDIT_MODE})
       expect(component.find('CardActionRow').exists()).toEqual(true)
+      expect(component.find('CardActionRow').props().isSaving).not.toBeTruthy()
     })
 
     it('canceling edit calls onCancel', () => {
       const onCancel = jasmine.createSpy('onCancel')
-      const component = renderPersonCard({onCancel, mode: 'edit'})
+      const component = renderPersonCard({onCancel, mode: EDIT_MODE})
       component.find('CardActionRow').props().onCancel()
       expect(onCancel).toHaveBeenCalled()
     })
 
     it('saving changes calls onSave', () => {
       const onSave = jasmine.createSpy('onSave')
-      const component = renderPersonCard({onSave, mode: 'edit'})
+      const component = renderPersonCard({onSave, mode: EDIT_MODE})
       component.find('CardActionRow').props().onSave()
       expect(onSave).toHaveBeenCalled()
+    })
+
+    it('navigates to itself when transitioning to show mode', () => {
+      const id = '8675309'
+      spyOn(Navigation, 'setHash')
+      const component = renderPersonCard({mode: EDIT_MODE, personId: id})
+      expect(Navigation.setHash).not.toHaveBeenCalled()
+
+      component.setProps({mode: SHOW_MODE})
+      expect(Navigation.setHash).toHaveBeenCalledWith(`#participants-card-${id}`)
+    })
+  })
+  describe('mode is saving', () => {
+    it('displays a card header', () => {
+      const onDelete = jasmine.createSpy('onDelete')
+      const onEdit = jasmine.createSpy('onEdit')
+      const component = renderPersonCard({
+        editable: true,
+        deletable: false,
+        informationFlag: 'Sensitive Or Sealed',
+        personName: 'John Q. Public',
+        informationPill: 'Deceased',
+        mode: SAVING_MODE,
+        onDelete,
+        onEdit,
+      })
+      const cardHead = component.find('PersonCardHeader')
+      expect(cardHead.props().informationFlag).toEqual('Sensitive Or Sealed')
+      expect(cardHead.props().showDelete).toEqual(false)
+      expect(cardHead.props().showEdit).toEqual(false)
+      expect(cardHead.props().onDelete).toEqual(onDelete)
+      expect(cardHead.props().onEdit).toEqual(onEdit)
+      expect(cardHead.props().title).toEqual('John Q. Public')
+      expect(cardHead.props().informationPill).toEqual('Deceased')
+    })
+    it('renders div with id and "edit" as the className', () => {
+      const component = renderPersonCard({
+        mode: SAVING_MODE,
+        personId: '42',
+      })
+      const div = component.find('div.card')
+      expect(div.props().className).toContain('edit')
+      expect(div.props().id).toContain('participants-card-42')
+    })
+    it('renders edit children', () => {
+      const component = shallow(
+        <PersonCard
+          deletable={true}
+          edit={<p>Editing</p>}
+          editable={true}
+          mode={SAVING_MODE}
+          onCancel={() => {}}
+          onSave={() => {}}
+          personId='1234'
+          personName='Bob Smith'
+          show={<p>Showing</p>}
+        />
+      )
+      expect(component.find('.card-body').children('p').at(0).text()).toEqual('Editing')
+    })
+
+    it('renders a "saving" card action row', () => {
+      const component = renderPersonCard({mode: SAVING_MODE})
+      expect(component.find('CardActionRow').exists()).toEqual(true)
+      expect(component.find('CardActionRow').props().isSaving).toEqual(true)
+    })
+
+    it('navigates to itself when transitioning to show mode', () => {
+      const id = '8675309'
+      spyOn(Navigation, 'setHash')
+      const component = renderPersonCard({mode: SAVING_MODE, personId: id})
+      expect(Navigation.setHash).not.toHaveBeenCalled()
+
+      component.setProps({mode: SHOW_MODE})
+      expect(Navigation.setHash).toHaveBeenCalledWith(`#participants-card-${id}`)
     })
   })
 })

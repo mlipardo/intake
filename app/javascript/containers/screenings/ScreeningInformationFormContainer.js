@@ -60,7 +60,7 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => ({
       dispatchProps.dispatch(saveCard(cardName))
     }
     dispatchProps.dispatch(touchAllFields())
-    ownProps.onShow()
+    ownProps.onSave()
   },
 })
 

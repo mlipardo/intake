@@ -1,5 +1,6 @@
 import {Map} from 'immutable'
 import {createSelector} from 'reselect'
+import {SHOW_MODE} from 'actions/screeningPageActions'
 import {selectParticipants} from 'selectors/participantSelectors'
 import {participantFlag} from 'utils/accessIndicator'
 import nameFormatter from 'utils/nameFormatter'
@@ -26,5 +27,5 @@ export const getPersonInformationFlagValuesSelector = createSelector(
 )
 export const getModeValueSelector = (state, personId) => {
   const screeningPage = state.get('screeningPage')
-  return screeningPage.getIn(['peopleCards', personId], 'show')
+  return screeningPage.getIn(['peopleCards', personId], SHOW_MODE)
 }

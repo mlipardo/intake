@@ -12,8 +12,8 @@ export const CLEAR_TIME = 'CLEAR_TIME'
 export function updatePersonSuccess(person) {
   return {type: UPDATE_PERSON_COMPLETE, payload: {person}}
 }
-export function updatePersonFailure(error) {
-  return {type: UPDATE_PERSON_COMPLETE, payload: {error}, error: true}
+export function updatePersonFailure(error, personId) {
+  return {type: UPDATE_PERSON_COMPLETE, payload: {error, personId}, error: true}
 }
 export function savePerson(personId) {
   return {type: UPDATE_PERSON, payload: {personId}}

@@ -18,6 +18,7 @@ import {
   generateBabyDoe,
   generateBabyDoeSaga,
 } from 'sagas/generateBabyDoeSaga'
+import * as SaveScreeningCardSagas from 'sagas/saveScreeningCardSaga'
 import {
   getScreeningWithEditsSelector as getScreeningWithScreeningInformationEditsSelector,
 } from 'selectors/screening/screeningInformationFormSelectors'
@@ -46,6 +47,7 @@ describe('triggerSSB', () => {
   }
 
   it('adds Baby Doe and Caretaker Doe', () => {
+    spyOn(SaveScreeningCardSagas, 'quietlySaveScreeningCard')
     const gen = generateBabyDoe({payload: screening_id})
     expect(gen.next().value).toEqual(select(getScreeningWithScreeningInformationEditsSelector))
     expect(gen.next(fromJS(screening)).value).toEqual(call(http.put, '/api/v1/screenings/1', {screening}))
@@ -79,7 +81,10 @@ describe('triggerSSB', () => {
       perpetratorId: '222',
       allegationTypes: ['Caretaker absent/incapacity'],
     })))
-    expect(gen.next().value).toEqual(put(saveCard(allegationsCardName)))
+    gen.next()
+    expect(
+      SaveScreeningCardSagas.quietlySaveScreeningCard
+    ).toHaveBeenCalledWith(saveCard(allegationsCardName))
   })
 
   it('puts createPersonFailure when Baby Doe fails', () => {

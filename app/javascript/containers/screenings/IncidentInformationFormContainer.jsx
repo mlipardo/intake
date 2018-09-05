@@ -32,7 +32,7 @@ const mapStateToProps = (state) => ({
   locationOfChildren: getLocationOfChildrenSelector(state),
 })
 
-export const mapDispatchToProps = (dispatch, {onShow}) => ({
+export const mapDispatchToProps = (dispatch, {onSave, onShow}) => ({
   onBlur: (fieldName) => dispatch(touchField(fieldName)),
   onCancel: () => {
     dispatch(clearCardEdits(cardName))
@@ -43,7 +43,7 @@ export const mapDispatchToProps = (dispatch, {onShow}) => ({
   onSave: () => {
     dispatch(saveCard(cardName))
     dispatch(touchAllFields())
-    onShow()
+    onSave()
   },
 })
 

@@ -1,25 +1,26 @@
+import {SHOW_MODE, SAVING_MODE, setPersonCardMode} from 'actions/screeningPageActions'
 import {mapDispatchToProps} from 'containers/screenings/PersonCardContainer'
-import * as Navigation from 'utils/navigation'
 
 describe('PersonCardContainer', () => {
   describe('mapDispatchToProps', () => {
+    const id = '34592'
+    let dispatch
+    let props
     beforeEach(() => {
-      spyOn(Navigation, 'setHash')
+      dispatch = jasmine.createSpy('dispatch')
+      props = mapDispatchToProps(dispatch, {personId: id})
     })
+
     describe('when saving', () => {
-      it('navigates to the card', () => {
-        const dispatch = jasmine.createSpy('dispatch')
-        const {onSave} = mapDispatchToProps(dispatch, {personId: '34592'})
-        onSave()
-        expect(Navigation.setHash).toHaveBeenCalledWith('#participants-card-34592')
+      it('sets the card to saving mode', () => {
+        props.onSave()
+        expect(dispatch).toHaveBeenCalledWith(setPersonCardMode(id, SAVING_MODE))
       })
     })
     describe('when canceling', () => {
-      it('navigates to the card', () => {
-        const dispatch = jasmine.createSpy('dispatch')
-        const {onCancel} = mapDispatchToProps(dispatch, {personId: '34592'})
-        onCancel()
-        expect(Navigation.setHash).toHaveBeenCalledWith('#participants-card-34592')
+      it('sets the card to show mode', () => {
+        props.onCancel()
+        expect(dispatch).toHaveBeenCalledWith(setPersonCardMode(id, SHOW_MODE))
       })
     })
   })

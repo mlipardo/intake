@@ -66,7 +66,10 @@ feature 'Edit Person' do
     scenario 'saves the person information' do
       stub_request(:put,
         ferb_api_url(FerbRoutes.screening_participant_path(screening[:id], marge.id)))
-        .and_return(json_body(marge.to_json, status: 200))
+        .and_return(proc {
+          sleep 2
+          json_body(marge.to_json, status: 200)
+        })
       visit edit_screening_path(id: screening[:id])
       within edit_participant_card_selector(marge.id) do
         within '.card-header' do
@@ -96,6 +99,7 @@ feature 'Edit Person' do
           select 'Sr', from: 'Suffix'
         end
         click_button 'Save'
+        expect(page).to have_button('Saving', disabled: true)
       end
 
       expect(

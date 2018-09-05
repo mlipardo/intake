@@ -8,14 +8,12 @@ services:
     volumes:
       - ../../reports:/reports
     environment:
-      API_URL: "http://api"
       FERB_API_URL: "https://ferbapi.preint.cwds.io"
       DORA_API_URL: "https://doraapi.preint.cwds.io"
       RAILS_ENV: test
       NODE_ENV: test
       CI_REPORTS: /reports
       GENERATE_TEST_REPORTS: 'yes'
-      USE_XVFB: 'true'
       REDIS_HOST: 'redis'
       TZ: US/Pacific
       REDIS_PORT: 6379

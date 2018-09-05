@@ -34,7 +34,6 @@ module CaIntake # :nodoc:
     URL
 
     config.intake = {
-      api_url: ENV.fetch('API_URL', nil),
       authentication_base_url: ENV.fetch('AUTHENTICATION_URL', ''),
       authentication_login_url: authentication_login_url,
       authentication_logout_url: authentication_logout_url,

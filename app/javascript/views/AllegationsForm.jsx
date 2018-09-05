@@ -8,6 +8,7 @@ const AllegationsForm = ({
   alertErrorMessage,
   allegations,
   allegationTypes,
+  isSaving,
   onCancel,
   onChange,
   onSave,
@@ -56,7 +57,7 @@ const AllegationsForm = ({
         </table>
       </div>
     </div>
-    <CardActionRow onCancel={onCancel} onSave={onSave} />
+    <CardActionRow onCancel={onCancel} onSave={onSave} isSaving={isSaving} />
   </div>
 )
 
@@ -73,6 +74,7 @@ AllegationsForm.propTypes = {
     perpetrarorId: PropTypes.string,
     allegationTypes: PropTypes.arrayOf(PropTypes.string),
   })).isRequired,
+  isSaving: PropTypes.bool,
   onCancel: PropTypes.func,
   onChange: PropTypes.func,
   onSave: PropTypes.func,

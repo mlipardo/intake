@@ -10,8 +10,7 @@ feature 'API call' do
 
   it_behaves_like :authenticated do
     context 'responds with unauthorized error' do
-      scenario 'redirectes user to login with full callback path',
-        browser: :poltergeist do
+      scenario 'redirectes user to login with full callback path' do
         stub_empty_relationships
         stub_empty_history_for_screening(screening)
         stub_request(:get, ferb_api_url(FerbRoutes.screenings_path)).and_return(

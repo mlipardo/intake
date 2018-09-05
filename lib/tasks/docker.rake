@@ -9,11 +9,8 @@ namespace :docker do # rubocop:disable BlockLength
   task :reup do
     run_commands [
       'docker-compose down',
-      'docker-compose run --rm api bundle',
       'docker-compose run --rm ca_intake bundle',
-      'docker-compose up -d',
-      'docker-compose exec api bash -c "bundle exec rake db:structure:dump"',
-      'docker-compose exec api bash -c "RAILS_ENV=test bundle exec rake db:test:load"'
+      'docker-compose up -d'
     ]
   end
   desc 'Cleans docker of old dangling containers & images'
@@ -47,21 +44,12 @@ namespace :docker do # rubocop:disable BlockLength
     task :intake do
       system 'docker-compose logs -f ca_intake'
     end
-    desc 'Show logs for api container'
-    task :api do
-      system 'docker-compose logs -f api'
-    end
   end
 
   namespace :console do
     desc 'Start rails console in ca_intake container'
     task :intake do
       system 'docker-compose exec ca_intake bundle exec rails console'
-    end
-
-    desc 'Start rails console in api container'
-    task :api do
-      system 'docker-compose exec api bundle exec rails console'
     end
   end
 end

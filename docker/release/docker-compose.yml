@@ -13,7 +13,6 @@ services:
       - webroot:/ca_intake
     environment:
       RAILS_ENV: production
-      API_URL: "http://app:3000"
       SECRET_KEY_BASE: "kiHthL9VZLTDgVbryIuVefuFqVAX9lHNvUHysYZAFaA="
   nginx:
     build:

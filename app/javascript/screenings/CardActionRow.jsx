@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import LoadingButton from 'common/LoadingButton'
+import SavingButton from 'common/SavingButton'
 
-const CardActionRow = ({isLoading, onCancel, onSave}) => (
+const CardActionRow = ({isSaving, onCancel, onSave}) => (
   <div className='row'>
     <div className='col-md-12'>
       <div className='pull-right'>
-        {!isLoading &&
+        {!isSaving &&
           <button className='btn btn-default' onClick={onCancel}>Cancel</button>}
-        {isLoading ?
-          <LoadingButton text='Saving'/> :
+        {isSaving ?
+          <SavingButton text='Saving'/> :
           <button className='btn btn-primary' onClick={onSave}>Save</button>}
       </div>
     </div>
@@ -17,7 +17,7 @@ const CardActionRow = ({isLoading, onCancel, onSave}) => (
 )
 
 CardActionRow.propTypes = {
-  isLoading: PropTypes.bool,
+  isSaving: PropTypes.bool,
   onCancel: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
 }

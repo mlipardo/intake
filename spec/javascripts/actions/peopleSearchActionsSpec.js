@@ -2,6 +2,7 @@ import {
   clear,
   fetchFailure,
   fetchSuccess,
+  toggleAddressSearch,
   loadMoreResults,
   loadMoreResultsSuccess,
   loadMoreResultsFailure,
@@ -58,6 +59,11 @@ describe('peopleSearchActions', () => {
 
   it('setSearchTerm is FSA compliant', () => {
     const action = setSearchTerm('hello')
+    expect(isFSA(action)).toEqual(true)
+  })
+
+  it('toggleAddressSearch is FSA compliant', () => {
+    const action = toggleAddressSearch({})
     expect(isFSA(action)).toEqual(true)
   })
 })

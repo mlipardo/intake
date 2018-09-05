@@ -62,8 +62,8 @@
 
 .anchor {
   display: inline-block;
-  height: 13rem;
-  margin-top: -13rem;
+  height: $banner-height + $page-header-height + $error-banner-height;
+  margin-top: 0 - ($banner-height + $page-header-height + $error-banner-height);
   visibility: hidden;
 }
 
@@ -205,6 +205,10 @@ header {
   padding-top: $page-header-height + $banner-height;
 }
 
+.back-to-dashboard-error {
+  padding-top: $page-header-height + $banner-height + $error-banner-height;
+}
+
 .hotline-inner-container,
 .snapshot-inner-container,
 .back-to-dashboard {
@@ -217,4 +221,8 @@ header {
 
 .profile-avatar ul {
   z-index: 1002;
+}
+
+.address-search {
+  margin-top: 4.2rem;
 }

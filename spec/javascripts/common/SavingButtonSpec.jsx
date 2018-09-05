@@ -1,9 +1,9 @@
-import LoadingButton from 'common/LoadingButton'
+import SavingButton from 'common/SavingButton'
 import React from 'react'
 import {shallow} from 'enzyme'
 
-describe('LoadingButton', () => {
-  const render = (props) => shallow(<LoadingButton {...props}/>)
+describe('SavingButton', () => {
+  const render = (props) => shallow(<SavingButton {...props}/>)
 
   it('is a button', () => {
     expect(render().find('button').exists()).toEqual(true)
@@ -17,8 +17,8 @@ describe('LoadingButton', () => {
     expect(render().find('.btn-icon').exists()).toEqual(true)
   })
 
-  it('renders a Loading Indicator', () => {
-    expect(render().find('button LoadingIndicator').exists()).toEqual(true)
+  it('renders a Saving Indicator', () => {
+    expect(render().find('button SavingIndicator').exists()).toEqual(true)
   })
 
   it('renders the given text', () => {

@@ -16,6 +16,7 @@ const ScreeningDecisionForm = ({
   decisionDetailOptions,
   decisionOptions,
   isAdditionalInfoRequired,
+  isSaving,
   onBlur,
   onCancel,
   onChange,
@@ -135,7 +136,7 @@ const ScreeningDecisionForm = ({
         <a href={sdmPath} target='_blank' id='complete_sdm'>Complete SDM</a>
       </div>
     </div>
-    <CardActionRow onCancel={onCancel} onSave={onSave} />
+    <CardActionRow onCancel={onCancel} onSave={onSave} isSaving={isSaving}/>
   </div>
 )
 
@@ -170,6 +171,7 @@ ScreeningDecisionForm.propTypes = {
     label: PropTypes.string,
   })),
   isAdditionalInfoRequired: PropTypes.bool,
+  isSaving: PropTypes.bool,
   onBlur: PropTypes.func,
   onCancel: PropTypes.func,
   onChange: PropTypes.func,

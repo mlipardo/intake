@@ -178,7 +178,7 @@ feature 'Show Screening' do
       end
     end
 
-    scenario 'cannot view an existing screening', browser: :poltergeist do
+    scenario 'cannot view an existing screening' do
       stub_request(
         :get, ferb_api_url(FerbRoutes.intake_screening_path(existing_screening[:id]))
       ).and_return(json_body(existing_screening.to_json))

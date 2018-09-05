@@ -6,8 +6,22 @@ import SelectField from 'common/SelectField'
 import TextAreaCount from 'common/TextAreaCount'
 import CardActionRow from 'screenings/CardActionRow'
 
-const IncidentInformationForm = ({incidentDate, errors, onChange, onBlur, address, usStates, selectedCounty, counties,
-  selectedLocationType, locationTypes, locationOfChildren, onSave, onCancel}) => (
+const IncidentInformationForm = ({
+  incidentDate,
+  errors,
+  onChange,
+  onBlur,
+  address,
+  usStates,
+  selectedCounty,
+  counties,
+  selectedLocationType,
+  locationTypes,
+  locationOfChildren,
+  onSave,
+  onCancel,
+  isSaving,
+}) => (
   <div className='card-body'>
     <div className='row'>
       <DateField
@@ -111,7 +125,7 @@ const IncidentInformationForm = ({incidentDate, errors, onChange, onBlur, addres
         />
       </div>
     </div>
-    <CardActionRow onCancel={onCancel} onSave={onSave} />
+    <CardActionRow onCancel={onCancel} onSave={onSave} isSaving={isSaving} />
   </div>
 )
 
@@ -134,6 +148,7 @@ IncidentInformationForm.propTypes = {
     }),
   }),
   incidentDate: PropTypes.string,
+  isSaving: PropTypes.bool,
   locationOfChildren: PropTypes.string,
   locationTypes: PropTypes.arrayOf(PropTypes.shape({
     locations: PropTypes.arrayOf(PropTypes.string),

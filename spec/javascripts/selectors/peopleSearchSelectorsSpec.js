@@ -4,6 +4,7 @@ import {RESIDENCE_TYPE} from 'enums/AddressType'
 import {
   getPeopleResultsSelector,
   getLastResultsSortValueSelector,
+  getSearchAddressValueSelector,
   getStartTimeSelector,
   getPersonCreatedAtTimeSelector,
 } from 'selectors/peopleSearchSelectors'
@@ -465,6 +466,16 @@ describe('peopleSearchSelectors', () => {
       }]
       const state = fromJS({relationshipsQueryCycleTime})
       expect(getPersonCreatedAtTimeSelector(state)).toEqual(1534190832860)
+    })
+  })
+
+  describe('getSearchAddressValueSelector', () => {
+    it('gets search address value', () => {
+      const peopleSearch = {
+        isAddressIncluded: true,
+      }
+      const state = fromJS({peopleSearch})
+      expect(getSearchAddressValueSelector(state)).toEqual(true)
     })
   })
 })

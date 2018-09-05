@@ -1,36 +1,41 @@
-import ScreeningCreateRelationshipContainer from 'containers/screenings/ScreeningCreateRelationshipContainer'
-import React from 'react'
-import {createMockStore} from 'redux-test-utils'
-import {fromJS} from 'immutable'
-import {shallow} from 'enzyme'
+import {
+  batchCreateRelationships,
+  setFieldCandidate,
+  resetFieldCandidate,
+} from 'actions/relationshipsActions'
+import {mapDispatchToProps} from 'containers/screenings/ScreeningCreateRelationshipContainer'
 
 describe('ScreeningCreateRelationshipContainer', () => {
-  const state = fromJS({
-    relationships: [{
-      date_of_birth: '2014-01-15', first_name: 'Mohammed', gender: 'male',
-      id: '1', last_name: 'John', middle_name: '',
-      name_suffix: '', sealed: false, sensitive: false,
-      candidate_to: [{
-        candidate_age: 20, candidate_first_name: 'Tina', candidate_id: '5508',
-        candidate_last_name: 'Carwithan', candidate_middle_name: '',
-        candidate_name_suffix: '',
-      }],
-      relationships: [{}],
-    }],
-  })
-  const store = createMockStore(state)
-  let component
-  beforeEach(() => {
-    const context = {store}
-    component = shallow(<ScreeningCreateRelationshipContainer personId='1'/>, {context}, {disableLifecycleMethods: true})
-  })
-
-  it('renders candidates', () => {
-    expect(component.find('ScreeningCreateRelationship').props()).toEqual({
-      personId: '1',
-      candidates: [{
-        person: {dateOfBirth: '01/15/2014', legacyId: undefined, name: 'Mohammed John', gender: 'male', age: ''},
-        candidate: {candidateId: '5508', name: 'Tina Carwithan', gender: undefined, dateOfBirth: '', age: ''}}],
+  describe('mapDispatchToProps', () => {
+    let dispatch
+    let props
+    beforeEach(() => {
+      dispatch = jasmine.createSpy('dispatch')
+      props = mapDispatchToProps(dispatch)
+    })
+    describe('when changing', () => {
+      it('calls setFieldCandidate with person id, candidate id, fieldSet, and value', () => {
+        const {onChange} = props
+        onChange('1', '805', 'relationshipType', '190')
+        expect(dispatch).toHaveBeenCalled()
+        expect(dispatch).toHaveBeenCalledWith(setFieldCandidate('1', '805', 'relationshipType', '190'))
+      })
+    })
+    describe('when canceling', () => {
+      it('calls resetFieldCandidate with person id', () => {
+        const {onCancel} = props
+        onCancel('805')
+        expect(dispatch).toHaveBeenCalled()
+        expect(dispatch).toHaveBeenCalledWith(resetFieldCandidate('805'))
+      })
+    })
+    describe('when saving', () => {
+      it('calls saving with person id', () => {
+        const {onSave} = props
+        onSave('805')
+        expect(dispatch).toHaveBeenCalled()
+        expect(dispatch).toHaveBeenCalledWith(batchCreateRelationships('805'))
+      })
     })
   })
 })

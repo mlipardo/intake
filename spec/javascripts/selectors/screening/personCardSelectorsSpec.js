@@ -1,3 +1,4 @@
+import {EDIT_MODE, SHOW_MODE} from 'actions/screeningPageActions'
 import {fromJS} from 'immutable'
 import {
   getPersonNamesSelector,
@@ -57,25 +58,25 @@ describe('personCardSelectors', () => {
   })
   describe('getModeValueSelector', () => {
     const screeningPage = {
-      mode: 'edit',
-      peopleCards: {person_id_A: 'show'},
+      mode: EDIT_MODE,
+      peopleCards: {person_id_A: SHOW_MODE},
     }
     const state = fromJS({screeningPage})
     describe('when a person id is present in screening page', () => {
       it('returns the mode for that person card', () => {
-        expect(getModeValueSelector(state, 'person_id_A')).toEqual('show')
+        expect(getModeValueSelector(state, 'person_id_A')).toEqual(SHOW_MODE)
       })
     })
     describe('when a person id is not present in screening page', () => {
-      it("returns 'show' by default", () => {
-        expect(getModeValueSelector(state, 'person_id_Z')).toEqual('show')
+      it('returns SHOW_MODE by default', () => {
+        expect(getModeValueSelector(state, 'person_id_Z')).toEqual(SHOW_MODE)
       })
     })
     describe('when no people card modes are stored', () => {
-      const screeningPage = {mode: 'edit'}
+      const screeningPage = {mode: EDIT_MODE}
       const state = fromJS({screeningPage})
-      it("returns 'show' by default", () => {
-        expect(getModeValueSelector(state, 'person_id_Z')).toEqual('show')
+      it('returns SHOW_MODE by default', () => {
+        expect(getModeValueSelector(state, 'person_id_Z')).toEqual(SHOW_MODE)
       })
     })
   })
