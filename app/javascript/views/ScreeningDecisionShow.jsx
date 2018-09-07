@@ -46,7 +46,7 @@ const ScreeningDecisionShow = ({
     </div>
     <div className='row'>
       <div className='col-md-12'>
-        <ShowField textWrapClassNames='text-area-show' label='Additional Information' errors={additionalInformation.errors} required={isAdditionalInfoRequired}>
+        <ShowField label='Additional Information' errors={additionalInformation.errors} required={isAdditionalInfoRequired}>
           {additionalInformation.value}
         </ShowField>
         {accessRestriction.value &&

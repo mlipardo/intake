@@ -17,7 +17,7 @@ const WorkerSafetyShow = ({safetyAlerts, safetyInformation}) => (
       </ShowField>
     </div>
     <div className='row'>
-      <ShowField gridClassName='col-md-12' textWrapClassNames='text-area-show' labelClassName='no-gap' label='Additional Safety Information'>
+      <ShowField gridClassName='col-md-12' labelClassName='no-gap' label='Additional Safety Information'>
         {safetyInformation || ''}
       </ShowField>
     </div>
