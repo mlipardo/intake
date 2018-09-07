@@ -3,7 +3,7 @@ import ErrorMessages from 'common/ErrorMessages'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-const ShowField = ({children, errors, gridClassName, labelClassName, htmlFor, label, required, value}) => {
+const ShowField = ({children, errors, gridClassName, labelClassName, htmlFor, label, required}) => {
   const emptyArrayLength = 0
   const hasErrors = errors && errors.length > emptyArrayLength
   const gridClassNames = ClassNames(gridClassName, {'input-error': hasErrors})
@@ -15,17 +15,14 @@ const ShowField = ({children, errors, gridClassName, labelClassName, htmlFor, la
       <div className={labelClassNames}>
         {label}
       </div>
-      <div>
-        {value}
-      </div>
-      <ErrorMessages ariaDescribedBy={htmlFor} errors={errors}/>
       <span className='text-area-show'>{children || '\u00A0'}</span>
+      <ErrorMessages ariaDescribedBy={htmlFor} errors={errors}/>
     </div>
   )
 }
 
 ShowField.propTypes = {
-  children: PropTypes.any,
+  children: PropTypes.node,
   errors: PropTypes.array,
   gridClassName: PropTypes.string,
   htmlFor: PropTypes.string,
