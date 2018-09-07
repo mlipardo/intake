@@ -73,7 +73,7 @@ class PersonSearchQueryBuilder
       match_query(:'last_name.phonetic', term, LOW_BOOST),
       match_query(:date_of_birth_as_text, term, HIGH_BOOST),
       match_query(:ssn, term, HIGH_BOOST)
-    ]
+    ] + PersonSearchByAddress.new.search_by_address(term)
   end
 
   def fuzzy_query
