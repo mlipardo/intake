@@ -7,12 +7,12 @@ class PersonSearchByAddress
   HIGH_BOOST = 7
   def search_by_address(term)
     [
-      match_query(:'address.street_name', term, HIGH_BOOST),
-      match_query(:'address.street_number', term, HIGH_BOOST),
-      match_query(:'address.city', term, HIGH_BOOST),
-      match_query(:'address.county', term, HIGH_BOOST),
-      match_query(:'address.state_code', term, HIGH_BOOST),
-      match_query(:'address.zip', term, HIGH_BOOST)
+      match_query(:'addresses.street_name', term, HIGH_BOOST),
+      match_query(:'addresses.street_number', term, HIGH_BOOST),
+      match_query(:'addresses.city', term, HIGH_BOOST),
+      match_query(:'addresses.county', term, HIGH_BOOST),
+      match_query(:'addresses.state_code', term, HIGH_BOOST),
+      match_query(:'addresses.zip', term, HIGH_BOOST)
     ]
   end
 

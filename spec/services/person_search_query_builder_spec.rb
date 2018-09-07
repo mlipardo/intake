@@ -170,6 +170,54 @@ describe PersonSearchQueryBuilder do
                       boost: high_boost
                     }
                   }
+                },
+                {
+                  match: {
+                    'addresses.street_name': {
+                      query: 'this is my search term',
+                      boost: high_boost
+                    }
+                  }
+                },
+                {
+                  match: {
+                    'addresses.street_number': {
+                      query: 'this is my search term',
+                      boost: high_boost
+                    }
+                  }
+                },
+                {
+                  match: {
+                    'addresses.city': {
+                      query: 'this is my search term',
+                      boost: high_boost
+                    }
+                  }
+                },
+                {
+                  match: {
+                    'addresses.county': {
+                      query: 'this is my search term',
+                      boost: high_boost
+                    }
+                  }
+                },
+                {
+                  match: {
+                    'addresses.state_code': {
+                      query: 'this is my search term',
+                      boost: high_boost
+                    }
+                  }
+                },
+                {
+                  match: {
+                    'addresses.zip': {
+                      query: 'this is my search term',
+                      boost: high_boost
+                    }
+                  }
                 }
               ]
             }
@@ -331,6 +379,54 @@ describe PersonSearchQueryBuilder do
                       boost: high_boost
                     }
                   }
+                },
+                {
+                  match: {
+                    'addresses.street_name': {
+                      query: 'this is my search term',
+                      boost: high_boost
+                    }
+                  }
+                },
+                {
+                  match: {
+                    'addresses.street_number': {
+                      query: 'this is my search term',
+                      boost: high_boost
+                    }
+                  }
+                },
+                {
+                  match: {
+                    'addresses.city': {
+                      query: 'this is my search term',
+                      boost: high_boost
+                    }
+                  }
+                },
+                {
+                  match: {
+                    'addresses.county': {
+                      query: 'this is my search term',
+                      boost: high_boost
+                    }
+                  }
+                },
+                {
+                  match: {
+                    'addresses.state_code': {
+                      query: 'this is my search term',
+                      boost: high_boost
+                    }
+                  }
+                },
+                {
+                  match: {
+                    'addresses.zip': {
+                      query: 'this is my search term',
+                      boost: high_boost
+                    }
+                  }
                 }
               ]
             }
@@ -459,6 +555,54 @@ describe PersonSearchQueryBuilder do
                     {
                       match: {
                         ssn: {
+                          query: expected_results[index],
+                          boost: high_boost
+                        }
+                      }
+                    },
+                    {
+                      match: {
+                        'addresses.street_number': {
+                          query: expected_results[index],
+                          boost: high_boost
+                        }
+                      }
+                    },
+                    {
+                      match: {
+                        'addresses.street_name': {
+                          query: expected_results[index],
+                          boost: high_boost
+                        }
+                      }
+                    },
+                    {
+                      match: {
+                        'addresses.city': {
+                          query: expected_results[index],
+                          boost: high_boost
+                        }
+                      }
+                    },
+                    {
+                      match: {
+                        'addresses.county': {
+                          query: expected_results[index],
+                          boost: high_boost
+                        }
+                      }
+                    },
+                    {
+                      match: {
+                        'addresses.state_code': {
+                          query: expected_results[index],
+                          boost: high_boost
+                        }
+                      }
+                    },
+                    {
+                      match: {
+                        'addresses.zip': {
                           query: expected_results[index],
                           boost: high_boost
                         }
@@ -595,6 +739,54 @@ describe PersonSearchQueryBuilder do
                           boost: high_boost
                         }
                       }
+                    },
+                    {
+                      match: {
+                        'addresses.street_number': {
+                          query: expected_results[index],
+                          boost: high_boost
+                        }
+                      }
+                    },
+                    {
+                      match: {
+                        'addresses.street_name': {
+                          query: expected_results[index],
+                          boost: high_boost
+                        }
+                      }
+                    },
+                    {
+                      match: {
+                        'addresses.city': {
+                          query: expected_results[index],
+                          boost: high_boost
+                        }
+                      }
+                    },
+                    {
+                      match: {
+                        'addresses.county': {
+                          query: expected_results[index],
+                          boost: high_boost
+                        }
+                      }
+                    },
+                    {
+                      match: {
+                        'addresses.state_code': {
+                          query: expected_results[index],
+                          boost: high_boost
+                        }
+                      }
+                    },
+                    {
+                      match: {
+                        'addresses.zip': {
+                          query: expected_results[index],
+                          boost: high_boost
+                        }
+                      }
                     }
                   ]
                 }
@@ -706,6 +898,54 @@ describe PersonSearchQueryBuilder do
                   {
                     match: {
                       ssn: {
+                        query: expected_search_term,
+                        boost: high_boost
+                      }
+                    }
+                  },
+                  {
+                    match: {
+                      'addresses.street_name': {
+                        query: expected_search_term,
+                        boost: high_boost
+                      }
+                    }
+                  },
+                  {
+                    match: {
+                      'addresses.street_number': {
+                        query: expected_search_term,
+                        boost: high_boost
+                      }
+                    }
+                  },
+                  {
+                    match: {
+                      'addresses.city': {
+                        query: expected_search_term,
+                        boost: high_boost
+                      }
+                    }
+                  },
+                  {
+                    match: {
+                      'addresses.county': {
+                        query: expected_search_term,
+                        boost: high_boost
+                      }
+                    }
+                  },
+                  {
+                    match: {
+                      'addresses.state_code': {
+                        query: expected_search_term,
+                        boost: high_boost
+                      }
+                    }
+                  },
+                  {
+                    match: {
+                      'addresses.zip': {
                         query: expected_search_term,
                         boost: high_boost
                       }
@@ -861,6 +1101,54 @@ describe PersonSearchQueryBuilder do
                     {
                       match: {
                         ssn: {
+                          query: expected_results[index],
+                          boost: high_boost
+                        }
+                      }
+                    },
+                    {
+                      match: {
+                        'addresses.street_name': {
+                          query: expected_results[index],
+                          boost: high_boost
+                        }
+                      }
+                    },
+                    {
+                      match: {
+                        'addresses.street_number': {
+                          query: expected_results[index],
+                          boost: high_boost
+                        }
+                      }
+                    },
+                    {
+                      match: {
+                        'addresses.city': {
+                          query: expected_results[index],
+                          boost: high_boost
+                        }
+                      }
+                    },
+                    {
+                      match: {
+                        'addresses.county': {
+                          query: expected_results[index],
+                          boost: high_boost
+                        }
+                      }
+                    },
+                    {
+                      match: {
+                        'addresses.state_code': {
+                          query: expected_results[index],
+                          boost: high_boost
+                        }
+                      }
+                    },
+                    {
+                      match: {
+                        'addresses.zip': {
                           query: expected_results[index],
                           boost: high_boost
                         }
