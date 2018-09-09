@@ -460,6 +460,53 @@ describe PersonSearchQueryBuilder do
             described_class.new(search_term: search_term).build
           ).to match(
             a_hash_including(
+              _source: [
+                'id',
+                'legacy_source_table',
+                'first_name',
+                'middle_name',
+                'last_name',
+                'name_suffix',
+                'gender',
+                'date_of_birth',
+                'date_of_death',
+                'ssn',
+                'languages',
+                'races',
+                'ethnicity',
+                'client_counties',
+                'addresses.id',
+                'addresses.effective_start_date',
+                'addresses.street_name',
+                'addresses.street_number',
+                'addresses.city',
+                'addresses.state_code',
+                'addresses.zip',
+                'addresses.type',
+                'addresses.legacy_descriptor',
+                'addresses.phone_numbers.number',
+                'addresses.phone_numbers.type',
+                'legacy_descriptor',
+                'highlight',
+                'phone_numbers.id',
+                'phone_numbers.number',
+                'phone_numbers.type',
+                'sensitivity_indicator',
+                'race_ethnicity',
+                'open_case_responsible_agency_code'
+              ],
+              highlight: {
+                order: 'score',
+                number_of_fragments:  number_of_fragments,
+                require_field_match: false,
+                fields: {
+                  'autocomplete_search_bar': auto_bar_highlight,
+                  'searchable_date_of_birth': {}
+                }
+              },
+              size: 10,
+              track_scores: true,
+              sort: [{ _score: 'desc', _uid: 'desc' }],
               query: {
                 bool: {
                   must: [
@@ -562,7 +609,7 @@ describe PersonSearchQueryBuilder do
                     },
                     {
                       match: {
-                        'addresses.street_number': {
+                        'addresses.street_name': {
                           query: expected_results[index],
                           boost: high_boost
                         }
@@ -570,7 +617,7 @@ describe PersonSearchQueryBuilder do
                     },
                     {
                       match: {
-                        'addresses.street_name': {
+                        'addresses.street_number': {
                           query: expected_results[index],
                           boost: high_boost
                         }
@@ -640,6 +687,53 @@ describe PersonSearchQueryBuilder do
             described_class.new(search_term: search_term).build
           ).to match(
             a_hash_including(
+              _source: [
+                'id',
+                'legacy_source_table',
+                'first_name',
+                'middle_name',
+                'last_name',
+                'name_suffix',
+                'gender',
+                'date_of_birth',
+                'date_of_death',
+                'ssn',
+                'languages',
+                'races',
+                'ethnicity',
+                'client_counties',
+                'addresses.id',
+                'addresses.effective_start_date',
+                'addresses.street_name',
+                'addresses.street_number',
+                'addresses.city',
+                'addresses.state_code',
+                'addresses.zip',
+                'addresses.type',
+                'addresses.legacy_descriptor',
+                'addresses.phone_numbers.number',
+                'addresses.phone_numbers.type',
+                'legacy_descriptor',
+                'highlight',
+                'phone_numbers.id',
+                'phone_numbers.number',
+                'phone_numbers.type',
+                'sensitivity_indicator',
+                'race_ethnicity',
+                'open_case_responsible_agency_code'
+              ],
+              highlight: {
+                order: 'score',
+                number_of_fragments:  number_of_fragments,
+                require_field_match: false,
+                fields: {
+                  'autocomplete_search_bar': auto_bar_highlight,
+                  'searchable_date_of_birth': {}
+                }
+              },
+              size: 10,
+              track_scores: true,
+              sort: [{ _score: 'desc', _uid: 'desc' }],
               query: {
                 bool: {
                   must: [
@@ -742,7 +836,7 @@ describe PersonSearchQueryBuilder do
                     },
                     {
                       match: {
-                        'addresses.street_number': {
+                        'addresses.street_name': {
                           query: expected_results[index],
                           boost: high_boost
                         }
@@ -750,7 +844,7 @@ describe PersonSearchQueryBuilder do
                     },
                     {
                       match: {
-                        'addresses.street_name': {
+                        'addresses.street_number': {
                           query: expected_results[index],
                           boost: high_boost
                         }
@@ -803,6 +897,53 @@ describe PersonSearchQueryBuilder do
           described_class.new(search_term: search_term).build
         ).to match(
           a_hash_including(
+            _source: [
+              'id',
+              'legacy_source_table',
+              'first_name',
+              'middle_name',
+              'last_name',
+              'name_suffix',
+              'gender',
+              'date_of_birth',
+              'date_of_death',
+              'ssn',
+              'languages',
+              'races',
+              'ethnicity',
+              'client_counties',
+              'addresses.id',
+              'addresses.effective_start_date',
+              'addresses.street_name',
+              'addresses.street_number',
+              'addresses.city',
+              'addresses.state_code',
+              'addresses.zip',
+              'addresses.type',
+              'addresses.legacy_descriptor',
+              'addresses.phone_numbers.number',
+              'addresses.phone_numbers.type',
+              'legacy_descriptor',
+              'highlight',
+              'phone_numbers.id',
+              'phone_numbers.number',
+              'phone_numbers.type',
+              'sensitivity_indicator',
+              'race_ethnicity',
+              'open_case_responsible_agency_code'
+            ],
+            highlight: {
+              order: 'score',
+              number_of_fragments:  number_of_fragments,
+              require_field_match: false,
+              fields: {
+                'autocomplete_search_bar': auto_bar_highlight,
+                'searchable_date_of_birth': {}
+              }
+            },
+            size: 10,
+            track_scores: true,
+            sort: [{ _score: 'desc', _uid: 'desc' }],
             query: {
               bool: {
                 must: [
@@ -1006,6 +1147,53 @@ describe PersonSearchQueryBuilder do
             described_class.new(search_term: search_term).build
           ).to match(
             a_hash_including(
+              _source: [
+                'id',
+                'legacy_source_table',
+                'first_name',
+                'middle_name',
+                'last_name',
+                'name_suffix',
+                'gender',
+                'date_of_birth',
+                'date_of_death',
+                'ssn',
+                'languages',
+                'races',
+                'ethnicity',
+                'client_counties',
+                'addresses.id',
+                'addresses.effective_start_date',
+                'addresses.street_name',
+                'addresses.street_number',
+                'addresses.city',
+                'addresses.state_code',
+                'addresses.zip',
+                'addresses.type',
+                'addresses.legacy_descriptor',
+                'addresses.phone_numbers.number',
+                'addresses.phone_numbers.type',
+                'legacy_descriptor',
+                'highlight',
+                'phone_numbers.id',
+                'phone_numbers.number',
+                'phone_numbers.type',
+                'sensitivity_indicator',
+                'race_ethnicity',
+                'open_case_responsible_agency_code'
+              ],
+              highlight: {
+                order: 'score',
+                number_of_fragments:  number_of_fragments,
+                require_field_match: false,
+                fields: {
+                  'autocomplete_search_bar': auto_bar_highlight,
+                  'searchable_date_of_birth': {}
+                }
+              },
+              size: 10,
+              track_scores: true,
+              sort: [{ _score: 'desc', _uid: 'desc' }],
               query: {
                 bool: {
                   must: [
