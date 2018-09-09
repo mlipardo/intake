@@ -124,7 +124,19 @@ describe PersonSearchRepository do
             { match: { date_of_birth_as_text: { query: 'robert barathian',
                                                 boost: high_boost } } },
             { match: { ssn: { query: 'robert barathian',
-                              boost: high_boost } } }
+                              boost: high_boost } } },
+            { match: { 'addresses.street_name': { query: 'robert barathian',
+                                                  boost: high_boost } } },
+            { match: { 'addresses.street_number': { query: 'robert barathian',
+                                                    boost: high_boost } } },
+            { match: { 'addresses.city': { query: 'robert barathian',
+                                           boost: high_boost } } },
+            { match: { 'addresses.county': { query: 'robert barathian',
+                                             boost: high_boost } } },
+            { match: { 'addresses.state_code': { query: 'robert barathian',
+                                                 boost: high_boost } } },
+            { match: { 'addresses.zip': { query: 'robert barathian',
+                                          boost: high_boost } } }
           ]
         }
       }
