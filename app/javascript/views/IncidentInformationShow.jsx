@@ -32,7 +32,7 @@ const IncidentInformationShow = ({incidentDate, incidentCounty, address, locatio
       </ShowField>
     </div>
     <div className='row'>
-      <ShowField gridClassName='col-md-12 ' textWrapClassNames='text-area-show' labelClassName='no-gap' label='Location of Children'>
+      <ShowField gridClassName='col-md-12' labelClassName='no-gap' label='Location of Children'>
         {locationOfChildren}
       </ShowField>
     </div>

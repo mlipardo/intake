@@ -13,7 +13,7 @@ describe('ShowField', () => {
       }
       component = shallow(<ShowField {...props}/>, {disableLifecycleMethods: true})
       expect(component.html())
-        .toEqual('<div class=""><div class="show-label">L1</div><div class=""></div><div></div><span><div>Italy</div></span></div>')
+        .toEqual('<div class=""><div class="show-label">L1</div><span class="text-area-show"><div>Italy</div></span><div></div></div>')
     })
   })
 
@@ -28,7 +28,7 @@ describe('ShowField', () => {
     it('renders the label inside the grid wrapper with the classes', () => {
       component = shallow(<ShowField {...props}/>, {disableLifecycleMethods: true})
       expect(component.html())
-        .toEqual('<div class="giggidy"><div class="working-class object-oriented-class show-label">Do not judge a component by its label</div><div class=""></div><div></div><span><br/></span></div>')
+        .toEqual('<div class="giggidy"><div class="working-class object-oriented-class show-label">Do not judge a component by its label</div><span class="text-area-show"><br/></span><div></div></div>')
       expect(component.find('div.giggidy').props()
         .className).toEqual('giggidy')
     })
@@ -44,8 +44,8 @@ describe('ShowField', () => {
 
     it('renders the children between the label and ErrorMessages', () => {
       const wrapper = shallow(<ShowField {...props}/>, {disableLifecycleMethods: true}).first('div')
-      expect(wrapper.children().length).toEqual(4)
-      expect(wrapper.childAt(3).html()).toEqual('<span><h1>Child</h1></span>')
+      expect(wrapper.children().length).toEqual(3)
+      expect(wrapper.childAt(1).html()).toEqual('<span class="text-area-show"><h1>Child</h1></span>')
       expect(wrapper.find('ErrorMessages').exists()).toEqual(true)
     })
   })
