@@ -6,6 +6,8 @@ import {
   createPersonFailure,
   updatePersonSuccess,
   updatePersonFailure,
+  deletePersonSuccess,
+  deletePersonFailure,
 } from 'actions/personCardActions'
 import {
   EDIT_MODE,
@@ -216,6 +218,32 @@ describe('screeningPageReducer', () => {
       const newState = screeningPageReducer(initialState, action)
       expect(newState.getIn(['peopleCards', 'bbb'])).toEqual(SHOW_MODE)
       expect(newState.getIn(['peopleCards', 'aaa'])).toEqual(SAVING_MODE)
+    })
+  })
+
+  describe('on DELETE_PERSON_COMPLETE', () => {
+    it('removes the people card by id', () => {
+      const initialState = fromJS({
+        mode: EDIT_MODE,
+        peopleCards: {
+          aaa: EDIT_MODE,
+        },
+      })
+      const action = deletePersonSuccess('aaa')
+      const newState = screeningPageReducer(initialState, action)
+      expect(newState.getIn(['peopleCards', 'aaa'])).toEqual(undefined)
+    })
+
+    it('leaves the state as is when there is an error', () => {
+      const initialState = fromJS({
+        mode: EDIT_MODE,
+        peopleCards: {
+          aaa: EDIT_MODE,
+        },
+      })
+      const action = deletePersonFailure('error string')
+      const newState = screeningPageReducer(initialState, action)
+      expect(newState).toEqual(initialState)
     })
   })
 

@@ -35,6 +35,17 @@ describe('SnapshotPage', () => {
     expect(snapshotPage.find('PersonCardView').length).toEqual(2)
   })
 
+  it('renders a sidebar with participants', () => {
+    const screeningPage = renderSnapshotPage({
+      participants: [],
+    })
+    const screeningSideBar = screeningPage.find('SnapshotSideBar')
+    expect(screeningSideBar.exists()).toBe(true)
+    expect(screeningSideBar.props()).toEqual({
+      participants: [],
+    })
+  })
+
   it('passes the page title to the header', () => {
     const snapshotPage = renderSnapshotPage({})
     expect(snapshotPage.find('Connect(PageHeader)').exists()).toBe(true)

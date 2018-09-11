@@ -86,7 +86,6 @@ describe PersonSearchQueryBuilder do
                         match: {
                           autocomplete_search_bar: {
                             query: 'this is my search term',
-                            fuzziness: 'AUTO',
                             operator: 'and',
                             boost: low_boost
                           }
@@ -243,7 +242,6 @@ describe PersonSearchQueryBuilder do
                         match: {
                           autocomplete_search_bar: {
                             query: 'this is my search term',
-                            fuzziness: 'AUTO',
                             operator: 'and',
                             boost: low_boost
                           }
@@ -376,7 +374,6 @@ describe PersonSearchQueryBuilder do
                             match: {
                               autocomplete_search_bar: {
                                 query: expected_results[index],
-                                fuzziness: 'AUTO',
                                 operator: 'and',
                                 boost:  low_boost
                               }
@@ -509,7 +506,6 @@ describe PersonSearchQueryBuilder do
                             match: {
                               autocomplete_search_bar: {
                                 query: expected_results[index],
-                                fuzziness: 'AUTO',
                                 operator: 'and',
                                 boost: low_boost
                               }
@@ -625,7 +621,6 @@ describe PersonSearchQueryBuilder do
                           match: {
                             autocomplete_search_bar: {
                               query: expected_search_term,
-                              fuzziness: 'AUTO',
                               operator: 'and',
                               boost: low_boost
                             }
@@ -781,7 +776,6 @@ describe PersonSearchQueryBuilder do
                             match: {
                               autocomplete_search_bar: {
                                 query: expected_results[index],
-                                fuzziness: 'AUTO',
                                 operator: 'and',
                                 boost: low_boost
                               }

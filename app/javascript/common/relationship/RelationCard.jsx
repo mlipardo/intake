@@ -97,8 +97,10 @@ const RelationCard = ({
               relationship ={row}
               screeningId={screeningId}
             />}
-          width='5%'
-        />
+          width='15%'
+        >
+            Actions
+        </TableHeaderColumn>
       </BootstrapTable>
     </div>
   </div>

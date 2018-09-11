@@ -77,7 +77,6 @@ describe PersonSearchRepository do
                   match: {
                     autocomplete_search_bar: {
                       query: 'robert barathian',
-                      fuzziness: 'AUTO',
                       operator: 'and',
                       boost: low_boost
                     }

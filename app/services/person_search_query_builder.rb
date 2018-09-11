@@ -81,7 +81,6 @@ class PersonSearchQueryBuilder
       match: {
         autocomplete_search_bar: {
           query: formatted_search_term,
-          fuzziness: 'AUTO',
           operator: 'and',
           boost: LOW_BOOST
         }

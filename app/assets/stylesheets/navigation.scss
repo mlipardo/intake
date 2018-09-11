@@ -135,9 +135,17 @@
 }
 
 .side-bar {
-  max-height: calc(100vh - #{$banner-height + $page-header-height + $error-banner-height});
+  height: calc(100vh - #{$banner-height + $page-header-height + $bread-crumb-height});
   overflow-x: hidden;
   overflow-y: auto;
+
+  div {
+    height: 100%;
+  }
+}
+
+.generic-error .side-bar {
+  height: calc(100vh - #{$banner-height + $page-header-height + $bread-crumb-height + $error-banner-height});
 }
 
 .social-worker {

@@ -6,7 +6,11 @@ import * as personCardActions from 'actions/personCardActions'
 import {clearRelationships} from 'actions/relationshipsActions'
 import {fetchHistoryOfInvolvements, clearHistoryOfInvolvement} from 'actions/historyOfInvolvementActions'
 import {setPageMode} from 'actions/screeningPageActions'
-import {getScreeningSubmissionErrorsSelector, getApiValidationErrorsSelector} from 'selectors/errorsSelectors'
+import {
+  getScreeningSubmissionErrorsSelector,
+  getApiValidationErrorsSelector,
+  getHasGenericErrorValueSelector,
+} from 'selectors/errorsSelectors'
 import {getScreeningTitleSelector, getScreeningIsReadOnlySelector} from 'selectors/screeningSelectors'
 import {selectParticipants} from 'selectors/participantSelectors'
 import {
@@ -29,6 +33,7 @@ function mapStateToProps(state, _ownProps) {
     hasApiValidationErrors: Boolean(getApiValidationErrorsSelector(state).size),
     screeningTitle: getScreeningTitleSelector(state),
     submitReferralErrors: getScreeningSubmissionErrorsSelector(state).toJS(),
+    hasGenericErrors: getHasGenericErrorValueSelector(state),
   }
 }
 

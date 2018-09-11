@@ -47,6 +47,17 @@ describe('RelationCard', () => {
     expect(renderRelationCard(props).find('TableHeaderColumn').length).toBe(4)
   })
 
+  it('has a TableHeaderColumn Name, Relationship, Age and Actions', () => {
+    expect(renderRelationCard(props).find('TableHeaderColumn').at(0).text()).toEqual('Name')
+    expect(renderRelationCard(props).find('TableHeaderColumn').at(1).text()).toEqual('Relationship')
+    expect(renderRelationCard(props).find('TableHeaderColumn').at(2).text()).toEqual('Age')
+    expect(renderRelationCard(props).find('TableHeaderColumn').at(3).text()).toEqual('Actions')
+  })
+
+  it('has a Actions TableHeaderColumn and width is 15%', () => {
+    expect(renderRelationCard(props).find('TableHeaderColumn').at(3).prop('width')).toEqual('15%')
+  })
+
   it('has 2 Attach links', () => {
     expect(renderRelationCard(props).find(AttachLink).length).toBe(2)
   })

@@ -1,4 +1,7 @@
-import {CREATE_PERSON_COMPLETE, UPDATE_PERSON_COMPLETE} from 'actions/personCardActions'
+import {CREATE_PERSON_COMPLETE,
+  UPDATE_PERSON_COMPLETE,
+  DELETE_PERSON_COMPLETE,
+} from 'actions/personCardActions'
 import {CREATE_SCREENING_COMPLETE, FETCH_SCREENING_COMPLETE} from 'actions/actionTypes'
 import {Map} from 'immutable'
 import {
@@ -69,6 +72,13 @@ export default createReducer(Map(), {
   [UPDATE_PERSON_COMPLETE]: (state, {payload: {person, personId}, error}) => {
     const id = error ? personId : person.id
     return state.updateIn(['peopleCards', id], savingToShow)
+  },
+  [DELETE_PERSON_COMPLETE](state, {payload: {id}, error}) {
+    if (error) {
+      return state
+    } else {
+      return state.deleteIn(['peopleCards', id])
+    }
   },
   [SAVE_SCREENING]: (state, {payload: {card}}) => state.setIn(['cards', card], SAVING_MODE),
   [CREATE_SCREENING_COMPLETE]: setAllSavingToShow,

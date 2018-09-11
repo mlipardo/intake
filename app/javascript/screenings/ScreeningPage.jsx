@@ -154,13 +154,14 @@ export class ScreeningPage extends React.Component {
   }
 
   render() {
+    const genericErrorClass = this.props.hasGenericErrors ? 'generic-error' : ''
     return (
       <div>
         <div>
           <PageHeader pageTitle={this.props.screeningTitle} button={this.submitButton()} />
           <BreadCrumb navigationElements={[<Link key={this.props.params.id} to={urlHelper('/')}>CaseLoad</Link>]}/>
         </div>
-        <div className='container hotline-container'>
+        <div className={`container hotline-container ${genericErrorClass}`}>
           {this.renderScreening()}
         </div>
       </div>
@@ -173,6 +174,7 @@ ScreeningPage.propTypes = {
   disableSubmitButton: PropTypes.bool,
   editable: PropTypes.bool,
   hasApiValidationErrors: PropTypes.bool,
+  hasGenericErrors: PropTypes.bool,
   loaded: PropTypes.bool,
   mode: PropTypes.string.isRequired,
   params: PropTypes.object.isRequired,
