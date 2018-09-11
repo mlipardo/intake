@@ -4,13 +4,13 @@
 # resource via the API
 class PersonSearchRepository
   class << self
-    def search(security_token:, search_term:, search_after:, is_client_only:)
+    def search(security_token:, search_term:, search_address:, search_after:, is_client_only:)
       response = DoraAPI.make_api_call(
         security_token,
         ExternalRoutes.dora_people_light_index_path,
         :post,
-        search_query(search_term: search_term, search_after: search_after,
-                     is_client_only: is_client_only)
+        search_query(search_term: search_term, search_address: search_address,
+                     search_after: search_after, is_client_only: is_client_only)
       )
       body response
     end
@@ -55,9 +55,10 @@ class PersonSearchRepository
           sensitivity_indicator race_ethnicity]
     end
 
-    def search_query(search_term:, search_after:, is_client_only:)
+    def search_query(search_term:, search_address:, search_after:, is_client_only:)
       PersonSearchQueryBuilder.new(
-        search_term: search_term, search_after: search_after, is_client_only: is_client_only
+        search_term: search_term, search_address: search_address,
+        search_after: search_after, is_client_only: is_client_only
       ).build
     end
   end

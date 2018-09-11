@@ -10,8 +10,9 @@ class PersonSearchQueryBuilder
   NO_BOOST = 1
   attr_reader :search_after
 
-  def initialize(search_term: '', search_after: nil, is_client_only: true)
+  def initialize(search_term: '', search_address: '', search_after: nil, is_client_only: true)
     @search_term = search_term
+    @search_address = search_address
     @search_after = search_after
     @is_client_only = is_client_only
   end
@@ -36,6 +37,12 @@ class PersonSearchQueryBuilder
       .downcase
       .gsub(%r{[-/]*(\d+)[-/]*}, '\1')
   end
+
+  def formatted_search_address
+    @search_address
+      .downcase
+      .gsub(%r{[-/]*(\d+)[-/]*}, '\1')
+  end    
 
   def query
     { bool: { must: must, should: should } }
@@ -73,7 +80,7 @@ class PersonSearchQueryBuilder
       match_query(:'last_name.phonetic', term, LOW_BOOST),
       match_query(:date_of_birth_as_text, term, HIGH_BOOST),
       match_query(:ssn, term, HIGH_BOOST)
-    ] + PersonSearchByAddress.new.search_by_address(term)
+    ] #+ PersonSearchByAddress.new.search_by_address(term)
   end
 
   def fuzzy_query

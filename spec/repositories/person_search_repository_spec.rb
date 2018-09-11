@@ -8,6 +8,7 @@ describe PersonSearchRepository do
 
   describe '.search' do
     let(:search_term) { 'Robert Barathian' }
+    let(:search_address) { '123 main street' }
     let(:number_of_fragments) { 10 }
     let(:low_boost) { 2 }
     let(:medium_boost) { 3 }
@@ -124,19 +125,7 @@ describe PersonSearchRepository do
             { match: { date_of_birth_as_text: { query: 'robert barathian',
                                                 boost: high_boost } } },
             { match: { ssn: { query: 'robert barathian',
-                              boost: high_boost } } },
-            { match: { 'addresses.street_name': { query: 'robert barathian',
-                                                  boost: high_boost } } },
-            { match: { 'addresses.street_number': { query: 'robert barathian',
-                                                    boost: high_boost } } },
-            { match: { 'addresses.city': { query: 'robert barathian',
-                                           boost: high_boost } } },
-            { match: { 'addresses.county': { query: 'robert barathian',
-                                             boost: high_boost } } },
-            { match: { 'addresses.state_code': { query: 'robert barathian',
-                                                 boost: high_boost } } },
-            { match: { 'addresses.zip': { query: 'robert barathian',
-                                          boost: high_boost } } }
+                              boost: high_boost } } }
           ]
         }
       }
@@ -193,6 +182,7 @@ describe PersonSearchRepository do
             described_class.search(
               security_token: security_token,
               search_term: search_term,
+              search_address: search_address,
               search_after: search_after,
               is_client_only: true
             )
@@ -224,6 +214,7 @@ describe PersonSearchRepository do
             described_class.search(
               security_token: security_token,
               search_term: search_term,
+              search_address: search_address,
               search_after: nil,
               is_client_only: true
             )
@@ -255,6 +246,7 @@ describe PersonSearchRepository do
             described_class.search(
               security_token: security_token,
               search_term: search_term,
+              search_address: search_address,
               search_after: nil,
               is_client_only: false
             )
@@ -285,6 +277,7 @@ describe PersonSearchRepository do
           described_class.search(
             security_token: security_token,
             search_term: search_term,
+            search_address: search_address,
             search_after: nil,
             is_client_only: true
           )

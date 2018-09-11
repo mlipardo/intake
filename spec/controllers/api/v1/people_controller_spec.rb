@@ -13,13 +13,15 @@ describe Api::V1::PeopleController do
 
     context 'when search_after is not provied as a param' do
       let(:params) do
-        { search_term: 'foobarbaz' }
+        { search_term: 'foobarbaz',
+          search_address: '123 main street' }
       end
       before do
         allow(PersonSearchRepository).to receive(:search)
           .with(
             security_token: security_token,
             search_term: params[:search_term],
+            search_address: params[:search_address],
             search_after: nil,
             is_client_only: false
           ).and_return(people)
@@ -36,6 +38,7 @@ describe Api::V1::PeopleController do
       let(:params) do
         {
           search_term: 'foobarbaz',
+          search_address: '123 main street',
           search_after: %w[one two]
         }
       end
@@ -44,6 +47,7 @@ describe Api::V1::PeopleController do
           .with(
             security_token: security_token,
             search_term: params[:search_term],
+            search_address: params[:search_address],
             search_after: params[:search_after],
             is_client_only: false
           ).and_return(people)
