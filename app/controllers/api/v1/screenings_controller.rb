@@ -81,7 +81,8 @@ module Api
           assignee: build_assignee_name(session),
           assignee_staff_id: build_staff_id(session),
           incident_county: build_incident_county(session),
-          indexable: true
+          indexable: true,
+          started_at: DateTime.now.strftime("%FT%T.%3NZ")
         }.merge(empty_screening_fields)
       end
 

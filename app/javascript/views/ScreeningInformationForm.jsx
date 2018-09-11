@@ -119,3 +119,4 @@ ScreeningInformationForm.propTypes = {
   startedAt: PropTypes.string,
 }
 export default ScreeningInformationForm
+

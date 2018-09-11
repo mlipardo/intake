@@ -6,6 +6,7 @@ import {setField, touchField, touchAllFields} from 'actions/screeningInformation
 import {
   getScreeningInformationFormSelector,
   getVisibleErrorsSelector,
+  screeningDateSelector,
 } from 'selectors/screening/screeningInformationFormSelectors'
 import {generateBabyDoe} from 'actions/safelySurrenderedBabyActions'
 import {saveCard, clearCardEdits} from 'actions/screeningActions'
@@ -34,7 +35,7 @@ const mapStateToProps = (state) => {
     reportType: screeningInformationForm.getIn(['report_type', 'value']),
     reportTypes,
     screeningId: screening.get('id'),
-    startedAt: screeningInformationForm.getIn(['started_at', 'value']),
+    startedAt: screeningDateSelector(state),
   }
 }
 
