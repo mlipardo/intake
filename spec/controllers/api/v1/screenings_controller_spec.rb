@@ -29,6 +29,7 @@ describe Api::V1::ScreeningsController do
     let(:new_screening) do
       {
         reference: 'F3RBKY',
+        started_at: Time.now.round.utc,
         assignee: nil,
         assignee_staff_id: nil,
         incident_county: nil,

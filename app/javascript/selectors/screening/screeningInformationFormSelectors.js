@@ -1,5 +1,4 @@
 import {createSelector} from 'reselect'
-//import moment from 'moment'
 import {fromJS, List, Map} from 'immutable'
 import {selectParticipantsForFerb} from 'selectors/participantSelectors'
 import {getScreeningSelector} from 'selectors/screeningSelectors'
@@ -79,9 +78,4 @@ export const getVisibleErrorsSelector = createSelector(
     },
     Map()
   )
-)
-
-export const screeningDateSelector = createSelector(
-  getScreeningInformationFormSelector,
-  (screeningInformationForm) => screeningInformationForm.getIn(['started_at', 'value'])
 )
