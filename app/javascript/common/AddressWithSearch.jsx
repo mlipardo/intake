@@ -13,6 +13,12 @@ const AddressWithSearch = ({onChangeCounty, onSubmit, searchCounty}) => (
     />
     <InputField
       gridClassName='col-md-3'
+      id='search-city'
+      label='City'
+      onChange={() => {}}
+    />
+    <InputField
+      gridClassName='col-md-3'
       id='search-address'
       label='Address'
       onChange={() => {}}

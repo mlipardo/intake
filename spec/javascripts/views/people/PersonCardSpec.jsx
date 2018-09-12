@@ -191,7 +191,7 @@ describe('PersonCard', () => {
         deletable: false,
         informationFlag: 'Sensitive Or Sealed',
         personName: 'John Q. Public',
-        informationPill: 'Deceased',
+        informationPill: 'Probation Youth',
         mode: SAVING_MODE,
         onDelete,
         onEdit,
@@ -203,7 +203,7 @@ describe('PersonCard', () => {
       expect(cardHead.props().onDelete).toEqual(onDelete)
       expect(cardHead.props().onEdit).toEqual(onEdit)
       expect(cardHead.props().title).toEqual('John Q. Public')
-      expect(cardHead.props().informationPill).toEqual('Deceased')
+      expect(cardHead.props().informationPill).toEqual('Probation Youth')
     })
     it('renders div with id and "edit" as the className', () => {
       const component = renderPersonCard({

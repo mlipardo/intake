@@ -52,7 +52,7 @@ class PersonSearchRepository
     def find_fields
       %w[ id legacy_source_table first_name middle_name last_name name_suffix gender
           date_of_birth date_of_death ssn languages addresses phone_numbers legacy_descriptor
-          sensitivity_indicator race_ethnicity]
+          sensitivity_indicator race_ethnicity open_case_responsible_agency_code]
     end
 
     def search_query(search_term:, search_address:, search_after:, is_client_only:)

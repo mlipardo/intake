@@ -188,6 +188,7 @@ export const getPeopleWithEditsSelector = createSelector(
       ssn: person.getIn(['ssn', 'value']),
       sensitive: person.getIn(['sensitive', 'value']),
       sealed: person.getIn(['sealed', 'value']),
+      probation_youth: person.getIn(['probation_youth', 'value']),
       ethnicity: getEthnicity(person),
       races: getRaces(person)})
   })

@@ -77,6 +77,55 @@ describe('candidateSelectors', () => {
         relationshipType: '271',
       },
     }],
+    4: [{
+      person: {
+        age: '32 yrs',
+        dateOfBirth: '01/15/1986',
+        id: '5786',
+        gender: 'Male',
+        name: 'Vegeta',
+      },
+      candidate: {
+        age: '21 yrs',
+        dateOfBirth: '11/11/1997',
+        id: '852',
+        gender: 'Male',
+        name: 'Son Gohan',
+        relationshipType: '296',
+      },
+    }, {
+      person: {
+        age: '32 yrs',
+        dateOfBirth: '01/15/1986',
+        id: '5786',
+        gender: 'Male',
+        name: 'Vegeta',
+      },
+      candidate: {
+        age: '500 yrs',
+        dateOfBirth: '11/11/1968',
+        id: '788',
+        gender: 'Unknown',
+        name: 'Jiren',
+        relationshipType: null,
+      },
+    }, {
+      person: {
+        age: '32 yrs',
+        dateOfBirth: '01/15/1986',
+        id: '5786',
+        gender: 'Male',
+        name: 'Vegeta',
+      },
+      candidate: {
+        age: '200 yrs',
+        dateOfBirth: '01/04/1600',
+        id: '1111',
+        gender: 'Unknown',
+        name: 'Hitman',
+        relationshipType: '',
+      },
+    }],
   }
   describe('selectCandidates', () => {
     it('returns a list of candidates', () => {
@@ -150,6 +199,19 @@ describe('candidateSelectors', () => {
       expect(
         selectCandidatesWithEdits(state, id)).toEqualImmutable(fromJS({relationships: []})
       )
+    })
+
+    it('removes a candidate when the relationship value is null or empty string', () => {
+      const id = '4'
+      const state = fromJS({candidatesForm})
+      expect(selectCandidatesWithEdits(state, id)).toEqualImmutable(fromJS({
+        relationships: [{
+          client_id: '5786',
+          relative_id: '852',
+          relationship_type: 296,
+          absent_parent_indicator: false,
+          same_home_status: 'N',
+        }]}))
     })
   })
 })

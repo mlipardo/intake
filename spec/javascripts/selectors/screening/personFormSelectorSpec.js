@@ -75,6 +75,7 @@ describe('personFormSelectors', () => {
           ssn: {value: '321456789'},
           sensitive: {value: true},
           sealed: {value: true},
+          probation_youth: {value: true},
           ethnicity: {
             hispanic_latino_origin: {value: 'Yes'},
             ethnicity_detail: {value: ['Mexican']},
@@ -115,6 +116,7 @@ describe('personFormSelectors', () => {
           ssn: {value: '321456789'},
           sensitive: {value: false},
           sealed: {value: false},
+          probation_youth: {value: false},
           ethnicity: {
             hispanic_latino_origin: {value: 'No'},
             ethnicity_detail: {value: ['Mexican']},
@@ -149,6 +151,7 @@ describe('personFormSelectors', () => {
           ssn: {value: null},
           sensitive: {value: true},
           sealed: {value: true},
+          probation_youth: {value: true},
           ethnicity: {
             hispanic_latino_origin: {value: null},
             ethnicity_detail: {value: []},
@@ -210,6 +213,7 @@ describe('personFormSelectors', () => {
           ssn: '321456789',
           sensitive: true,
           sealed: true,
+          probation_youth: true,
           ethnicity: {
             hispanic_latino_origin: 'Yes',
             ethnicity_detail: ['Mexican'],
@@ -252,6 +256,7 @@ describe('personFormSelectors', () => {
           ssn: '321456789',
           sensitive: false,
           sealed: false,
+          probation_youth: false,
           ethnicity: {
             hispanic_latino_origin: 'No',
             ethnicity_detail: [],
@@ -288,6 +293,7 @@ describe('personFormSelectors', () => {
           ssn: null,
           sensitive: true,
           sealed: true,
+          probation_youth: true,
           ethnicity: {
             hispanic_latino_origin: null,
             ethnicity_detail: [],
@@ -368,6 +374,7 @@ describe('personFormSelectors', () => {
           ssn: {value: ''},
           sensitive: {value: true},
           sealed: {value: true},
+          probation_youth: {value: true},
           ethnicity: {
             hispanic_latino_origin: {value: null},
             ethnicity_detail: {value: []},
@@ -417,6 +424,7 @@ describe('personFormSelectors', () => {
           ssn: '',
           sensitive: true,
           sealed: true,
+          probation_youth: true,
           ethnicity: {
             hispanic_latino_origin: null,
             ethnicity_detail: [],
@@ -450,6 +458,7 @@ describe('personFormSelectors', () => {
           ssn: {value: ''},
           sensitive: {value: true},
           sealed: {value: true},
+          probation_youth: {value: true},
           ethnicity: {
             hispanic_latino_origin: {value: null},
             ethnicity_detail: {value: []},
@@ -487,6 +496,7 @@ describe('personFormSelectors', () => {
           ssn: '',
           sensitive: true,
           sealed: true,
+          probation_youth: true,
           ethnicity: {
             hispanic_latino_origin: null,
             ethnicity_detail: [],
@@ -996,6 +1006,7 @@ describe('personFormSelectors', () => {
         ssn: {value: '321456789'},
         sensitive: {value: true},
         sealed: {value: true},
+        probation_youth: {value: true},
         ethnicity: {
           hispanic_latino_origin: {value: 'Yes'},
           ethnicity_detail: {value: ['Mexican']},
@@ -1033,6 +1044,7 @@ describe('personFormSelectors', () => {
         ssn: {value: '321456789'},
         sensitive: {value: false},
         sealed: {value: false},
+        probation_youth: {value: false},
         ethnicity: {
           hispanic_latino_origin: {value: 'No'},
           ethnicity_detail: {value: ['Mexican']},
@@ -1063,6 +1075,7 @@ describe('personFormSelectors', () => {
         ssn: {value: null},
         sensitive: {value: true},
         sealed: {value: true},
+        probation_youth: {value: true},
         ethnicity: {
           hispanic_latino_origin: {value: null},
           ethnicity_detail: {value: []},
@@ -1127,6 +1140,7 @@ describe('personFormSelectors', () => {
         ssn: '321456789',
         sensitive: true,
         sealed: true,
+        probation_youth: true,
         ethnicity: {
           hispanic_latino_origin: 'Yes',
           ethnicity_detail: ['Mexican'],

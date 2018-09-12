@@ -3,7 +3,7 @@ import PersonCard from 'views/people/PersonCard'
 import {
   getModeValueSelector,
   getPersonNamesSelector,
-  selectDeceased,
+  selectInformationalMessage,
   getPersonInformationFlagValuesSelector,
 } from 'selectors/screening/personCardSelectors'
 import {savePerson, deletePerson} from 'actions/personCardActions'
@@ -16,7 +16,7 @@ const mapStateToProps = (state, {personId}) => ({
   deletable: !state.getIn(['screening', 'referral_id']),
   informationFlag: getPersonInformationFlagValuesSelector(state).get(personId),
   personName: getPersonNamesSelector(state).get(personId),
-  informationPill: selectDeceased(state).get(personId) ? 'Deceased' : null,
+  informationPill: selectInformationalMessage(state, personId),
 })
 
 export const mapDispatchToProps = (dispatch, {personId}) => ({

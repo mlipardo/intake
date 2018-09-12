@@ -31,10 +31,14 @@ describe('AddressWithSearch', () => {
     expect(countySelect.props().value).toEqual('Contra Costa')
   })
 
+  it('renders city input field with label City', () => {
+    const component = render()
+    expect(component.find('InputField[label="City"]').props().id).toEqual('search-city')
+  })
+
   it('renders address input field with label Address', () => {
     const component = render()
-    expect(component.find('InputField').props().id).toEqual('search-address')
-    expect(component.find('InputField').props().label).toEqual('Address')
+    expect(component.find('InputField[label="Address"]').props().id).toEqual('search-address')
   })
 
   it('renders button for search', () => {

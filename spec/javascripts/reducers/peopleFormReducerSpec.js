@@ -54,6 +54,7 @@ describe('peopleFormReducer', () => {
           ssn: 'ssn one',
           sensitive: true,
           sealed: true,
+          probation_youth: true,
           races: [
             {race: 'race_1', race_detail: 'race_detail_1'},
             {race: 'race_2', race_detail: 'race_detail_2'},
@@ -95,6 +96,7 @@ describe('peopleFormReducer', () => {
           ssn: 'ssn two',
           sensitive: false,
           sealed: false,
+          probation_youth: false,
           races: [],
           ethnicity: {
             ethnicity_detail: [],
@@ -135,6 +137,7 @@ describe('peopleFormReducer', () => {
             ssn: {value: 'ssn one', touched: false},
             sensitive: {value: true},
             sealed: {value: true},
+            probation_youth: {value: true},
             races: {
               race_1: {value: true},
               race_2: {value: true},
@@ -183,6 +186,7 @@ describe('peopleFormReducer', () => {
             ssn: {value: 'ssn two', touched: false},
             sensitive: {value: false},
             sealed: {value: false},
+            probation_youth: {value: false},
             races: {},
             race_details: {},
             ethnicity: {
@@ -496,6 +500,7 @@ describe('peopleFormReducer', () => {
         ssn: {value: 'ssn one', touched: true},
         sensitive: {value: true},
         sealed: {value: true},
+        probation_youth: {value: true},
         phone_numbers: [],
         addresses: [],
         races: {},
@@ -530,6 +535,7 @@ describe('peopleFormReducer', () => {
         ssn: 'ssn two',
         sensitive: false,
         sealed: false,
+        probation_youth: false,
         phone_numbers: [{id: 'DEF456', number: '1234567890', type: 'Home'}],
         addresses: [{
           id: 'ABC123',
@@ -563,6 +569,7 @@ describe('peopleFormReducer', () => {
           ssn: {value: 'ssn one', touched: true},
           sensitive: {value: true},
           sealed: {value: true},
+          probation_youth: {value: true},
           phone_numbers: [],
           addresses: [],
           races: {},
@@ -592,6 +599,7 @@ describe('peopleFormReducer', () => {
           ssn: {value: 'ssn two', touched: false},
           sensitive: {value: false},
           sealed: {value: false},
+          probation_youth: {value: false},
           phone_numbers: [{
             id: 'DEF456',
             number: {value: '1234567890'},
@@ -643,6 +651,7 @@ describe('peopleFormReducer', () => {
         ssn: {value: 'ssn one', touched: true},
         sensitive: {value: false},
         sealed: {value: false},
+        probation_youth: {value: false},
         phone_numbers: [],
         addresses: [],
         races: [],
@@ -678,6 +687,7 @@ describe('peopleFormReducer', () => {
         ssn: 'ssn two',
         sensitive: false,
         sealed: false,
+        probation_youth: false,
         phone_numbers: [],
         addresses: [{
           id: 'ABC123',
@@ -716,6 +726,7 @@ describe('peopleFormReducer', () => {
           ssn: {value: 'ssn two', touched: true},
           sensitive: {value: false},
           sealed: {value: false},
+          probation_youth: {value: false},
           phone_numbers: [],
           addresses: [{
             touched: {},

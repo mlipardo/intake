@@ -19,6 +19,13 @@ export const selectDeceased = createSelector(
   ), Map())
 )
 
+export const selectProbationYouth = createSelector(
+  selectParticipants,
+  (people) => people.reduce((namesMap, person) => (
+    namesMap.set(person.get('id'), person.get('probation_youth'))
+  ), Map())
+)
+
 export const getPersonInformationFlagValuesSelector = createSelector(
   selectParticipants,
   (people) => people.reduce((informationFlagMap, person) => (
@@ -28,4 +35,11 @@ export const getPersonInformationFlagValuesSelector = createSelector(
 export const getModeValueSelector = (state, personId) => {
   const screeningPage = state.get('screeningPage')
   return screeningPage.getIn(['peopleCards', personId], SHOW_MODE)
+}
+
+export const selectInformationalMessage = (state, personId) => {
+  const probationYouthInfo = selectProbationYouth(state).get(personId) ?
+    'Probation Youth' : null
+  const deceasedInfo = selectDeceased(state).get(personId) ? 'Deceased' : null
+  return deceasedInfo ? deceasedInfo : probationYouthInfo
 }
