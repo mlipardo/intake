@@ -19,12 +19,8 @@ class PersonSearchQueryBuilder
 
   def build
     {
-      size: 10,
-      track_scores: true,
-      sort: [{ _score: 'desc', _uid: 'desc' }],
-      query: query,
-      _source: fields,
-      highlight: highlight
+      size: 10, track_scores: true, sort: [{ _score: 'desc', _uid: 'desc' }],
+      query: query, _source: fields, highlight: highlight
     }.tap do |query|
       query[:search_after] = search_after if search_after
     end
@@ -37,12 +33,6 @@ class PersonSearchQueryBuilder
       .downcase
       .gsub(%r{[-/]*(\d+)[-/]*}, '\1')
   end
-
-  def formatted_search_address
-    @search_address
-      .downcase
-      .gsub(%r{[-/]*(\d+)[-/]*}, '\1')
-  end    
 
   def query
     { bool: { must: must, should: should } }
@@ -80,17 +70,13 @@ class PersonSearchQueryBuilder
       match_query(:'last_name.phonetic', term, LOW_BOOST),
       match_query(:date_of_birth_as_text, term, HIGH_BOOST),
       match_query(:ssn, term, HIGH_BOOST)
-    ] #+ PersonSearchByAddress.new.search_by_address(term)
+    ] + PersonSearchByAddress.new.search_by_address(term)
   end
 
   def fuzzy_query
     {
       match: {
-        autocomplete_search_bar: {
-          query: formatted_search_term,
-          operator: 'and',
-          boost: LOW_BOOST
-        }
+        autocomplete_search_bar: { query: formatted_search_term, operator: 'and', boost: LOW_BOOST }
       }
     }
   end
