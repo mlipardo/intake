@@ -2,13 +2,21 @@ import {connect} from 'react-redux'
 import PersonSearchForm from 'views/people/PersonSearchForm'
 import {selectParticipants} from 'selectors/participantSelectors'
 import {
-  getPeopleResultsSelector,
-  getResultsTotalValueSelector,
-  getSearchTermValueSelector,
-  getSearchAddressValueSelector,
-  getStartTimeSelector,
+  selectPeopleResults,
+  selectResultsTotalValue,
+  selectSearchTermValue,
+  selectSearchAddressValue,
+  selectStartTime,
+  selectSearchCounty,
 } from 'selectors/peopleSearchSelectors'
-import {search, setSearchTerm, clear, loadMoreResults, toggleAddressSearch} from 'actions/peopleSearchActions'
+import {
+  search,
+  setSearchTerm,
+  setSearchCounty,
+  clear,
+  loadMoreResults,
+  toggleAddressSearch,
+} from 'actions/peopleSearchActions'
 import {canUserAddClient} from 'utils/authorization'
 import {getStaffIdSelector} from 'selectors/userInfoSelectors'
 
@@ -19,12 +27,13 @@ const mapStateToProps = (state) => {
   const isSelectable = (person) => canUserAddClient(userInfo, hasAddSensitivePerson, person, hasOverride)
 
   return {
-    results: getPeopleResultsSelector(state).toJS(),
-    total: getResultsTotalValueSelector(state),
-    searchTerm: getSearchTermValueSelector(state),
-    isAddressIncluded: getSearchAddressValueSelector(state),
+    results: selectPeopleResults(state).toJS(),
+    total: selectResultsTotalValue(state),
+    searchTerm: selectSearchTermValue(state),
+    searchCounty: selectSearchCounty(state),
+    isAddressIncluded: selectSearchAddressValue(state),
     staffId: getStaffIdSelector(state),
-    startTime: getStartTimeSelector(state),
+    startTime: selectStartTime(state),
     participants: selectParticipants(state).toJS(),
     isSelectable,
   }
@@ -33,6 +42,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   const onClear = () => dispatch(clear())
   const onChange = (value) => dispatch(setSearchTerm(value))
+  const onChangeCounty = (value) => dispatch(setSearchCounty(value))
   const onSearch = (value) => dispatch(search(value, ownProps.isClientOnly))
   const onLoadMoreResults = () => dispatch(loadMoreResults(ownProps.isClientOnly))
   const onToggleAddressSearch = () => dispatch(toggleAddressSearch())
@@ -40,6 +50,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     onSearch,
     onClear,
     onChange,
+    onChangeCounty,
     onLoadMoreResults,
     onToggleAddressSearch,
     dispatch,

@@ -5,8 +5,8 @@ import {
   loadMorePeopleSearch,
 } from 'sagas/loadMorePeopleSearchResultsSaga'
 import {
-  getSearchTermValueSelector,
-  getLastResultsSortValueSelector,
+  selectSearchTermValue,
+  selectLastResultsSortValue,
 } from 'selectors/peopleSearchSelectors'
 import {
   LOAD_MORE_RESULTS,
@@ -32,8 +32,8 @@ describe('loadMorePeopleSearch', () => {
   it('finds some error during the process', () => {
     const error = 'Something went wrong'
     const peopleSeachGenerator = loadMorePeopleSearch(action)
-    expect(peopleSeachGenerator.next().value).toEqual(select(getSearchTermValueSelector))
-    expect(peopleSeachGenerator.next(searchTerm).value).toEqual(select(getLastResultsSortValueSelector))
+    expect(peopleSeachGenerator.next().value).toEqual(select(selectSearchTermValue))
+    expect(peopleSeachGenerator.next(searchTerm).value).toEqual(select(selectLastResultsSortValue))
     expect(peopleSeachGenerator.next(lastResultSort).value).toEqual(call(get, '/api/v1/people/search', {
       search_term: searchTerm,
       search_after: lastResultSort,
@@ -49,8 +49,8 @@ describe('loadMorePeopleSearch', () => {
       },
     }
     const peopleSeachGenerator = loadMorePeopleSearch(action)
-    expect(peopleSeachGenerator.next().value).toEqual(select(getSearchTermValueSelector))
-    expect(peopleSeachGenerator.next(searchTerm).value).toEqual(select(getLastResultsSortValueSelector))
+    expect(peopleSeachGenerator.next().value).toEqual(select(selectSearchTermValue))
+    expect(peopleSeachGenerator.next(searchTerm).value).toEqual(select(selectLastResultsSortValue))
     expect(peopleSeachGenerator.next(lastResultSort).value).toEqual(call(get, '/api/v1/people/search', {
       search_term: searchTerm,
       search_after: lastResultSort,

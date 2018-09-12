@@ -296,11 +296,11 @@ describe('CrossReportForm', () => {
 
     it('renders the users county when no county set', () => {
       const component = renderCrossReportForm({county_id: '', actions, counties, userCounty: '1234'})
-      expect(component.find('CountySelectField[id="cross_report_county"]').props().value).toEqual('1234')
+      expect(component.find('CountyCodeSelect[id="cross_report_county"]').props().value).toEqual('1234')
     })
     it('passes the selected county to county pull down', () => {
       const component = renderCrossReportForm({county_id: '1234', counties})
-      expect(component.find('CountySelectField[id="cross_report_county"]').props().value).toEqual('1234')
+      expect(component.find('CountyCodeSelect[id="cross_report_county"]').props().value).toEqual('1234')
     })
     it('triggers the fetchCountyAgencies action for user county when no county set', () => {
       renderCrossReportForm({county_id: '', actions, counties, userCounty: '1234'})
@@ -308,23 +308,23 @@ describe('CrossReportForm', () => {
     })
     it('triggers the fetchCountyAgencies action on change', () => {
       const component = renderCrossReportForm({actions, counties})
-      component.find('CountySelectField[id="cross_report_county"]').simulate('change', {target: {value: '1234'}})
+      component.find('CountyCodeSelect[id="cross_report_county"]').simulate('change', {target: {value: '1234'}})
       expect(fetchCountyAgencies).toHaveBeenCalledWith('1234')
     })
     it('triggers the setField action on change', () => {
       const component = renderCrossReportForm({actions, counties})
-      component.find('CountySelectField[id="cross_report_county"]').simulate('change', {target: {value: '1234'}})
+      component.find('CountyCodeSelect[id="cross_report_county"]').simulate('change', {target: {value: '1234'}})
       expect(setField).toHaveBeenCalledWith('county_id', '1234')
     })
     it('triggers the clearAllFields action on change', () => {
       const component = renderCrossReportForm({actions, counties})
-      component.find('CountySelectField[id="cross_report_county"]').simulate('change', {target: {value: '1234'}})
+      component.find('CountyCodeSelect[id="cross_report_county"]').simulate('change', {target: {value: '1234'}})
       expect(clearAllFields).toHaveBeenCalled()
     })
     it('triggers the touchField action on blur', () => {
       const touchField = jasmine.createSpy('touchField')
       const component = renderCrossReportForm({hasAgencies: true, inform_date: '', actions: {touchField}})
-      component.find('CountySelectField[id="cross_report_county"]').simulate('blur')
+      component.find('CountyCodeSelect[id="cross_report_county"]').simulate('blur')
       expect(touchField).toHaveBeenCalledWith('county_id')
     })
   })

@@ -176,8 +176,8 @@ export default class Autocompleter extends Component {
     return <input {...newProps}/>
   }
 
-  render() {
-    const {searchTerm, id, results, canCreateNewPerson, total, isAddressIncluded, onToggleAddressSearch} = this.props
+  renderAutocomplete() {
+    const {searchTerm, id, results, canCreateNewPerson, total} = this.props
     const showMoreResults = {showMoreResults: 'Show More Results', posInSet: 'show-more', setSize: 'the-same'}
     const createNewPerson = {createNewPerson: 'Create New Person', posInSet: 'create-new', setSize: 'the-same'}
     const suggestionHeader = [{suggestionHeader: 'suggestion Header'}]
@@ -185,7 +185,8 @@ export default class Autocompleter extends Component {
     //Sequentually numbering items
     addPosAndSetAttr(results)
     const newResults = suggestionHeader.concat(results.concat(canLoadMoreResults ? showMoreResults : [], canCreateNewPerson ? createNewPerson : []))
-    return (<div>
+
+    return (
       <Autocomplete
         ref={(el) => (this.element_ref = el)}
         getItemValue={(_) => searchTerm}
@@ -200,7 +201,27 @@ export default class Autocompleter extends Component {
         wrapperStyle={{display: 'block', position: 'relative'}}
         renderInput={(props) => this.renderInput(props)}
       />
-      <SearchByAddress isAddressIncluded={isAddressIncluded} toggleAddressSearch={onToggleAddressSearch} onSubmit={this.handleSubmit} />
+    )
+  }
+
+  renderAddressSearch() {
+    const {searchCounty, isAddressIncluded, onChangeCounty, onToggleAddressSearch} = this.props
+
+    return (
+      <SearchByAddress
+        isAddressIncluded={isAddressIncluded}
+        toggleAddressSearch={onToggleAddressSearch}
+        onSubmit={this.handleSubmit}
+        searchCounty={searchCounty}
+        onChangeCounty={onChangeCounty}
+      />
+    )
+  }
+
+  render() {
+    return (<div>
+      {this.renderAutocomplete()}
+      {this.renderAddressSearch()}
     </div>)
   }
 }
@@ -211,12 +232,14 @@ Autocompleter.propTypes = {
   isAddressIncluded: PropTypes.bool,
   isSelectable: PropTypes.func,
   onChange: PropTypes.func.isRequired,
+  onChangeCounty: PropTypes.func.isRequired,
   onClear: PropTypes.func.isRequired,
   onLoadMoreResults: PropTypes.func.isRequired,
   onSearch: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,
   onToggleAddressSearch: PropTypes.func,
   results: PropTypes.array,
+  searchCounty: PropTypes.string,
   searchTerm: PropTypes.string,
   staffId: PropTypes.string,
   startTime: PropTypes.string,

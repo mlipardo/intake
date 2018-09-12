@@ -19,18 +19,18 @@ import {
 import {isCommaSuffix, formatHighlightedSuffix} from 'utils/nameFormatter'
 import {phoneNumberFormatter} from 'utils/phoneNumberFormatter'
 
-const getPeopleSearchSelector = (state) => state.get('peopleSearch')
-export const getSearchTermValueSelector = (state) => (
-  getPeopleSearchSelector(state).get('searchTerm')
+const selectPeopleSearch = (state) => state.get('peopleSearch')
+export const selectSearchTermValue = (state) => (
+  selectPeopleSearch(state).get('searchTerm')
 )
-export const getSearchAddressValueSelector = (state) => (
-  getPeopleSearchSelector(state).get('isAddressIncluded')
+export const selectSearchAddressValue = (state) => (
+  selectPeopleSearch(state).get('isAddressIncluded')
 )
-export const getResultsTotalValueSelector = (state) => (
-  getPeopleSearchSelector(state).get('total')
+export const selectResultsTotalValue = (state) => (
+  selectPeopleSearch(state).get('total')
 )
-export const getLastResultsSortValueSelector = (state) => {
-  const lastResult = getPeopleSearchSelector(state).get('results').last()
+export const selectLastResultsSortValue = (state) => {
+  const lastResult = selectPeopleSearch(state).get('results').last()
   return lastResult.get('sort').toJS()
 }
 
@@ -76,7 +76,7 @@ const mapCounties = (counties, countyCodes) => counties.map((county) =>
   systemCodeDisplayValue(county.get('id'), countyCodes)
 )
 
-export const getPeopleResultsSelector = (state) => getPeopleSearchSelector(state)
+export const selectPeopleResults = (state) => selectPeopleSearch(state)
   .get('results')
   .map((fullResult) => {
     const result = fullResult.get('_source', Map())
@@ -101,11 +101,13 @@ export const getPeopleResultsSelector = (state) => getPeopleSearchSelector(state
     })
   })
 
-export const getStartTimeSelector = (state) => getPeopleSearchSelector(state)
+export const selectStartTime = (state) => selectPeopleSearch(state)
   .get('startTime')
 
-export const getPersonCreatedAtTimeSelector = (state) =>
+export const selectPersonCreatedAtTime = (state) =>
   state.get('relationshipsQueryCycleTime').toJS()
     .map((t) => t.personCreatedAtTime)
     .pop()
 
+export const selectSearchCounty = (state) => selectPeopleSearch(state)
+  .get('county')

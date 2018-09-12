@@ -1,5 +1,5 @@
 import AlertInfoMessage from 'common/AlertInfoMessage'
-import CountySelectField from 'common/CountySelectField'
+import CountyCodeSelect from 'common/county/CountyCodeSelect'
 import DateField from 'common/DateField'
 import InlineHeader from 'common/InlineHeader'
 import PropTypes from 'prop-types'
@@ -81,7 +81,7 @@ const CrossReportForm = ({
         <label>This report has cross reported to:</label>
       </div>
       <div className='row'>
-        <CountySelectField
+        <CountyCodeSelect
           gridClassName='col-md-6'
           id='cross_report_county'
           onChange={({target: {value}}) => {

@@ -6,8 +6,10 @@ import {
   PEOPLE_SEARCH_FETCH,
   PEOPLE_SEARCH_FETCH_COMPLETE,
   SET_SEARCH_TERM,
+  SET_SEARCH_COUNTY,
   LOAD_MORE_RESULTS_COMPLETE,
 } from 'actions/peopleSearchActions'
+import {FETCH_USER_INFO_COMPLETE} from 'actions/userInfoActions'
 import moment from 'moment'
 
 const initialState = fromJS({
@@ -15,6 +17,7 @@ const initialState = fromJS({
   searchTerm: '',
   total: 0,
   isAddressIncluded: false,
+  county: '',
 })
 export default createReducer(initialState, {
   [PEOPLE_SEARCH_FETCH](state, {payload: {searchTerm}}) {
@@ -44,6 +47,12 @@ export default createReducer(initialState, {
       return state.set('searchTerm', searchTerm)
         .set('startTime', null)
     }
+  },
+  [SET_SEARCH_COUNTY](state, {payload: {county}}) {
+    return state.set('county', county)
+  },
+  [FETCH_USER_INFO_COMPLETE](state, {payload: {userInfo: {county}}}) {
+    return state.get('county') === '' ? state.set('county', county) : state
   },
   [LOAD_MORE_RESULTS_COMPLETE](state, {payload: {results}, error}) {
     if (error) {

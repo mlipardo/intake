@@ -6,9 +6,11 @@ import {
   toggleAddressSearch,
   search,
   setSearchTerm,
+  setSearchCounty,
   loadMoreResultsSuccess,
   loadMoreResultsFailure,
 } from 'actions/peopleSearchActions'
+import {fetchSuccess as fetchUserInfoSuccess} from 'actions/userInfoActions'
 import peopleSearchReducer from 'reducers/peopleSearchReducer'
 import {Map, fromJS} from 'immutable'
 import moment from 'moment'
@@ -111,6 +113,20 @@ describe('peopleSearchReducer', () => {
       )
     })
   })
+  describe('on SET_SEARCH_COUNTY', () => {
+    it('sets the county', () => {
+      const action = setSearchCounty('Placer')
+      const initialState = fromJS({
+        searchTerm: 'searchTerm',
+        total: 3,
+        results: ['result_one', 'result_two', 'result_three'],
+        county: 'Shasta',
+      })
+      expect(
+        peopleSearchReducer(initialState, action).get('county')
+      ).toEqual('Placer')
+    })
+  })
   describe('on LOAD_MORE_RESULTS_COMPLETE', () => {
     const initialState = fromJS({
       searchTerm: 'newSearchTerm',
@@ -160,6 +176,23 @@ describe('peopleSearchReducer', () => {
           isAddressIncluded: false,
         })
       )
+    })
+  })
+
+  describe('on FETCH_USER_INFO_COMPLETE', () => {
+    it('defaults the search county to the county of the user', () => {
+      const action = fetchUserInfoSuccess({county: 'Los Angeles'})
+      const initialState = fromJS({county: ''})
+      expect(
+        peopleSearchReducer(initialState, action).get('county')
+      ).toEqual('Los Angeles')
+    })
+    it('does not override an explicit user selection', () => {
+      const action = fetchUserInfoSuccess({county: 'Los Angeles'})
+      const initialState = fromJS({county: 'Sutter'})
+      expect(
+        peopleSearchReducer(initialState, action).get('county')
+      ).toEqual('Sutter')
     })
   })
 })

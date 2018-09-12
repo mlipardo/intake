@@ -3,7 +3,6 @@ import {Map, List, fromJS} from 'immutable'
 import nameFormatter from 'utils/nameFormatter'
 import {accessDescription} from 'utils/accessIndicator'
 import {dateRangeFormatter} from 'utils/dateFormatter'
-import COUNTIES from 'enums/Counties'
 import {systemCodeDisplayValue, selectScreenResponseTimes, selectRelationshipTypes} from 'selectors/systemCodeSelectors'
 import {hasNonReporter} from 'utils/roles'
 
@@ -21,11 +20,8 @@ const formatDisposition = (disposition) => {
 
 const getCaseCountyAndStatus = (hoiCase) => {
   const status = hoiCase.get('end_date') ? 'Closed' : 'Open'
-  const serviceComponent = hoiCase.getIn(['service_component', 'description']) ||
-    hoiCase.get('service_component')
-
-  const county = hoiCase.getIn(['county', 'description']) ||
-    hoiCase.get('county_name')
+  const serviceComponent = hoiCase.getIn(['service_component', 'description'])
+  const county = hoiCase.getIn(['county', 'description'])
 
   return {
     county,
@@ -77,41 +73,27 @@ const getReferralCountyAndStatus = (referral, responseTimes) => {
     systemCodeDisplayValue(maybeResponseTimeID, responseTimes) :
     referral.get('response_time')
 
-  const county = referral.get('county_name') ||
-    referral.getIn(['county', 'description'])
-
   return {
-    county,
+    county: referral.getIn(['county', 'description']),
     status: [status, responseTime].filter((n) => n).join(' - '),
   }
 }
 
 const getMixedReferralAllegations = (allegation) => Map({
   victim: nameFormatter({
-    first_name: allegation.get('victim_first_name') ||
-      allegation.getIn(['victim', 'first_name']),
-    middle_name: allegation.get('victim_middle_name') ||
-      allegation.getIn(['victim', 'middle_name']),
-    last_name: allegation.get('victim_last_name') ||
-      allegation.getIn(['victim', 'last_name']),
-    name_suffix: allegation.get('victim_name_suffix') ||
-      allegation.getIn(['victim', 'name_suffix']),
+    first_name: allegation.getIn(['victim', 'first_name']),
+    middle_name: allegation.getIn(['victim', 'middle_name']),
+    last_name: allegation.getIn(['victim', 'last_name']),
+    name_suffix: allegation.getIn(['victim', 'name_suffix']),
     name_default: ''}),
   perpetrator: nameFormatter({
-    first_name: allegation.get('perpetrator_first_name') ||
-      allegation.getIn(['perpetrator', 'first_name']),
-    middle_name: allegation.get('perpetrator_middle_name') ||
-      allegation.getIn(['perpetrator', 'middle_name']),
-    last_name: allegation.get('perpetrator_last_name') ||
-      allegation.getIn(['perpetrator', 'last_name']),
-    name_suffix: allegation.get('perpetrator_name_suffix') ||
-      allegation.getIn(['perpetrator', 'name_suffix']),
+    first_name: allegation.getIn(['perpetrator', 'first_name']),
+    middle_name: allegation.getIn(['perpetrator', 'middle_name']),
+    last_name: allegation.getIn(['perpetrator', 'last_name']),
+    name_suffix: allegation.getIn(['perpetrator', 'name_suffix']),
     name_default: ''}),
-  allegations: allegation.get('allegation_description') ||
-    allegation.getIn(['type', 'description'], ''),
-  disposition: formatDisposition(
-    allegation.get('disposition_description') ||
-    allegation.getIn(['disposition', 'description'])
+  allegations: allegation.getIn(['type', 'description'], ''),
+  disposition: formatDisposition(allegation.getIn(['disposition', 'description'])
   ),
 })
 
@@ -143,8 +125,7 @@ const getScreeningsSelector = createSelector(
 )
 
 const getScreeningCountyAndWorker = (screening) => ({
-  county: COUNTIES[screening.get('county_name')] ||
-    screening.getIn(['county', 'description'], ''),
+  county: screening.getIn(['county', 'description'], ''),
   worker: nameFormatter({name_default: '', ...screening.get('assigned_social_worker', Map()).toJS()}),
 })
 
@@ -157,12 +138,12 @@ export const getFormattedScreeningsSelector = createSelector(
     })
     const {county, worker} = getScreeningCountyAndWorker(screening)
     return fromJS({
-      county: county,
+      county,
       dateRange: dateRangeFormatter(screening.toJS()),
       people: notJustReporters.map((person) => nameFormatter(person.toJS())).join(', '),
       reporter: nameFormatter({name_default: '', ...screening.get('reporter', Map()).toJS()}),
       status: screening.get('end_date') ? 'Closed' : 'In Progress',
-      worker: worker,
+      worker,
     })
   })
 )

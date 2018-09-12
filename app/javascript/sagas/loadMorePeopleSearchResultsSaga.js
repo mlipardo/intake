@@ -1,7 +1,7 @@
 import {takeEvery, put, call, select} from 'redux-saga/effects'
 import {
-  getSearchTermValueSelector,
-  getLastResultsSortValueSelector,
+  selectSearchTermValue,
+  selectLastResultsSortValue,
 } from 'selectors/peopleSearchSelectors'
 import {get} from 'utils/http'
 import {
@@ -12,8 +12,8 @@ import {
 
 export function* loadMorePeopleSearch({payload: {isClientOnly}}) {
   try {
-    const searchTerm = yield select(getSearchTermValueSelector)
-    const sort = yield select(getLastResultsSortValueSelector)
+    const searchTerm = yield select(selectSearchTermValue)
+    const sort = yield select(selectLastResultsSortValue)
     const response = yield call(
       get,
       '/api/v1/people/search',

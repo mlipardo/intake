@@ -8,7 +8,7 @@ import {
 } from 'sagas/fetchRelationshipsSaga'
 import {FETCH_RELATIONSHIPS} from 'actions/actionTypes'
 import * as actions from 'actions/relationshipsActions'
-import {getPersonCreatedAtTimeSelector} from 'selectors/peopleSearchSelectors'
+import {selectPersonCreatedAtTime} from 'selectors/peopleSearchSelectors'
 import moment from 'moment'
 import {logEvent} from 'utils/analytics'
 import {clearTime} from 'actions/personCardActions'
@@ -45,7 +45,7 @@ describe('fetchRelationships', () => {
       select(getStaffIdSelector)
     )
     expect(gen.next(staffId).value).toEqual(
-      select(getPersonCreatedAtTimeSelector)
+      select(selectPersonCreatedAtTime)
     )
     const fetchRelationshipTime = moment().valueOf()
     const relationshipsQueryCycleTime = fetchRelationshipTime - personCreatedAtTime

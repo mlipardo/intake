@@ -2,11 +2,12 @@ import * as matchers from 'jasmine-immutable-matchers'
 import {fromJS, Map} from 'immutable'
 import {RESIDENCE_TYPE} from 'enums/AddressType'
 import {
-  getPeopleResultsSelector,
-  getLastResultsSortValueSelector,
-  getSearchAddressValueSelector,
-  getStartTimeSelector,
-  getPersonCreatedAtTimeSelector,
+  selectPeopleResults,
+  selectLastResultsSortValue,
+  selectSearchAddressValue,
+  selectStartTime,
+  selectPersonCreatedAtTime,
+  selectSearchCounty,
 } from 'selectors/peopleSearchSelectors'
 
 describe('peopleSearchSelectors', () => {
@@ -55,7 +56,7 @@ describe('peopleSearchSelectors', () => {
     unableToDetermineCodes,
   }
 
-  describe('getLastResultsSortValueSelector', () => {
+  describe('selectLastResultsSortValue', () => {
     it('returns the last results sort attribute', () => {
       const peopleSearch = {
         results: [{
@@ -67,12 +68,12 @@ describe('peopleSearchSelectors', () => {
         }],
       }
       const state = fromJS({peopleSearch})
-      const lastSort = getLastResultsSortValueSelector(state)
+      const lastSort = selectLastResultsSortValue(state)
       expect(lastSort).toEqual(['last_sort'])
     })
   })
 
-  describe('getPeopleResultsSelector', () => {
+  describe('selectPeopleResults', () => {
     it('maps person search attributes to suggestion attributes', () => {
       const peopleSearch = {
         results: [{
@@ -131,7 +132,7 @@ describe('peopleSearchSelectors', () => {
         peopleSearch,
         systemCodes,
       })
-      const peopleResults = getPeopleResultsSelector(state)
+      const peopleResults = selectPeopleResults(state)
       expect(peopleResults).toEqualImmutable(
         fromJS([{
           legacy_id: '1',
@@ -214,7 +215,7 @@ describe('peopleSearchSelectors', () => {
         peopleSearch,
         systemCodes,
       })
-      const peopleResults = getPeopleResultsSelector(state)
+      const peopleResults = selectPeopleResults(state)
       expect(peopleResults.getIn([0, 'address'])).toEqualImmutable(
         Map({
           city: 'Flushing',
@@ -245,7 +246,7 @@ describe('peopleSearchSelectors', () => {
         peopleSearch,
         systemCodes,
       })
-      const peopleResults = getPeopleResultsSelector(state)
+      const peopleResults = selectPeopleResults(state)
       expect(peopleResults.getIn([0, 'address'])).toEqual(null)
       expect(peopleResults.getIn([0, 'phoneNumber'])).toEqual(null)
     })
@@ -285,7 +286,7 @@ describe('peopleSearchSelectors', () => {
           peopleSearch,
           systemCodes,
         })
-        const peopleResults = getPeopleResultsSelector(state)
+        const peopleResults = selectPeopleResults(state)
         expect(peopleResults.getIn([0, 'fullName'])).toEqual('<em>Bar</em>t Sim<em>pson</em>')
         expect(peopleResults.getIn([0, 'ssn'])).toEqual('<em>123-45-6789</em>')
         expect(peopleResults.getIn([0, 'dateOfBirth'])).toEqual('<em>1990-02-13</em>')
@@ -311,7 +312,7 @@ describe('peopleSearchSelectors', () => {
           peopleSearch,
           systemCodes,
         })
-        const peopleResults = getPeopleResultsSelector(state)
+        const peopleResults = selectPeopleResults(state)
         expect(peopleResults.getIn([0, 'fullName'])).toEqual('<em>Bar</em>t Sim<em>pson</em>')
         expect(peopleResults.getIn([0, 'ssn'])).toEqual('<em>123-45-6789</em>')
         expect(peopleResults.getIn([0, 'dateOfBirth'])).toEqual('<em>1990-02-13</em>')
@@ -335,7 +336,7 @@ describe('peopleSearchSelectors', () => {
           peopleSearch,
           systemCodes,
         })
-        const peopleResults = getPeopleResultsSelector(state)
+        const peopleResults = selectPeopleResults(state)
         expect(peopleResults.getIn([0, 'fullName'])).toEqual('<em>Bar</em>t Sim<em>pson</em>')
       })
 
@@ -357,7 +358,7 @@ describe('peopleSearchSelectors', () => {
           peopleSearch,
           systemCodes,
         })
-        const peopleResults = getPeopleResultsSelector(state)
+        const peopleResults = selectPeopleResults(state)
         expect(peopleResults.getIn([0, 'fullName'])).toEqual('<em>Bar</em>t Sim<em>pson</em>')
       })
 
@@ -379,7 +380,7 @@ describe('peopleSearchSelectors', () => {
           peopleSearch,
           systemCodes,
         })
-        const peopleResults = getPeopleResultsSelector(state)
+        const peopleResults = selectPeopleResults(state)
         expect(peopleResults.getIn([0, 'fullName'])).toEqual('<em>Bar</em>t Sim<em>pson</em>')
       })
 
@@ -400,7 +401,7 @@ describe('peopleSearchSelectors', () => {
           peopleSearch,
           systemCodes,
         })
-        const peopleResults = getPeopleResultsSelector(state)
+        const peopleResults = selectPeopleResults(state)
         expect(peopleResults.getIn([0, 'fullName'])).toEqual('Bart Simpson')
       })
     })
@@ -417,7 +418,7 @@ describe('peopleSearchSelectors', () => {
         peopleSearch,
         systemCodes,
       })
-      const peopleResults = getPeopleResultsSelector(state)
+      const peopleResults = selectPeopleResults(state)
       expect(peopleResults.getIn([0, 'ssn'])).toEqual('123-45-6789')
     })
 
@@ -436,18 +437,18 @@ describe('peopleSearchSelectors', () => {
         peopleSearch,
         systemCodes,
       })
-      const peopleResults = getPeopleResultsSelector(state)
+      const peopleResults = selectPeopleResults(state)
       expect(peopleResults.getIn([0, 'ssn'])).toEqual('<em>123-45-6789</em>')
     })
   })
 
-  describe('getStartTimeSelector', () => {
+  describe('selectStartTime', () => {
     it('gets the start time when there is a start time', () => {
       const peopleSearch = {
         startTime: '10-10-2001',
       }
       const state = fromJS({peopleSearch})
-      expect(getStartTimeSelector(state)).toEqual('10-10-2001')
+      expect(selectStartTime(state)).toEqual('10-10-2001')
     })
 
     it('gets the start time when there is no start time', () => {
@@ -455,27 +456,37 @@ describe('peopleSearchSelectors', () => {
         startTime: null,
       }
       const state = fromJS({peopleSearch})
-      expect(getStartTimeSelector(state)).toEqual(null)
+      expect(selectStartTime(state)).toEqual(null)
     })
   })
 
-  describe('getPersonCreatedAtTimeSelector', () => {
+  describe('selectPersonCreatedAtTime', () => {
     it('gets person created at time', () => {
       const relationshipsQueryCycleTime = [{
         personCreatedAtTime: 1534190832860,
       }]
       const state = fromJS({relationshipsQueryCycleTime})
-      expect(getPersonCreatedAtTimeSelector(state)).toEqual(1534190832860)
+      expect(selectPersonCreatedAtTime(state)).toEqual(1534190832860)
     })
   })
 
-  describe('getSearchAddressValueSelector', () => {
+  describe('selectSearchAddressValue', () => {
     it('gets search address value', () => {
       const peopleSearch = {
         isAddressIncluded: true,
       }
       const state = fromJS({peopleSearch})
-      expect(getSearchAddressValueSelector(state)).toEqual(true)
+      expect(selectSearchAddressValue(state)).toEqual(true)
+    })
+  })
+
+  describe('selectSearchCounty', () => {
+    it('gets the selected county from the store', () => {
+      const peopleSearch = {
+        county: 'Mariposa',
+      }
+      const state = fromJS({peopleSearch})
+      expect(selectSearchCounty(state)).toEqual('Mariposa')
     })
   })
 })

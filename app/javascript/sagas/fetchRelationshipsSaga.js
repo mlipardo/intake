@@ -9,7 +9,7 @@ import {
 } from 'actions/actionTypes'
 import {clearTime} from 'actions/personCardActions'
 import moment from 'moment'
-import {getPersonCreatedAtTimeSelector} from 'selectors/peopleSearchSelectors'
+import {selectPersonCreatedAtTime} from 'selectors/peopleSearchSelectors'
 import {logEvent} from 'utils/analytics'
 import {getStaffIdSelector} from 'selectors/userInfoSelectors'
 
@@ -20,7 +20,7 @@ export function* fetchRelationships({payload: {ids, screeningId}}) {
     const response = yield call(get, `/api/v1/relationships?clientIds=${ids.join(',')}&screeningId=${screeningId}`)
     yield put(fetchRelationshipsSuccess(response))
     const staffId = yield select(getStaffIdSelector)
-    const personCreatedAtTime = yield select(getPersonCreatedAtTimeSelector)
+    const personCreatedAtTime = yield select(selectPersonCreatedAtTime)
     const fetchRelationshipTime = yield select(currentTime)
     if (personCreatedAtTime) {
       const relationshipsQueryCycleTime = fetchRelationshipTime - personCreatedAtTime

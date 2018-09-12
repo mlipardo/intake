@@ -39,7 +39,10 @@ feature 'Snapshot History of Involvement' do
         id: '1234',
         start_date: '2016-11-14',
         end_date: '2016-12-14',
-        county_name: 'Madera',
+        county: {
+          description: 'Madera',
+          id: '1087'
+        },
         response_time: 'Immediate',
         reporter: {
           first_name: 'Reporter1',
@@ -50,12 +53,22 @@ feature 'Snapshot History of Involvement' do
           last_name: 's1LastName'
         },
         allegations: [{
-          allegation_description: 'General Neglect',
-          disposition_description: 'Entered in Error',
-          perpetrator_first_name: 'Perpetrator1',
-          perpetrator_last_name: 'p1LastName',
-          victim_first_name: 'Victim1',
-          victim_last_name: 'v1LastName'
+          type: {
+            id: '2178',
+            description: 'General Neglect'
+          },
+          disposition: {
+            id: '1',
+            description: 'Entered in Error'
+          },
+          victim: {
+            first_name: 'Victim1',
+            last_name: 'v1LastName'
+          },
+          perpetrator: {
+            first_name: 'Perpetrator1',
+            last_name: 'p1LastName'
+          }
         }],
         legacy_descriptor: {
           legacy_ui_id: '0853-2115-5670-6000802'
@@ -64,7 +77,10 @@ feature 'Snapshot History of Involvement' do
       },
       {
         start_date: '2016-05-06',
-        county_name: 'San Francisco',
+        county: {
+          id: '1',
+          description: 'San Francisco'
+        },
         reporter: {
           first_name: 'Reporter2',
           last_name: 'r2LastName'
@@ -74,11 +90,21 @@ feature 'Snapshot History of Involvement' do
           last_name: 's2LastName'
         },
         allegations: [{
-          allegation_description: 'Severe Neglect',
-          perpetrator_first_name: 'Perpetrator2',
-          perpetrator_last_name: 'p2LastName',
-          victim_first_name: 'Victim2',
-          victim_last_name: 'v2LastName'
+          type: {
+            id: '2179',
+            description: 'Severe Neglect'
+          },
+          disposition: {
+            id: '0'
+          },
+          perpetrator: {
+            first_name: 'Perpetrator2',
+            last_name: 'p2LastName'
+          },
+          victim: {
+            first_name: 'Victim2',
+            last_name: 'v2LastName'
+          }
         }],
         legacy_descriptor: {
           legacy_ui_id: '0202-9769-1248-2000283'
@@ -98,8 +124,14 @@ feature 'Snapshot History of Involvement' do
           id: '0rumtwQ0Bn',
           first_name: 'fChild1'
         },
-        county_name: 'El Dorado',
-        service_component: 'Family Reunification',
+        county: {
+          id: '456',
+          description: 'El Dorado'
+        },
+        service_component: {
+          id: '123',
+          description: 'Family Reunification'
+        },
         parents: [
           { first_name: 'Parent1', last_name: 'p1Last', id: 'AbiQA5q0Bo' },
           { first_name: 'Parent2', last_name: 'p2Last', id: 'CaTvuzq0Bo' }
@@ -120,7 +152,10 @@ feature 'Snapshot History of Involvement' do
           id: '1234567',
           first_name: 'fChild2'
         },
-        county_name: 'Plumas',
+        county: {
+          id: '457',
+          description: 'Plumas'
+        },
         parents: [
           { first_name: 'Parent3', last_name: 'p3Last', id: 'ABC123' },
           { first_name: 'Parent4', last_name: 'p4Last', id: 'ABCDEFG' }

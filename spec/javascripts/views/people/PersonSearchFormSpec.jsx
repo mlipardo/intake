@@ -13,13 +13,14 @@ describe('PersonSearchForm', () => {
     onSelect = () => null,
     onLoadMoreResults = () => null,
     onChange = () => null,
+    onChangeCounty = () => null,
     onClear = () => null,
     onSearch = () => null,
     searchPrompt = '',
     canCreateNewPerson = false,
     ...args
   }) {
-    const props = {onSelect, onLoadMoreResults, onChange, onClear, onSearch, searchPrompt, canCreateNewPerson, ...args}
+    const props = {onSelect, onLoadMoreResults, onChange, onChangeCounty, onClear, onSearch, searchPrompt, canCreateNewPerson, ...args}
     return shallow(<PersonSearchForm {...props}/>, {disableLifecycleMethods: true})
   }
 
@@ -44,18 +45,18 @@ describe('PersonSearchForm', () => {
     expect(autocompleter.props().id).toEqual('screening_participants')
   })
 
-  it('passes isSelectable from props to the autocompleter', () => {
+  it('passes props to the autocompleter', () => {
     const isSelectable = jasmine.createSpy('isSelectable')
-    const component = renderPersonSearchForm({isSelectable})
+    const onSelect = jasmine.createSpy('onSelect')
+    const component = renderPersonSearchForm({
+      isSelectable,
+      onSelect,
+      searchCounty: 'Orange',
+    })
     const autocompleter = component.find('Autocompleter')
     expect(autocompleter.props().isSelectable).toEqual(isSelectable)
-  })
-
-  it('passes the onSelect prop to the autocompleter', () => {
-    const onSelect = jasmine.createSpy('onSelect')
-    const component = renderPersonSearchForm({onSelect})
-    const autocompleter = component.find('Autocompleter')
     expect(autocompleter.props().onSelect).toEqual(onSelect)
+    expect(autocompleter.props().searchCounty).toEqual('Orange')
   })
 
   it('renders the card header', () => {
@@ -68,5 +69,14 @@ describe('PersonSearchForm', () => {
     const searchCard = component.find('#search-card')
     const label = searchCard.children('.card-body').children('div').children('div').children('label')
     expect(label.text()).toContain('Search for any person')
+  })
+
+  it('calls onChangeCounty when new county is selected', () => {
+    const onChangeCounty = jasmine.createSpy('onChangeCounty')
+    const component = renderPersonSearchForm({onChangeCounty})
+
+    component.find('Autocompleter').props().onChangeCounty('Shasta')
+
+    expect(onChangeCounty).toHaveBeenCalledWith('Shasta')
   })
 })

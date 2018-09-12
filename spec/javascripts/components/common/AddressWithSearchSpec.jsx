@@ -3,11 +3,35 @@ import AddressWithSearch from 'common/AddressWithSearch'
 import {shallow} from 'enzyme'
 
 describe('AddressWithSearch', () => {
-  const render = ({onSubmit = () => {}, onChange = () => {}, ...props} = {}) => (
-    shallow(<AddressWithSearch onSubmit={onSubmit} onChange={onChange} {...props} />)
+  const render = ({
+    onChangeCounty = () => {},
+    onSubmit = () => {},
+    ...props
+  } = {}) => (
+    shallow(
+      <AddressWithSearch
+        onChangeCounty={onChangeCounty}
+        onSubmit={onSubmit}
+        {...props}
+      />
+    )
   )
 
-  it("renders address input field with id 'search-address' and label 'Address'", () => {
+  it('renders county select', () => {
+    const component = render()
+    const countySelect = component.find('CountyNameSelect')
+    expect(countySelect.props().id).toEqual('search-county')
+    expect(countySelect.props().value).toEqual('')
+  })
+
+  it('renders county select when a county is selected', () => {
+    const component = render({searchCounty: 'Contra Costa'})
+    const countySelect = component.find('CountyNameSelect')
+    expect(countySelect.props().id).toEqual('search-county')
+    expect(countySelect.props().value).toEqual('Contra Costa')
+  })
+
+  it('renders address input field with label Address', () => {
     const component = render()
     expect(component.find('InputField').props().id).toEqual('search-address')
     expect(component.find('InputField').props().label).toEqual('Address')
@@ -24,5 +48,12 @@ describe('AddressWithSearch', () => {
     const searchButton = component.find('.btn-primary')
     searchButton.simulate('click')
     expect(onSubmit).toHaveBeenCalled()
+  })
+
+  it('calls onChangeCounty when new county is selected', () => {
+    const onChangeCounty = jasmine.createSpy('onChangeCounty')
+    const component = render({onChangeCounty})
+    component.find('CountyNameSelect').props().onChange('Inyo')
+    expect(onChangeCounty).toHaveBeenCalledWith('Inyo')
   })
 })
