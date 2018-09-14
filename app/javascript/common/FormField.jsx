@@ -12,9 +12,9 @@ const FormField = ({children, errors, gridClassName, textWrapClassName, labelCla
     ClassNames(labelClassName, {'input-error-label': hasErrors}, {required: required})
   return (
     <div className={gridClassNames}>
-      <label htmlFor={htmlFor} className={labelClassNames}>
+      {label && <label htmlFor={htmlFor} className={labelClassNames}>
         {label}
-      </label>
+      </label>}
       <div className={textWrapClassNames}>
         {children}
       </div>
@@ -31,7 +31,7 @@ FormField.propTypes = {
   errors: PropTypes.array,
   gridClassName: PropTypes.string,
   htmlFor: PropTypes.string,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   labelClassName: PropTypes.string,
   required: PropTypes.bool,
   textWrapClassName: PropTypes.string,

@@ -17,6 +17,28 @@ describe('FormField', () => {
     })
   })
 
+  describe('when label is undefined', () => {
+    it('doesnot renders a label with a div wrapper', () => {
+      const props = {
+        children: <div>Italy</div>,
+        label: undefined,
+      }
+      component = shallow(<FormField {...props}/>, {disableLifecycleMethods: true})
+      expect(component.find('label').exists()).toEqual(false)
+    })
+  })
+
+  describe('when label is null', () => {
+    it('doesnot renders a label with a div wrapper', () => {
+      const props = {
+        children: <div>Italy</div>,
+        label: null,
+      }
+      component = shallow(<FormField {...props}/>, {disableLifecycleMethods: true})
+      expect(component.find('label').exists()).toEqual(false)
+    })
+  })
+
   describe('when label and className props are passed', () => {
     const props = {
       children: <br/>,

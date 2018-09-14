@@ -12,6 +12,7 @@ describe('SelectField', () => {
     id: 'myDateFieldId',
     label: 'this is my label',
     value: 'this-is-my-value',
+    ariaLabel: 'this-is-my-ariaLabel',
   }
   let onChange
   let onBlur
@@ -38,6 +39,7 @@ describe('SelectField', () => {
     const selectElement = component.find('select')
     expect(selectElement.length).toEqual(1)
     expect(selectElement.props().value).toEqual('this-is-my-value')
+    expect(selectElement.prop('aria-label')).toEqual('this-is-my-ariaLabel')
     expect(selectElement.find('option').length).toEqual(1)
   })
 

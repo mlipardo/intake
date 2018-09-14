@@ -151,6 +151,7 @@ describe('peopleSearchSelectors', () => {
             ethnicity_detail: ['Central American'],
           },
           dateOfBirth: '1990-02-13',
+          isCsec: false,
           isDeceased: true,
           isProbationYouth: true,
           ssn: '123-45-6789',

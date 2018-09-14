@@ -116,6 +116,26 @@ feature 'Edit Person' do
         )
       ).to have_been_made
     end
+
+    context 'when there is an error' do
+      scenario 'displays the error banner without completely crashing the page' do
+        stub_request(:put,
+          ferb_api_url(FerbRoutes.screening_participant_path(screening[:id], marge.id)))
+          .and_return(proc {
+            sleep 2
+            { status: 500 }
+          })
+        visit edit_screening_path(id: screening[:id])
+        within edit_participant_card_selector(marge.id) do
+          click_button 'Save'
+          expect(page).to have_button('Saving', disabled: true)
+        end
+        expect(page).to have_text(
+          /Something went wrong, sorry! Please try your last action again. \(Ref #:.*\)/
+        )
+        expect(page).to have_css(participant_card_selector(marge.id))
+      end
+    end
   end
 
   context 'editing and saving person phone numbers' do

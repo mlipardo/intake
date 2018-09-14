@@ -17,6 +17,7 @@ const RaceField = ({personId, onRaceChange, onRaceDetailChange, race, raceDetail
       <SelectField
         id={`participant-${personId}-${race.replace(/ /gi, '_')}-race-detail`}
         label=''
+        ariaLabel={`participant-${personId}-${race.replace(/ /gi, '_')}-race-detail`}
         value={raceDetail}
         onChange={({target: {value}}) => onRaceDetailChange(race, value)}
       >

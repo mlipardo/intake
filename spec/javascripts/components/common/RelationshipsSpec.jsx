@@ -10,12 +10,14 @@ describe('Relationships for Screening', () => {
 
   let onClick
   let component
+  const relationshipsButtonStatus = {createRelationshipsButtonStatus: true}
   const renderRelationships = (props) => shallow(
     <Relationships {...props}
       isScreening={true}
       screeningId={'1'}
-      pendingPeople = {['1']}
+      pendingPeople={['1']}
       onClick={onClick}
+      relationshipsButtonStatus={relationshipsButtonStatus}
     />, {disableLifecycleMethods: true})
 
   const candidates = [{
@@ -36,6 +38,7 @@ describe('Relationships for Screening', () => {
   }]
 
   const people = [{
+    id: 1,
     name: 'Sally Jones',
     relationships: [{
       type: 'mother',
@@ -44,6 +47,7 @@ describe('Relationships for Screening', () => {
       person_card_exists: true,
     }],
   }, {
+    id: 2,
     name: 'Nate Starbringer',
     relationships: [{
       type: 'father',
@@ -52,6 +56,7 @@ describe('Relationships for Screening', () => {
       person_card_exists: false,
     }],
   }, {
+    id: 3,
     name: 'Jim Johnson',
     relationships: [{
       type: 'son',
@@ -65,6 +70,7 @@ describe('Relationships for Screening', () => {
       person_card_exists: true,
     }],
   }, {
+    id: 4,
     name: 'Cecilia Gomez',
     relationships: [{
       name: 'Jose Gomez',
@@ -77,12 +83,15 @@ describe('Relationships for Screening', () => {
       person_card_exists: true,
     }],
   }, {
+    id: 5,
     name: 'Nally Raymonds',
     relationships: [],
   }, {
+    id: 6,
     name: 'Kate Winslet',
     relationships: [],
   }, {
+    id: 7,
     name: 'Kim West',
     relationships: [],
   }]
@@ -92,8 +101,10 @@ describe('Relationships for Screening', () => {
     component = renderRelationships({people, candidates})
   })
 
-  it('render ScreeningCreateRelationshipContainer for each person', () => {
-    expect(component.find('Connect(ScreeningCreateRelationship)').length).toEqual(7)
+  describe('ScreeningCreateRelationshipContainer', () => {
+    it('render ScreeningCreateRelationshipContainer for each person', () => {
+      expect(component.find('Connect(ScreeningCreateRelationship)').length).toEqual(7)
+    })
   })
 
   describe('Relationship for Relation Card Component', () => {
@@ -103,6 +114,7 @@ describe('Relationships for Screening', () => {
 
     it('passes correct props to RelationCard component and card number', () => {
       expect(getProps(component, 0).person).toEqual({
+        id: 1,
         name: 'Sally Jones',
         relationships: [{
           type: 'mother',
@@ -112,6 +124,7 @@ describe('Relationships for Screening', () => {
         }],
       })
       expect(getProps(component, 1).person).toEqual({
+        id: 2,
         name: 'Nate Starbringer',
         relationships: [{
           type: 'father',
@@ -121,6 +134,7 @@ describe('Relationships for Screening', () => {
         }],
       })
       expect(getProps(component, 2).person).toEqual({
+        id: 3,
         name: 'Jim Johnson',
         relationships: [{
           type: 'son',
@@ -135,6 +149,7 @@ describe('Relationships for Screening', () => {
         }],
       })
       expect(getProps(component, 3).person).toEqual({
+        id: 4,
         name: 'Cecilia Gomez',
         relationships: [{
           name: 'Jose Gomez',

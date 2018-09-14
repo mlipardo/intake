@@ -6,8 +6,8 @@ import {
   createPersonFailure,
 } from 'actions/personCardActions'
 import {fetchHistoryOfInvolvements} from 'actions/historyOfInvolvementActions'
-import {fetchRelationships} from 'actions/relationshipsActions'
-import {selectClientIds} from 'selectors/participantSelectors'
+import {fetchRelationships, setCreateRelationButtonStatus} from 'actions/relationshipsActions'
+import {selectClientIds, selectParticipants} from 'selectors/participantSelectors'
 import {getScreeningIdValueSelector} from 'selectors/screeningSelectors'
 import {replace} from 'react-router-redux'
 import {
@@ -47,6 +47,8 @@ export function* createParticipant({payload: {person}}) {
     const screeningId = yield select(getScreeningIdValueSelector)
     yield put(fetchRelationships(clientIds, screeningId))
     yield put(fetchHistoryOfInvolvements('screenings', screeningId))
+    const participants = yield select(selectParticipants)
+    yield put(setCreateRelationButtonStatus(participants))
   } catch (error) {
     if (error.status === STATUS_CODES.forbidden) {
       yield call(alert, 'You are not authorized to add this person.')

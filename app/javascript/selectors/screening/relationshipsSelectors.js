@@ -19,6 +19,8 @@ const isPersonCardExists = (people, relationship) => {
   return true
 }
 
+export const getRelationshipsButtonStatus = (state) => (state.get('relationshipsButtonStatus'))
+
 export const getPeopleSelector = createSelector(
   selectParticipants,
   getScreeningRelationships,

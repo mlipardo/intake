@@ -60,18 +60,25 @@ export const getScreeningWithEditsSelector = createSelector(
     agencies,
     participants
   ) => {
-    if (agencies.size) {
-      return screening
-        .setIn(['cross_reports', 0, 'county_id'], county_id)
-        .setIn(['cross_reports', 0, 'inform_date'], inform_date)
-        .setIn(['cross_reports', 0, 'method'], method)
-        .setIn(['cross_reports', 0, 'agencies'], agencies)
-        .set('participants', participants)
-    } else {
-      return screening
-        .set('cross_reports', List())
-        .set('participants', participants)
+    const hasFormData = county_id || inform_date || method || agencies && agencies.length > 0
+    let crossReports = screening.get('cross_reports')
+    const hasCrossReport = crossReports && crossReports.length > 0
+
+    if (!hasFormData && !hasCrossReport) {
+      return screening.set('participants', participants)
     }
+
+    if (hasFormData && !hasCrossReport) {
+      crossReports = new List()
+      crossReports.push({})
+      screening.set('cross_reports', crossReports)
+    }
+    return screening
+      .setIn(['cross_reports', 0, 'county_id'], county_id)
+      .setIn(['cross_reports', 0, 'inform_date'], inform_date)
+      .setIn(['cross_reports', 0, 'method'], method)
+      .setIn(['cross_reports', 0, 'agencies'], agencies)
+      .set('participants', participants)
   }
 )
 

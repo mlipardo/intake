@@ -2,6 +2,7 @@ import {fromJS} from 'immutable'
 import {
   selectCandidates,
   selectCandidatesWithEdits,
+  selectIsDisabledForm,
 } from 'selectors/screening/candidateSelectors'
 import * as matchers from 'jasmine-immutable-matchers'
 
@@ -9,6 +10,7 @@ describe('candidateSelectors', () => {
   beforeEach(() => jasmine.addMatchers(matchers))
 
   const candidatesForm = {
+    isDisabled: true,
     1: [{
       person: {
         age: '20 yrs',
@@ -212,6 +214,13 @@ describe('candidateSelectors', () => {
           absent_parent_indicator: false,
           same_home_status: 'N',
         }]}))
+    })
+  })
+
+  describe('selectIsDisabledForm', () => {
+    it('returns a list of candidates with isDisabled field', () => {
+      const state = fromJS({candidatesForm})
+      expect(selectIsDisabledForm(state)).toBe(true)
     })
   })
 })

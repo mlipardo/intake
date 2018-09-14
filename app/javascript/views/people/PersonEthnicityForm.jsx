@@ -38,6 +38,7 @@ const PersonEthnicityForm = ({
                   <SelectField
                     id={`participant-${personId}-ethnicity-detail`}
                     label={''}
+                    ariaLabel={`participant-${personId}-ethnicity-detail`}
                     value={ethnicityDetail || ''}
                     onChange={({target: {value}}) => onChange('ethnicity_detail', [value])}
                   >

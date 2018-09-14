@@ -569,31 +569,46 @@ describe('crossReportFormSelectors', () => {
     })
   })
   describe('getScreeningWithEditsSelector', () => {
-    it('returns a screening with an empty cross reports if no data set', () => {
+    it('returns a screening for no form data and no existing cross report', () => {
+      const screening = {}
+      const crossReportForm = {}
+      const state = fromJS({screening, crossReportForm})
+      expect(getScreeningWithEditsSelector(state))
+        .toEqualImmutable(fromJS({
+          participants: [],
+        }))
+    })
+    it('returns a screening with with cross report if form data set', () => {
       const screening = {cross_reports: []}
       const crossReportForm = getCrossReportState({
         county_id: {
-          value: '',
+          value: '-1',
           touched: true,
         },
       })
       const state = fromJS({screening, crossReportForm})
       expect(getScreeningWithEditsSelector(state))
         .toEqualImmutable(fromJS({
-          cross_reports: [],
+          cross_reports: [{
+            county_id: '-1',
+            inform_date: null,
+            method: null,
+            agencies: [],
+          }],
           participants: [],
         }))
     })
     it('returns a screening with an updated cross_reports if the form has a value', () => {
-      const screening = {cross_reports: []}
+      const screening = {cross_reports: [{
+        county_id: '-1',
+        inform_date: '2017-02-20',
+        method: 'test method',
+        agencies: [{code: 'code 1', type: 'type 1'}],
+      }]}
       const crossReportForm = getCrossReportState({
         county_id: {
           value: '1234',
           touched: true,
-        },
-        inform_date: {
-          value: '2017-02-20',
-          touched: false,
         },
         method: {
           value: 'Child Abuse Form',
@@ -622,7 +637,7 @@ describe('crossReportFormSelectors', () => {
           cross_reports: [
             {
               county_id: '1234',
-              inform_date: '2017-02-20',
+              inform_date: null,
               method: 'Child Abuse Form',
               agencies: [
                 {type: 'DISTRICT_ATTORNEY', code: '1234'},
@@ -641,7 +656,7 @@ describe('crossReportFormSelectors', () => {
       }
       const crossReportForm = getCrossReportState({
         county_id: {
-          value: '',
+          value: '-1',
           touched: true,
         },
       })
@@ -649,7 +664,12 @@ describe('crossReportFormSelectors', () => {
       const state = fromJS({screening, crossReportForm, participants})
       expect(getScreeningWithEditsSelector(state))
         .toEqualImmutable(fromJS({
-          cross_reports: [],
+          cross_reports: [{
+            county_id: '-1',
+            inform_date: null,
+            method: null,
+            agencies: [],
+          }],
           participants,
         }))
     })
@@ -661,7 +681,7 @@ describe('crossReportFormSelectors', () => {
       }
       const crossReportForm = getCrossReportState({
         county_id: {
-          value: '',
+          value: '-1',
           touched: true,
         },
       })
@@ -681,7 +701,12 @@ describe('crossReportFormSelectors', () => {
       const state = fromJS({screening, crossReportForm, participants})
       expect(getScreeningWithEditsSelector(state))
         .toEqualImmutable(fromJS({
-          cross_reports: [],
+          cross_reports: [{
+            county_id: '-1',
+            inform_date: null,
+            method: null,
+            agencies: [],
+          }],
           participants: [{
             id: '1',
             first_name: 'Mario',

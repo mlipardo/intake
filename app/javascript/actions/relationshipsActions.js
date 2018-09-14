@@ -2,6 +2,7 @@ import {
   FETCH_RELATIONSHIPS,
   FETCH_RELATIONSHIPS_COMPLETE,
   CLEAR_RELATIONSHIPS,
+  SET_CREATE_RELATION_BTN_STATUS,
 } from 'actions/actionTypes'
 
 export const BATCH_CREATE_RELATIONSHIPS = 'BATCH_CREATE_RELATIONSHIPS'
@@ -50,3 +51,7 @@ export const setFieldCandidate = (personId, candidateId, fieldSet, value) => ({
   payload: {personId, candidateId, fieldSet, value},
 })
 
+export const setCreateRelationButtonStatus = (participants) => ({
+  type: SET_CREATE_RELATION_BTN_STATUS,
+  payload: {participants},
+})

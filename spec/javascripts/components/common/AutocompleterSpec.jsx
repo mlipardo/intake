@@ -358,6 +358,7 @@ describe('<Autocompleter />', () => {
       const results = [{
         address,
         dateOfBirth: 'test date of birth',
+        isCsec: false,
         isDeceased: false,
         isProbationYouth: false,
         ethnicity,
@@ -391,6 +392,7 @@ describe('<Autocompleter />', () => {
 
         expect(suggestion.props().address).toEqual(address)
         expect(suggestion.props().dateOfBirth).toEqual('test date of birth')
+        expect(suggestion.props().isCsec).toEqual(false)
         expect(suggestion.props().isDeceased).toEqual(false)
         expect(suggestion.props().isProbationYouth).toEqual(false)
         expect(suggestion.props().ethnicity).toEqual(ethnicity)

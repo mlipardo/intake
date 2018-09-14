@@ -4,6 +4,7 @@ import {
   getPersonNamesSelector,
   getPersonInformationFlagValuesSelector,
   getModeValueSelector,
+  selectCsec,
   selectDeceased,
   selectProbationYouth,
   selectInformationalMessage,
@@ -28,6 +29,45 @@ describe('personCardSelectors', () => {
       }))
     })
   })
+
+  describe('selectCsec', () => {
+    it('return csec with details when participant has any csec details', () => {
+      const participants = [
+        {
+          id: '124',
+          first_name: 'John',
+          middle_name: 'Q',
+          last_name: 'Public',
+          csec: [],
+        },
+        {
+          id: '125',
+          first_name: 'Jane',
+          middle_name: '',
+          last_name: 'Public',
+          csec: [{
+            id: undefined,
+            participant_id: undefined,
+            csec_code_id: '1',
+            start_date: '1/1/1111',
+            end_date: '1/1/1111',
+          }],
+        },
+      ]
+      const state = fromJS({participants})
+      expect(selectCsec(state)).toEqualImmutable(fromJS({
+        124: [],
+        125: [{
+          id: undefined,
+          participant_id: undefined,
+          csec_code_id: '1',
+          start_date: '1/1/1111',
+          end_date: '1/1/1111',
+        }],
+      }))
+    })
+  })
+
   describe('selectDeceased', () => {
     it('return date of death when participant has a date of death', () => {
       const participants = [
@@ -43,6 +83,7 @@ describe('personCardSelectors', () => {
       }))
     })
   })
+
   describe('selectProbationYouth', () => {
     it('return probation_youth flag for each participant', () => {
       const participants = [
@@ -58,6 +99,7 @@ describe('personCardSelectors', () => {
       }))
     })
   })
+
   describe('getPersonInformationFlagValuesSelector', () => {
     it('returns the information flag each participant', () => {
       const participants = [
@@ -73,6 +115,7 @@ describe('personCardSelectors', () => {
       }))
     })
   })
+
   describe('getModeValueSelector', () => {
     const screeningPage = {
       mode: EDIT_MODE,
@@ -97,17 +140,42 @@ describe('personCardSelectors', () => {
       })
     })
   })
+
   describe('selectInformationalMessage', () => {
     const participants = [
       {id: '123', first_name: '', middle_name: '', last_name: ''},
       {id: '124', first_name: 'John', middle_name: 'Q', last_name: 'Public', date_of_death: '05/19/1993'},
       {id: '125', first_name: 'Jane', middle_name: 'W', last_name: 'Public', probation_youth: true},
       {id: '126', first_name: 'Jane', middle_name: 'E', last_name: 'Public', probation_youth: true, date_of_death: '05/19/1993'},
+      {id: '127', first_name: '', middle_name: '', last_name: '', csec: []},
+      {
+        id: '128',
+        first_name: 'Jane',
+        middle_name: '',
+        last_name: 'Public',
+        csec: [{
+          id: undefined,
+          participant_id: undefined,
+          csec_code_id: '1',
+          start_date: '1/1/1111',
+          end_date: '1/1/1111',
+        }],
+      },
     ]
     const state = fromJS({participants})
     describe('when a person does not have date_of_death and is not a Probation Youth', () => {
       it('returns no message', () => {
         expect(selectInformationalMessage(state, '123')).toEqual(null)
+      })
+    })
+    describe('when a person has no csec details ', () => {
+      it('returns no message', () => {
+        expect(selectInformationalMessage(state, '127')).toEqual(null)
+      })
+    })
+    describe('when a person has any csec details ', () => {
+      it('returns message: CSEC', () => {
+        expect(selectInformationalMessage(state, '128')).toEqual('CSEC')
       })
     })
     describe('when a person has date_of_death', () => {

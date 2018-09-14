@@ -2,7 +2,7 @@ import FormField from 'common/FormField'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-const SelectField = ({gridClassName, labelClassName, disabled, id, label, value, onChange, onBlur, children, required, errors}) => (
+const SelectField = ({gridClassName, labelClassName, disabled, id, label, value, onChange, onBlur, children, required, errors, ariaLabel}) => (
   <FormField
     htmlFor={id}
     label={label}
@@ -18,6 +18,7 @@ const SelectField = ({gridClassName, labelClassName, disabled, id, label, value,
       onChange={onChange}
       onBlur={onBlur}
       aria-required={required}
+      aria-label={ariaLabel}
       required={required}
     >
       {children}
@@ -26,6 +27,7 @@ const SelectField = ({gridClassName, labelClassName, disabled, id, label, value,
 )
 
 SelectField.propTypes = {
+  ariaLabel: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.object,

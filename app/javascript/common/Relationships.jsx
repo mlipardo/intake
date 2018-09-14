@@ -13,6 +13,7 @@ export const Relationships = ({
   onSave,
   pendingPeople = [],
   people,
+  relationshipsButtonStatus,
   screeningId,
 }) => (
   <div className='card-body no-pad-top'>
@@ -43,7 +44,7 @@ export const Relationships = ({
               }
             </div>
           </div>
-          <ScreeningCreateRelationshipContainer personId={person.id}/>
+          <ScreeningCreateRelationshipContainer personId={person.id} relationshipsButtonStatus={relationshipsButtonStatus}/>
         </div>
       ))
     }
@@ -128,6 +129,8 @@ Relationships.propTypes = {
       age: PropTypes.string,
     })),
   })),
+  relationshipsButtonStatus: PropTypes.shape({
+    createRelationshipsButtonStatus: PropTypes.bool}),
   screeningId: PropTypes.string,
 }
 

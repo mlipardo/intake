@@ -7,11 +7,11 @@ import {
 } from 'sagas/deleteParticipantSaga'
 import {DELETE_PERSON} from 'actions/personCardActions'
 import {fetch as fetchAllegations} from 'actions/screeningAllegationsActions'
-import {selectClientIds} from 'selectors/participantSelectors'
+import {selectClientIds, selectParticipants} from 'selectors/participantSelectors'
 import {getScreeningIdValueSelector} from 'selectors/screeningSelectors'
 import * as personCardActions from 'actions/personCardActions'
 import {fetchHistoryOfInvolvements} from 'actions/historyOfInvolvementActions'
-import {fetchRelationships} from 'actions/relationshipsActions'
+import {fetchRelationships, setCreateRelationButtonStatus} from 'actions/relationshipsActions'
 
 describe('deleteParticipantSaga', () => {
   it('deletes participant on DELETE_PERSON', () => {
@@ -24,7 +24,7 @@ describe('deleteParticipant', () => {
   const id = '123'
   const action = personCardActions.deletePerson(id)
 
-  it('deletes and puts participant, fetches a screening, and fetches relationships', () => {
+  it('deletes and puts participant, fetches a screening, fetches relationships and sets the relationshipsButtonStatus', () => {
     const gen = deleteParticipant(action)
     expect(gen.next().value).toEqual(select(getScreeningIdValueSelector))
     const screeningId = '444'
@@ -43,6 +43,9 @@ describe('deleteParticipant', () => {
     expect(gen.next('444').value).toEqual(
       put(fetchHistoryOfInvolvements('screenings', '444'))
     )
+    expect(gen.next().value).toEqual(select(selectParticipants))
+    const participants = [{legacy_id: 'ABC'}, {legacy_id: 'DEF'}]
+    expect(gen.next(participants).value).toEqual(put(setCreateRelationButtonStatus(participants)))
   })
 
   it('puts errors when errors are thrown', () => {

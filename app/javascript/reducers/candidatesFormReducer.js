@@ -9,6 +9,7 @@ import {
   SET_CANDIDATE_FORM_FIELD,
 } from 'actions/relationshipsActions'
 import nameFormatter from 'utils/nameFormatter'
+import {Maybe} from 'utils/maybe'
 
 const selectPerson = (person) => (Map({
   age: ageFormatter({
@@ -53,7 +54,8 @@ const loadCandidates = (state, {payload: {relationships}, error}) => {
   if (error) {
     return state
   } else {
-    return buildCandidates(fromJS((relationships)))
+    const candidates = buildCandidates(fromJS((relationships)))
+    return candidates
   }
 }
 
@@ -64,13 +66,19 @@ const removeRelationshipType = (candidates) => (
 )
 
 const resetCandidates = (state, {payload: {id}}) =>
-  state.update(id, removeRelationshipType)
+  state.update(id, removeRelationshipType).delete('isDisabled')
 
-const updateCandidateForm = (state, {payload: {personId, candidateId, value}}) => {
+const checkRelationshipType = (candidate) =>
+  Maybe.of(candidate.getIn(['candidate', 'relationshipType'])).isSomething() &&
+  candidate.getIn(['candidate', 'relationshipType']) !== ''
+
+const updateCandidateForm = (state, {payload: {personId, candidateId, fieldSet, value}}) => {
   const index = state.get(personId).findIndex(
     (relatee) => relatee.getIn(['candidate', 'id']) === candidateId
   )
-  return state.setIn([personId, index, 'candidate', 'relationshipType'], value)
+  const updatedForm = state.setIn([personId, index, 'candidate', fieldSet], value)
+  const relationshipTypeExists = updatedForm.getIn([personId]).some(checkRelationshipType)
+  return (relationshipTypeExists) ? updatedForm.set('isDisabled', false) : updatedForm.set('isDisabled', true)
 }
 
 export default createReducer(Map(), {

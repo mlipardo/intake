@@ -37,6 +37,7 @@ describe('Store', () => {
       },
       relationship: {},
       relationships: [],
+      relationshipsButtonStatus: {},
       relationshipsQueryCycleTime: [],
       routing: {locationBeforeTransitions: null},
       safelySurrenderedBaby: {

@@ -6,11 +6,11 @@ import {
   createParticipantSaga,
 } from 'sagas/createParticipantSaga'
 import {CREATE_PERSON} from 'actions/personCardActions'
-import {selectClientIds} from 'selectors/participantSelectors'
+import {selectClientIds, selectParticipants} from 'selectors/participantSelectors'
 import {getScreeningIdValueSelector} from 'selectors/screeningSelectors'
 import * as personCardActions from 'actions/personCardActions'
 import {fetchHistoryOfInvolvements} from 'actions/historyOfInvolvementActions'
-import {fetchRelationships} from 'actions/relationshipsActions'
+import {fetchRelationships, setCreateRelationButtonStatus} from 'actions/relationshipsActions'
 import {createScreeningSuccess} from 'actions/screeningActions'
 
 describe('createParticipantSaga', () => {
@@ -44,7 +44,7 @@ describe('createParticipant', () => {
   }
   const action = personCardActions.createPerson(participant)
 
-  it('creates and puts participant and fetches relationships and history', () => {
+  it('creates and puts participant, fetches relationships and history, and sets relationshipsButtonStatus', () => {
     const gen = createParticipant(action)
     expect(gen.next().value).toEqual(call(post, '/api/v1/participants', {participant: params}))
     expect(gen.next(participant).value).toEqual(
@@ -59,6 +59,11 @@ describe('createParticipant', () => {
     )
     expect(gen.next().value).toEqual(
       put(fetchHistoryOfInvolvements('screenings', screeningId))
+    )
+    expect(gen.next().value).toEqual(select(selectParticipants))
+    const participants = [{legacy_id: 'ABC'}, {legacy_id: 'DEF'}]
+    expect(gen.next(participants).value).toEqual(
+      put(setCreateRelationButtonStatus(participants))
     )
   })
 

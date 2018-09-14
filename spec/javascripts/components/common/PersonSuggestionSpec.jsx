@@ -40,6 +40,21 @@ describe('PersonSuggestion', () => {
       expect(component.html()).not.toContain('Sensitive')
     })
   })
+
+  describe('CSEC', () => {
+    it('renders when deceased when date of death is present', () => {
+      const props = {isCsec: true}
+      const component = shallow(<PersonSuggestion {...props} />, {disableLifecycleMethods: true})
+      expect(component.html()).toContain('CSEC')
+    })
+
+    it('does not render when deceased is not present', () => {
+      const props = {isCsec: false}
+      const component = shallow(<PersonSuggestion {...props} />, {disableLifecycleMethods: true})
+      expect(component.html()).not.toContain('CSEC')
+    })
+  })
+
   describe('deceased', () => {
     it('renders when deceased when date of death is present', () => {
       const props = {isDeceased: true}
@@ -53,6 +68,7 @@ describe('PersonSuggestion', () => {
       expect(component.html()).not.toContain('Deceased')
     })
   })
+
   describe('probation youth', () => {
     it('renders when open case responsible agence code is P - Probation', () => {
       const props = {isProbationYouth: true}
@@ -66,6 +82,7 @@ describe('PersonSuggestion', () => {
       expect(component.html()).not.toContain('Probation Youth')
     })
   })
+
   describe('sealed', () => {
     it('renders when is_sealed', () => {
       const props = {isSealed: true}

@@ -12,6 +12,13 @@ export const getPersonNamesSelector = createSelector(
   ), Map())
 )
 
+export const selectCsec = createSelector(
+  selectParticipants,
+  (people) => people.reduce((namesMap, person) => (
+    namesMap.set(person.get('id'), person.get('csec'))
+  ), Map())
+)
+
 export const selectDeceased = createSelector(
   selectParticipants,
   (people) => people.reduce((namesMap, person) => (
@@ -38,8 +45,15 @@ export const getModeValueSelector = (state, personId) => {
 }
 
 export const selectInformationalMessage = (state, personId) => {
-  const probationYouthInfo = selectProbationYouth(state).get(personId) ?
-    'Probation Youth' : null
-  const deceasedInfo = selectDeceased(state).get(personId) ? 'Deceased' : null
-  return deceasedInfo ? deceasedInfo : probationYouthInfo
+  const probationYouthInfo = selectProbationYouth(state).get(personId)
+  const deceasedInfo = selectDeceased(state).get(personId)
+  const csecInfo = selectCsec(state).get(personId)
+  if (deceasedInfo) {
+    return 'Deceased'
+  } else if (probationYouthInfo) {
+    return 'Probation Youth'
+  } else if (csecInfo && csecInfo.size > 0) {
+    return 'CSEC'
+  }
+  return null
 }

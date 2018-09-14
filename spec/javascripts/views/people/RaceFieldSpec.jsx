@@ -60,6 +60,7 @@ describe('RaceField', () => {
 
     expect(select.exists()).toEqual(true)
     expect(select.props().label).toEqual('')
+    expect(select.props().ariaLabel).toEqual('participant-123-Black_or_African-race-detail')
     expect(select.props().value).toEqual(raceDetail)
   })
 

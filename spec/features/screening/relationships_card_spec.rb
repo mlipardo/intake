@@ -23,9 +23,22 @@ feature 'Relationship card' do
     }
   end
   let(:participant) { FactoryBot.create(:participant) }
+  let(:participant2) { FactoryBot.create(:participant) }
   let(:participants_screening) do
     {
       id: '1',
+      incident_address: {},
+      addresses: [],
+      cross_reports: [],
+      participants: [participant.as_json.symbolize_keys, participant2.as_json.symbolize_keys],
+      allegations: [],
+      safety_alerts: []
+    }
+  end
+
+  let(:single_participant_screening) do
+    {
+      id: '2',
       incident_address: {},
       addresses: [],
       cross_reports: [],
@@ -551,6 +564,58 @@ feature 'Relationship card' do
                   count: 1)
             end
           end
+        end
+      end
+    end
+  end
+
+  context 'a screening with one participant' do
+    describe('Create Relationships button') do
+      before(:each) do
+        stub_request(:get,
+          ferb_api_url(
+            FerbRoutes.intake_screening_path(single_participant_screening[:id])
+          )).and_return(json_body(single_participant_screening.to_json))
+        stub_empty_history_for_screening(single_participant_screening)
+
+        stub_request(
+          :get,
+          ferb_api_url(
+            FerbRoutes.relationships_for_screening_path(single_participant_screening[:id])
+          )
+        ).and_return(json_body(relationships.to_json, status: 200))
+      end
+
+      scenario 'shows as disabled' do
+        visit screening_path(id: single_participant_screening[:id])
+        within '#relationships-card.card' do
+          create_relation_btn = find('button', text: 'CREATE RELATIONSHIP')
+          expect(create_relation_btn.disabled?).to be(true)
+        end
+      end
+    end
+  end
+
+  context 'a screening with multiple participants' do
+    describe('Create Relationships button') do
+      before(:each) do
+        stub_request(:get,
+          ferb_api_url(
+            FerbRoutes.intake_screening_path(participants_screening[:id])
+          )).and_return(json_body(participants_screening.to_json))
+        stub_empty_history_for_screening(participants_screening)
+
+        stub_request(
+          :get,
+          ferb_api_url(FerbRoutes.relationships_for_screening_path(participants_screening[:id]))
+        ).and_return(json_body(relationships.to_json, status: 200))
+      end
+
+      scenario 'shows as enabled' do
+        visit screening_path(id: participants_screening[:id])
+        within '#relationships-card.card' do
+          create_relation_btn = find('button', text: 'CREATE RELATIONSHIP')
+          expect(create_relation_btn.disabled?).to be(false)
         end
       end
     end

@@ -5,7 +5,7 @@ import {fetchScreeningSaga, fetchScreening} from 'sagas/fetchScreeningSaga'
 import {FETCH_SCREENING} from 'actions/actionTypes'
 import * as actions from 'actions/screeningActions'
 import {fetch as fetchCountyAgencies} from 'actions/countyAgenciesActions'
-import {fetchRelationships} from 'actions/relationshipsActions'
+import {fetchRelationships, setCreateRelationButtonStatus} from 'actions/relationshipsActions'
 import {replace} from 'react-router-redux'
 
 describe('fetchScreeningSaga', () => {
@@ -75,7 +75,23 @@ describe('fetchScreening', () => {
         put(fetchRelationships(['ABC', 'DEF'], '123'))
       )
     })
+
+    it('sets the relationshipsButtonStatus', () => {
+      const gen = fetchScreening(action)
+      expect(gen.next().value).toEqual(call(get, '/api/v1/screenings/123'))
+      const screening = {id, participants: [{legacy_id: 'ABC'}, {legacy_id: 'DEF'}]}
+      expect(gen.next(screening).value).toEqual(
+        put(actions.fetchScreeningSuccess(screening))
+      )
+      expect(gen.next(screening).value).toEqual(
+        put(fetchRelationships(['ABC', 'DEF'], '123'))
+      )
+      expect(gen.next(screening).value).toEqual(
+        put(setCreateRelationButtonStatus([{legacy_id: 'ABC'}, {legacy_id: 'DEF'}]))
+      )
+    })
   })
+
   describe('when unsuccessful', () => {
     const id = '123'
     const action = actions.fetchScreening(id)

@@ -69,6 +69,7 @@ describe('PersonEthnicityForm', () => {
         expect(detailSelect.props().label).toEqual('')
         expect(detailSelect.props().value).toEqual('')
         expect(detailSelect.props().id).toEqual('participant-123-ethnicity-detail')
+        expect(detailSelect.props().ariaLabel).toEqual('participant-123-ethnicity-detail')
       })
 
       it('sets the value of the select to the current ethnicityDetail', () => {

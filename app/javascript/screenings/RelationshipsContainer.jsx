@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import {Relationships} from 'common/Relationships'
-import {getPeopleSelector} from 'selectors/screening/relationshipsSelectors'
+import {getPeopleSelector, getRelationshipsButtonStatus} from 'selectors/screening/relationshipsSelectors'
 import {createPerson} from 'actions/personCardActions'
 import {createRelationship, setRelationshipForm, updateRelationship} from 'actions/relationshipActions'
 import {getScreeningIdValueSelector} from 'selectors/screeningSelectors'
@@ -12,6 +12,7 @@ const mapStateToProps = (state, _ownProps) => ({
   screeningId: getScreeningIdValueSelector(state),
   isScreening: true,
   pendingPeople: state.get('pendingParticipants').toJS(),
+  relationshipsButtonStatus: getRelationshipsButtonStatus(state).toJS(),
 })
 
 const mapDispatchToProps = (dispatch) => ({

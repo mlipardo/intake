@@ -24,3 +24,5 @@ export const selectCandidatesWithEdits = (state, id) => (Map({
     }))
     .filterNot(isEmptyRelationship),
 }))
+
+export const selectIsDisabledForm = (state) => state.getIn(['candidatesForm', 'isDisabled'])

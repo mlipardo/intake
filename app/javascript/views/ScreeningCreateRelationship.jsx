@@ -31,6 +31,7 @@ export default class ScreeningCreateRelationship extends React.Component {
   }
 
   modalFooter() {
+    const {isDisabled = true} = this.props
     return (
       <div>
         <button
@@ -43,6 +44,7 @@ export default class ScreeningCreateRelationship extends React.Component {
         <button
           aria-label='Create Relationship'
           className='btn btn-primary'
+          disabled={isDisabled}
           onClick={this.saveCreateRelationship}
         >
           Create Relationship
@@ -53,11 +55,12 @@ export default class ScreeningCreateRelationship extends React.Component {
 
   render() {
     const {candidates, onChange} = this.props
+    const relationshipsButtonStatus = !this.props.relationshipsButtonStatus.createRelationshipsButtonStatus
     return (
       <div className='row'>
         <div className='col-md-12' >
           <div className='pull-right'>
-            <button aria-label='Create Relationship' className='btn btn-primary' onClick={this.handleShowModal}>
+            <button aria-label='Create Relationship' className='btn btn-primary' onClick={this.handleShowModal} disabled={relationshipsButtonStatus}>
               Create Relationship
             </button>
           </div>
@@ -96,8 +99,11 @@ ScreeningCreateRelationship.propTypes = {
       name: PropTypes.string,
     }),
   })),
+  isDisabled: PropTypes.bool,
   onCancel: PropTypes.func,
   onChange: PropTypes.func,
   onSave: PropTypes.func,
   personId: PropTypes.string,
+  relationshipsButtonStatus: PropTypes.shape({
+    createRelationshipsButtonStatus: PropTypes.bool}),
 }

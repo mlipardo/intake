@@ -2,11 +2,15 @@
 
 module ScreeningHelpers
   def edit_participant_card_selector(participant_id)
-    "#participants-card-#{participant_id}.edit"
+    "#{participant_card_selector(participant_id)}.edit"
   end
 
   def show_participant_card_selector(participant_id)
-    "#participants-card-#{participant_id}.show"
+    "#{participant_card_selector(participant_id)}.show"
+  end
+
+  def participant_card_selector(participant_id)
+    "#participants-card-#{participant_id}"
   end
 
   def save_card(card_name)
