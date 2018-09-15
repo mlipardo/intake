@@ -5,17 +5,10 @@
 module Api
   module V1
     class PeopleController < ApiController # :nodoc:
-      respond_to :json
-
-      def search
-        search_response = PersonSearchRepository.search(
-          security_token: session[:security_token],
-          search_term: params[:search_term],
-          search_after: params[:search_after],
-          search_address: params[:search_address],
-          is_client_only: params[:is_client_only] == 'true'
-        )
-        render json: search_response
+      def index
+        # search = Search.new(security_token: session[:security_token], params)
+        # response = search.fetch
+        # render json: response
       end
 
       def show
