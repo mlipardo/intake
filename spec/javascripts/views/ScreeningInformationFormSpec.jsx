@@ -16,13 +16,6 @@ describe('ScreeningInformationForm', () => {
     return shallow(<ScreeningInformationForm {...props} />, {disableLifecycleMethods: true})
   }
 
-  it('the value for the name field is undefined initially', () => {
-    const titleField = renderScreeningInformationForm({
-      name: undefined || '',
-    }).find('InputField[label="Title/Name of Screening"]')
-    expect(titleField.props().value).toEqual(undefined || '')
-  })
-
   it('renders the name field', () => {
     const titleField = renderScreeningInformationForm({
       name: 'A sample screening name',
@@ -82,12 +75,7 @@ describe('ScreeningInformationForm', () => {
       .simulate('change', {target: {value: 'new assignee'}})
     expect(onChange).toHaveBeenCalledWith('assignee', 'new assignee')
   })
-  it('report type value should be undefined initially', () => {
-    const component = renderScreeningInformationForm({
-      reportType: undefined,
-    }).find('SelectField[label="Report Type"]')
-    expect(component.props().value).toEqual(undefined)
-  })
+
   it('renders the report type', () => {
     const component = renderScreeningInformationForm({
       reportType: 'Safely Surrendered Baby',
@@ -188,13 +176,6 @@ describe('ScreeningInformationForm', () => {
     expect(onChange).toHaveBeenCalledWith('ended_at', 'new end time')
   })
 
-  it('renders the communication method initially the value is undefined', () => {
-    const component = renderScreeningInformationForm({
-      communicationMethod: undefined,
-    }).find('SelectField[label="Communication Method"]')
-    expect(component.props().value).toEqual(undefined)
-    expect(component.props().required).toEqual(true)
-  })
   it('renders the communication method', () => {
     const component = renderScreeningInformationForm({
       communicationMethod: 'mail',
@@ -281,3 +262,4 @@ describe('ScreeningInformationForm', () => {
     expect(onSave).toHaveBeenCalled()
   })
 })
+
