@@ -8,17 +8,15 @@ describe PersonSearchQueryBuilder do
       let(:search_after) { %w[one two] }
 
       it 'builds a person search query with search_after' do
-        result = described_class.new({
-                    search_term: search_term,
-                    search_after: search_after
-                  }).build
+        result = described_class.new(search_term: search_term,
+                                     search_after: search_after).build
         expect(result[:_source].sort).to eq person_only_query[:_source].sort
         expect(result[:size]).to eq person_only_query[:size]
         expect(result[:sort]).to eq person_only_query[:sort]
         expect(result[:track_scores]).to eq person_only_query[:track_scores]
         expect(result[:highlight]).to eq person_only_query[:highlight]
         expect(result[:search_after]).to eq search_after
-        expect(result[:query].sort).to eq person_only_query[:query].sort
+        expect(result[:query]).to eq person_only_query[:query]
       end
     end
 
@@ -26,10 +24,8 @@ describe PersonSearchQueryBuilder do
       let(:search_after) { nil }
 
       it 'builds a person search query without search_after' do
-        result = described_class.new({
-                  search_term: search_term,
-                  search_after: search_after
-                }).build
+        result = described_class.new(search_term: search_term,
+                                     search_after: search_after).build
         expect(result[:query]).to eq person_only_query[:query]
         expect(result[:search_after]).to eq search_after
       end
@@ -156,8 +152,8 @@ describe PersonSearchQueryBuilder do
       "track_scores": 'true',
       "sort": [
         {
-          "_score": "desc",
-          "_uid": "desc"
+          "_score": 'desc',
+          "_uid": 'desc'
         }
       ],
       "query": {
@@ -169,28 +165,28 @@ describe PersonSearchQueryBuilder do
                   {
                     "match": {
                       "autocomplete_search_bar": {
-                        "query": "person_search_term",
+                        "query": 'person_search_term',
                         # "fuzziness": "AUTO",
-                        "operator": "and",
-                        "boost": "2"
+                        "operator": 'and',
+                        "boost": '2'
                       }
                     }
                   },
                   {
                     "match": {
                       "autocomplete_search_bar.diminutive": {
-                        "query": "person_search_term",
-                        "operator": "and",
-                        "boost": "1"
+                        "query": 'person_search_term',
+                        "operator": 'and',
+                        "boost": '1'
                       }
                     }
                   },
                   {
                     "match": {
                       "autocomplete_search_bar.phonetic": {
-                        "query": "person_search_term",
-                        "operator": "and",
-                        "boost": "1"
+                        "query": 'person_search_term',
+                        "operator": 'and',
+                        "boost": '1'
                       }
                     }
                   }
@@ -199,7 +195,7 @@ describe PersonSearchQueryBuilder do
             },
             {
               "match": {
-                "legacy_descriptor.legacy_table_name": "CLIENT_T"
+                "legacy_descriptor.legacy_table_name": 'CLIENT_T'
               }
             }
           ],
@@ -207,57 +203,57 @@ describe PersonSearchQueryBuilder do
             {
               "match": {
                 "autocomplete_search_bar": {
-                  "query": "person_search_term",
-                  "operator": "and",
-                  "boost": "3"
+                  "query": 'person_search_term',
+                  "operator": 'and',
+                  "boost": '3'
                 }
               }
             },
             {
               "match": {
                 "first_name": {
-                  "query": "person_search_term",
-                  "boost": "7"
+                  "query": 'person_search_term',
+                  "boost": '7'
                 }
               }
             },
             {
               "match": {
                 "last_name": {
-                  "query": "person_search_term",
-                  "boost": "7"
+                  "query": 'person_search_term',
+                  "boost": '7'
                 }
               }
             },
             {
               "match": {
                 "first_name.phonetic": {
-                  "query": "person_search_term",
-                  "boost": "2"
+                  "query": 'person_search_term',
+                  "boost": '2'
                 }
               }
             },
             {
               "match": {
                 "last_name.phonetic": {
-                  "query": "person_search_term",
-                  "boost": "2"
+                  "query": 'person_search_term',
+                  "boost": '2'
                 }
               }
             },
             {
               "match": {
                 "date_of_birth_as_text": {
-                  "query": "person_search_term",
-                  "boost": "7"
+                  "query": 'person_search_term',
+                  "boost": '7'
                 }
               }
             },
             {
               "match": {
                 "ssn": {
-                  "query": "person_search_term",
-                  "boost": "7"
+                  "query": 'person_search_term',
+                  "boost": '7'
                 }
               }
             }
@@ -265,50 +261,51 @@ describe PersonSearchQueryBuilder do
         }
       },
       "_source": [
-        "id",
-        "legacy_source_table",
-        "first_name",
-        "middle_name",
-        "last_name",
-        "name_suffix",
-        "gender",
-        "date_of_birth",
-        "date_of_death",
-        "ssn",
-        "languages",
-        "races",
-        "ethnicity",
-        "client_counties",
-        "addresses.id",
-        "addresses.effective_start_date",
-        "addresses.street_name",
-        "addresses.street_number",
-        "addresses.city",
-        "addresses.state_code",
-        "addresses.zip",
-        "addresses.type",
-        "addresses.legacy_descriptor",
-        "addresses.phone_numbers.number",
-        "addresses.phone_numbers.type",
-        "phone_numbers.id",
-        "phone_numbers.number",
-        "phone_numbers.type",
-        "highlight",
-        "legacy_descriptor",
-        "sensitivity_indicator",
-        "race_ethnicity",
-        "open_case_responsible_agency_code"
+        'id',
+        'legacy_source_table',
+        'first_name',
+        'middle_name',
+        'last_name',
+        'name_suffix',
+        'gender',
+        'date_of_birth',
+        'date_of_death',
+        'ssn',
+        'languages',
+        'races',
+        'ethnicity',
+        'client_counties',
+        'addresses.id',
+        'addresses.effective_start_date',
+        'addresses.street_name',
+        'addresses.street_number',
+        'addresses.city',
+        'addresses.county',
+        'addresses.state_code',
+        'addresses.zip',
+        'addresses.type',
+        'addresses.legacy_descriptor',
+        'addresses.phone_numbers.number',
+        'addresses.phone_numbers.type',
+        'phone_numbers.id',
+        'phone_numbers.number',
+        'phone_numbers.type',
+        'highlight',
+        'legacy_descriptor',
+        'sensitivity_indicator',
+        'race_ethnicity',
+        'open_case_responsible_agency_code'
       ],
       "highlight": {
-        "order": "score",
+        "order": 'score',
         "number_of_fragments": '10',
         "require_field_match": 'false',
         "fields": {
           "autocomplete_search_bar": {
             "matched_fields": [
-              "autocomplete_search_bar",
-              "autocomplete_search_bar.phonetic",
-              "autocomplete_search_bar.diminutive"
+              'autocomplete_search_bar',
+              'autocomplete_search_bar.phonetic',
+              'autocomplete_search_bar.diminutive'
             ]
           },
           "searchable_date_of_birth": {}
