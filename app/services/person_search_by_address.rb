@@ -18,33 +18,23 @@ class PersonSearchByAddress < QueryBuilder
     @county = params.dig(:search_address, :county).to_s
   end
 
-  def build_match_query
-    self.class::ATTRIBUTES.map do |key, value|
-      match_query(key, value)
-    end
+  def must
+    [base_query]
   end
 
-  def query
-    { bool: { must: must, should: should } }
-  end
-
-  def nested_path_query(nested_hash)
+  def base_query
     { nested:
         { path: 'addresses',
-          query:
-            { bool: nested_hash },
+          query: { bool: nested_must },
           inner_hits: highlight } }
   end
 
   def nested_must
     { must:
-      [{ match:
-          { "addresses.autocomplete_searchable_address": {
-            query: @search_termb, operator: 'and'
-          } } },
-       { match: { "addresses.autocomplete_city": { query: @city } } },
-       { match: { "addresses.county.description": { query: @county } } },
-       { match: { "addresses.last_known": { query: 'true' } } }] }
+      [match_query('addresses.autocomplete_searchable_address', @search_term, operator: 'and'),
+       match_query('addresses.autocomplete_city', @city),
+       match_query('addresses.county.description', @county),
+       { match: { "addresses.last_known": { query: 'true' } } }].compact }
   end
 
   def highlight
@@ -58,20 +48,12 @@ class PersonSearchByAddress < QueryBuilder
   end
 
   def should
-    { nested:
-        { path: 'addresses',
-          query:
-            { bool: build_match_query } } }
+    [{ "nested": { "path": 'addresses', "query": { "bool": {
+      "should": [
+        match_query('addresses.searchable_address', @search_term,
+          operator: 'and', boost: MEDIUM_BOOST),
+        match_query('addresses.city', @city, boost: MEDIUM_BOOST)
+      ].compact
+    } } } }]
   end
-
-  # def nested_should
-  #   { should:
-  #     [{ match:
-  #       { 'addresses.searchable_address':
-  #         { query: @search_term,
-  #           operator: 'and',
-  #           boost: MEDIUM_BOOST } } },
-  #      { match: { 'addresses.city':
-  #        { query: @city, boost: MEDIUM_BOOST } } }] }
-  # end
 end
