@@ -4,18 +4,17 @@
 # resource via the API
 class PersonSearchRepository
   class << self
-    def search(security_token:, search_term:, search_address:, search_after:, is_client_only:)
+    def search(params, security_token: nil)
       response = DoraAPI.make_api_call(
         security_token,
         ExternalRoutes.dora_people_light_index_path,
         :post,
-        search_query(search_term: search_term, search_address: search_address,
-                     search_after: search_after, is_client_only: is_client_only)
+        search_query(params)
       )
-      body response
+      body(response)
     end
 
-    def find(security_token:, id:)
+    def find(id, security_token: nil)
       raise 'id is required' unless id
       response = DoraAPI.make_api_call(
         security_token,
@@ -55,11 +54,9 @@ class PersonSearchRepository
           sensitivity_indicator race_ethnicity open_case_responsible_agency_code]
     end
 
-    def search_query(search_term:, search_address:, search_after:, is_client_only:)
-      PersonSearchQueryBuilder.new(
-        search_term: search_term, search_address: search_address,
-        search_after: search_after, is_client_only: is_client_only
-      ).build
+    def search_query(params)
+      return [] if params.blank?
+      QueryBuilder.new(params).build_query
     end
   end
 end
