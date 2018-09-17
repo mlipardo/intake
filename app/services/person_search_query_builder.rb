@@ -10,5 +10,5 @@ class PersonSearchQueryBuilder < QueryBuilder
     'last_name.phonetic' => LOW_BOOST,
     'date_of_birth_as_text' => HIGH_BOOST,
     'ssn' => HIGH_BOOST
-  }
+  }.freeze
 end
