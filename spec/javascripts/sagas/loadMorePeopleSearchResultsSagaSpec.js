@@ -34,7 +34,7 @@ describe('loadMorePeopleSearch', () => {
     const peopleSeachGenerator = loadMorePeopleSearch(action)
     expect(peopleSeachGenerator.next().value).toEqual(select(selectSearchTermValue))
     expect(peopleSeachGenerator.next(searchTerm).value).toEqual(select(selectLastResultsSortValue))
-    expect(peopleSeachGenerator.next(lastResultSort).value).toEqual(call(get, '/api/v1/people/search', {
+    expect(peopleSeachGenerator.next(lastResultSort).value).toEqual(call(get, '/api/v1/people', {
       search_term: searchTerm,
       search_after: lastResultSort,
       is_client_only: false,
@@ -51,7 +51,7 @@ describe('loadMorePeopleSearch', () => {
     const peopleSeachGenerator = loadMorePeopleSearch(action)
     expect(peopleSeachGenerator.next().value).toEqual(select(selectSearchTermValue))
     expect(peopleSeachGenerator.next(searchTerm).value).toEqual(select(selectLastResultsSortValue))
-    expect(peopleSeachGenerator.next(lastResultSort).value).toEqual(call(get, '/api/v1/people/search', {
+    expect(peopleSeachGenerator.next(lastResultSort).value).toEqual(call(get, '/api/v1/people', {
       search_term: searchTerm,
       search_after: lastResultSort,
       is_client_only: false,

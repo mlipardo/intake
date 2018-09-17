@@ -33,8 +33,7 @@ Rails.application.routes.draw do
       resources :relationships, only: %i[create index show update]
       get :history_of_involvements, to: 'history_of_involvements#by_client_ids'
 
-      resource :people, only: %i[index show], defaults: { format: 'json' }
-
+      resources :people, only: %i[index show]
       resources :system_codes,
         only: [:index]
       get 'cross_report_agency/:county_id', to: 'system_codes#cross_report_agency'

@@ -9,7 +9,7 @@ export function* fetchPeopleSearch({payload: {searchTerm, isClientOnly}}) {
   try {
     const TIME_TO_DEBOUNCE = 400
     yield call(delay, TIME_TO_DEBOUNCE)
-    const response = yield call(get, '/api/v1/people/search', {search_term: searchTerm, is_client_only: isClientOnly})
+    const response = yield call(get, '/api/v1/people', {search_term: searchTerm, is_client_only: isClientOnly})
     const staffId = yield select(getStaffIdSelector)
     yield put(fetchSuccess(response))
     yield call(logEvent, 'personSearch', {

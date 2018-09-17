@@ -20,7 +20,7 @@ describe('fetchPeopleSearch', () => {
     const error = 'Something went wrong'
     const peopleSeachGenerator = fetchPeopleSearch(action)
     expect(peopleSeachGenerator.next().value).toEqual(call(delay, 400))
-    expect(peopleSeachGenerator.next().value).toEqual(call(get, '/api/v1/people/search', {search_term: 'hello', is_client_only: true}))
+    expect(peopleSeachGenerator.next().value).toEqual(call(get, '/api/v1/people', {search_term: 'hello', is_client_only: true}))
     expect(peopleSeachGenerator.throw(error).value).toEqual(put(fetchFailure('Something went wrong')))
   })
 
@@ -34,7 +34,7 @@ describe('fetchPeopleSearch', () => {
     }
     const peopleSearchGenerator = fetchPeopleSearch(action)
     expect(peopleSearchGenerator.next().value).toEqual(call(delay, 400))
-    expect(peopleSearchGenerator.next().value).toEqual(call(get, '/api/v1/people/search', {search_term: 'hello', is_client_only: true}))
+    expect(peopleSearchGenerator.next().value).toEqual(call(get, '/api/v1/people', {search_term: 'hello', is_client_only: true}))
     expect(peopleSearchGenerator.next(searchResults).value).toEqual(
       select(getStaffIdSelector)
     )

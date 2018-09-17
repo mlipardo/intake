@@ -16,7 +16,7 @@ export function* loadMorePeopleSearch({payload: {isClientOnly}}) {
     const sort = yield select(selectLastResultsSortValue)
     const response = yield call(
       get,
-      '/api/v1/people/search',
+      '/api/v1/people',
       {search_term: searchTerm, search_after: sort, is_client_only: isClientOnly}
     )
     yield put(loadMoreResultsSuccess(response))
