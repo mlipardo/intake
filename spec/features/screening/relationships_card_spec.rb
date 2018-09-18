@@ -306,16 +306,8 @@ feature 'Relationship card' do
           ferb_api_url(FerbRoutes.relationships_for_screening_path(existing_screening[:id]))
         ).and_return(json_body(new_relationships.to_json, status: 200))
 
-        stub_person_search(
-          search_term: 'ma',
-          person_response: empty_response,
-          is_client_only: false
-        )
-        stub_person_search(
-          search_term: 'undefined undefined',
-          person_response: empty_response,
-          is_client_only: false
-        )
+        stub_person_search(person_response: empty_response)
+        stub_person_search(person_response: empty_response)
 
         within '#search-card', text: 'Search' do
           fill_in 'Search for any person', with: 'ma'

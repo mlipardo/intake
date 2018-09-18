@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 module WebmockHelpers
-  LOW_BOOST = 2
-  NO_BOOST = 1
   def stub_screening_put_request_with_anything_and_return(
     screening,
     with_updated_attributes: {}
@@ -28,67 +26,10 @@ module WebmockHelpers
     stub_request(:post, request_path).with(request_payload).to_return(response_payload)
   end
 
-  def stub_person_search(search_term:, person_response:, search_after: nil, is_client_only: true)
-    request_path = dora_api_url(ExternalRoutes.dora_people_light_index_path)
-    request_payload = {
-      'body' => {
-        'size' => 10,
-        'track_scores' => true,
-        'sort' => [{ '_score' => 'desc', '_uid' => 'desc' }],
-        'query' => {
-          'bool' => {
-            'must' => [
-              {
-                'bool' => {
-                  'should' => [
-                    {
-                      'match': {
-                        'autocomplete_search_bar' => {
-                          'query' => search_term.downcase,
-                          'operator' => 'and',
-                          'boost' => LOW_BOOST
-                        }
-                      }
-                    },
-                    {
-                      'match' => {
-                        'autocomplete_search_bar.diminutive' => {
-                          'query' => search_term.downcase,
-                          'operator' =>  'and',
-                          'boost' => NO_BOOST
-                        }
-                      }
-                    },
-                    {
-                      'match' =>  {
-                        'autocomplete_search_bar.phonetic' => {
-                          query: search_term.downcase,
-                          'operator' =>  'and',
-                          'boost' => NO_BOOST
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            ],
-            'should' => anything
-          }
-        },
-        '_source' => anything,
-        'highlight' => anything
-      }
-    }
-    request_payload['body'][:search_after] = search_after unless search_after.nil?
-    if is_client_only
-      request_payload['body']['query']['bool']['must'].push(
-        match: {
-          'legacy_descriptor.legacy_table_name': 'CLIENT_T'
-        }
-      )
-    end
+  def stub_person_search(person_response:)
     response_payload = json_body(person_response.to_json, status: 200)
-    stub_request(:post, request_path).with(request_payload).to_return(response_payload)
+    stub_request(:post, dora_api_url(ExternalRoutes.dora_people_light_index_path))
+      .to_return(response_payload)
   end
 
   def as_json_without_root_id(model)

@@ -86,7 +86,7 @@ feature 'Snapshot relationship card' do
         end
       end
 
-      stub_person_search(search_term: 'Ma', person_response: search_response)
+      stub_person_search(person_response: search_response)
       stub_request(
         :get,
         ferb_api_url(FerbRoutes.client_authorization_path(participant.legacy_descriptor.legacy_id))
