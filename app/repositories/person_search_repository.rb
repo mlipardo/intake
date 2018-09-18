@@ -55,7 +55,6 @@ class PersonSearchRepository
     end
 
     def search_query(params)
-      return [] if params.blank?
       QueryBuilder.new(params).build_query
     end
   end
